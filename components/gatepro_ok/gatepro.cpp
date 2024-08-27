@@ -158,17 +158,42 @@ cover::CoverTraits GatePro::get_traits() {
 }
 
 void GatePro::control(const cover::CoverCall &call) {
+  ESP_LOGD(TAG, "CALLED CONTROL");
   if (call.get_stop()) {
+    ESP_LOGD(TAG, "CONTROL / GET STOP");
     this->start_direction_(cover::COVER_OPERATION_IDLE);
     this->publish_state();
   }
 
+  /*//
+  if (call.get_toggle().has_value()) {
+    ESP_LOGD(TAG, "CONTROL / GET TOGGLE");
+    if (this->current_operation != cover::COVER_OPERATION_IDLE) {
+      ESP_LOGD(TAG, "CONTROL / GET TOGGLE / IDLE");
+      this->start_direction_(cover::COVER_OPERATION_IDLE);
+      this->publish_state();
+    } else {
+      if (this->position == cover::COVER_CLOSED || this->last_operation_ == cover::COVER_OPERATION_CLOSING) {
+        ESP_LOGD(TAG, "CONTROL / GET TOGGLE / CLOSED or CLOSING");
+        this->target_position_ = cover::COVER_OPEN;
+        this->start_direction_(cover::COVER_OPERATION_OPENING);
+      } else {
+        ESP_LOGD(TAG, "CONTROL / GET TOGGLE / OPEN or OPENING");
+        this->target_position_ = cover::COVER_CLOSED;
+        this->start_direction_(cover::COVER_OPERATION_CLOSING);
+      }
+    }
+  }*/
+
   //
   if (call.get_position().has_value()) {
+    ESP_LOGD(TAG, "CONTROL / GET POS");
     auto pos = *call.get_position();
     if (pos == this->position) {
+      ESP_LOGD(TAG, "CONTROL / GET POS / AT POS");
       //this->publish_state();
     } else {
+      ESP_LOGD(TAG, "CONTROL / GET POS / NOT AT POS");
       // sanitize position input - there has to be a min diff.
       if (abs(pos - this->position) < this->min_pos_diff) {
         return;
@@ -253,6 +278,18 @@ void GatePro::correction_after_operation() {
     }
 }
 
+void GatePro::debug() {
+  ESP_LOGD(TAG, "============================");
+
+  ESP_LOGD(TAG, cover::cover_operation_to_str(this->current_operation));
+  ESP_LOGD(TAG, cover::cover_operation_to_str(this->last_operation_));
+  ESP_LOGD(TAG, (const char*)std::to_string(this->operation_finished).c_str());
+  ESP_LOGD(TAG, (const char*)std::to_string(this->position).c_str());
+
+  ESP_LOGD(TAG, "");
+  ESP_LOGD(TAG, "");
+}
+
 void GatePro::stop_at_target() {
   // stop at target (except for full open / close)
   if (this->target_position_ != 0.0f && this->target_position_ != 1.0f) {
@@ -265,12 +302,6 @@ void GatePro::stop_at_target() {
 }
 
 void GatePro::update() {
-    // send first in queue UART cmd
-    if (this->tx_queue.size()) {
-      this->write_str(this->tx_queue.front());
-      this->tx_queue.pop();
-    }
-
     // if gate is not stationary, continuously read status
     //if (this->current_operation != cover::COVER_OPERATION_IDLE) {
         this->gatepro_cmd(GATEPRO_CMD_READ_STATUS);
@@ -294,22 +325,15 @@ void GatePro::update() {
 
 
 void GatePro::loop() {
+  if (this->tx_queue.size()) {
+    this->write_str(this->tx_queue.front());
+    this->tx_queue.pop();
+    delay_microseconds_safe(100000);
+  }
 }
 
 void GatePro::dump_config(){
     ESP_LOGCONFIG(TAG, "GatePro sensor dump config");
-}
-
-void GatePro::debug() {
-  ESP_LOGD(TAG, "============================");
-
-  ESP_LOGD(TAG, cover::cover_operation_to_str(this->current_operation));
-  ESP_LOGD(TAG, cover::cover_operation_to_str(this->last_operation_));
-  ESP_LOGD(TAG, (const char*)std::to_string(this->operation_finished).c_str());
-  ESP_LOGD(TAG, (const char*)std::to_string(this->position).c_str());
-
-  ESP_LOGD(TAG, "");
-  ESP_LOGD(TAG, "");
 }
 
 }  // namespace gatepro
