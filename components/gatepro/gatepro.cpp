@@ -219,6 +219,7 @@ void GatePro::setup() {
     this->make_call().set_command_stop().perform();
     this->operation_finished = true;
     this->gatepro_cmd(GATEPRO_CMD_READ_STATUS);
+    this->blocker = false;
 }
 
 void GatePro::update_sensors() {
@@ -265,6 +266,12 @@ void GatePro::stop_at_target() {
 }
 
 void GatePro::update() {
+    if (this->blocker){
+      ESP_LOGD(TAG, "TOO QUICK, SLOW DOWN!");
+      return;
+    }
+
+    this->blocker = true;
     // send first in queue UART cmd
     if (this->tx_queue.size()) {
       this->write_str(this->tx_queue.front());
@@ -272,9 +279,9 @@ void GatePro::update() {
     }
 
     // if gate is not stationary, continuously read status
-    //if (this->current_operation != cover::COVER_OPERATION_IDLE) {
+    if (this->current_operation != cover::COVER_OPERATION_IDLE) {
         this->gatepro_cmd(GATEPRO_CMD_READ_STATUS);
-    //}
+    }
 
     // stop at target
     this->stop_at_target();
@@ -290,6 +297,7 @@ void GatePro::update() {
 
     // debug
     //this->debug();
+    this->blocker = false;
 }
 
 
