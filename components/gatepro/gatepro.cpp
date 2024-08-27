@@ -18,6 +18,12 @@ void GatePro::gatepro_cmd(GateProCmd cmd) {
 
 // preprocessor (for the case if multiple messages read at once)
 void GatePro::preprocess(std::string msg) {
+    if (msg.substr(0, 3) == "NAK") {
+      ESP_LOGD(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      ESP_LOGD(TAG, (const char*)msg.c_str());
+      ESP_LOGD(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+
     // check if there are multiple messages in one msg
     uint8_t delimiter_location = msg.find(this->delimiter);
     uint8_t msg_length = msg.length();
