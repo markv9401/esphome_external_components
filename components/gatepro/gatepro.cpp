@@ -324,7 +324,7 @@ void GatePro::loop() {
   if (this->tx_queue.size()) {
     this->write_str(this->tx_queue.front());
     this->tx_queue.pop();
-    delay_microseconds_safe(2500);
+    delay_microseconds_safe(100000);
   }
 }
 
