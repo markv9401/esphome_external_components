@@ -27,7 +27,9 @@ enum ac_mode: uint8_t {
 enum ac_fan: uint8_t {
   AC_FAN_AUTO = 0x00,
   AC_FAN_LOW = 0x01,
+  // AC_FAN_MEDIUMLOW = 0x00,
   AC_FAN_MEDIUM = 0x02,
+  // AC_FAN_MEDIUMHIGH = 0x00,
   AC_FAN_HIGH = 0x03
 };
 
@@ -74,6 +76,7 @@ struct gree_raw_packet_t
 };
 
 
+
 /*
 class Constants {
   public:
@@ -91,9 +94,9 @@ class GreeClimate : public climate::Climate, public uart::UARTDevice, public Pol
   void dump_config() override;
   void control(const climate::ClimateCall &call) override;
   void set_supported_presets(const std::set<climate::ClimatePreset> &presets) { this->supported_presets_ = presets; }
-  // void set_supported_swing_modes(const std::set<climate::ClimateSwingMode> &modes) {
-  //   this->supported_swing_modes_ = modes;
-  // }
+  void set_supported_swing_modes(const std::set<climate::ClimateSwingMode> &modes) {
+     this->supported_swing_modes_ = modes;
+  }
 
  protected:
   climate::ClimateTraits traits() override;
@@ -115,7 +118,7 @@ class GreeClimate : public climate::Climate, public uart::UARTDevice, public Pol
   bool receiving_packet_ = false;
 
   std::set<climate::ClimatePreset> supported_presets_{};
-  // std::set<climate::ClimateSwingMode> supported_swing_modes_{};
+  std::set<climate::ClimateSwingMode> supported_swing_modes_{};
 };
 
 }  // namespace gree

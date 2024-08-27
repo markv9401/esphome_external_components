@@ -42,7 +42,7 @@ void GreeClimate::loop() {
 
   while (!receiving_packet_ && this->available() >= sizeof(gree_header_t)) {
     if (this->peek() != GREE_START_BYTE) {
-      this->read(); // читаем байт "в никуда"
+      this->read(); // read byte to nowhere
       continue;
     }
 
@@ -105,7 +105,7 @@ climate::ClimateTraits GreeClimate::traits() {
       climate::CLIMATE_FAN_HIGH
   });
 
-  // traits.set_supported_swing_modes(this->supported_swing_modes_);
+  traits.set_supported_swing_modes(this->supported_swing_modes_);
   traits.set_supports_current_temperature(true);
   traits.set_supports_two_point_target_temperature(false);
 
@@ -113,13 +113,13 @@ climate::ClimateTraits GreeClimate::traits() {
 
   traits.add_supported_preset(climate::CLIMATE_PRESET_NONE);
   traits.add_supported_preset(climate::CLIMATE_PRESET_BOOST);
-  // traits.add_supported_preset(climate::CLIMATE_PRESET_SLEEP);
+  traits.add_supported_preset(climate::CLIMATE_PRESET_SLEEP);
 
   return traits;
 }
 
 void GreeClimate::read_state_(const uint8_t *data, uint8_t size) {
-  // get checksum byte from received data (using the last byte)
+  // get checksum byte from received data (using the last byte in packet)
   uint8_t data_crc = data[size-1];
   // get checksum byte based on received data (calculating)
   uint8_t get_crc = get_checksum_(data, size);
@@ -129,9 +129,9 @@ void GreeClimate::read_state_(const uint8_t *data, uint8_t size) {
     return;
   }
 
-// now we are using only packets with 0x31 as first data byte
+// now we are using only packets with 0x31 as first data byte (byte 3 in packet)
   if (data[3] != 49) {
-    ESP_LOGW(TAG, "Invalid packet type.");
+    ESP_LOGW(TAG, "Invalid packet type (%s)", data[3]);
     return;
   }
 
@@ -185,7 +185,7 @@ void GreeClimate::read_state_(const uint8_t *data, uint8_t size) {
       ESP_LOGW(TAG, "Unknown AC mode&FAN: %s", data[MODE]);
   }
 
-  /*
+  
   switch (data[SWING]) {
     case AC_SWING_OFF:
       this->swing_mode = climate::CLIMATE_SWING_OFF;
@@ -203,7 +203,7 @@ void GreeClimate::read_state_(const uint8_t *data, uint8_t size) {
       this->swing_mode = climate::CLIMATE_SWING_BOTH;
       break;
   }
-  */
+  
 
   switch (data[10]) {
     case 7:
@@ -340,16 +340,16 @@ void GreeClimate::control(const climate::ClimateCall &call) {
   if (call.get_swing_mode().has_value()) {
     switch (call.get_swing_mode().value()) {
       case climate::CLIMATE_SWING_OFF:
-        // data_[SWING] = SWING_OFF;
+        data_write_[SWING] = AC_SWING_OFF;
         break;
       case climate::CLIMATE_SWING_VERTICAL:
-        // data_[SWING] = SWING_VERTICAL;
+        data_write_[SWING] = AC_SWING_VERTICAL;
         break;
       case climate::CLIMATE_SWING_HORIZONTAL:
-        // data_[SWING] = SWING_HORIZONTAL;
+        data_write_[SWING] = AC_SWING_HORIZONTAL;
         break;
       case climate::CLIMATE_SWING_BOTH:
-        // data_[SWING] = SWING_BOTH;
+        data_write_[SWING] = AC_SWING_BOTH;
         break;
     }
   }
