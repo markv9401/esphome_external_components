@@ -1,0 +1,356 @@
+INFO ESPHome 2024.7.3
+INFO Reading configuration /config/esphome/drivewaygate.yaml...
+INFO Updating https://github.com/markv9401/esphome-external-component-uart-reader@main
+INFO Starting log output from 192.168.0.55 using esphome API
+INFO Successfully connected to drivewaygate @ 192.168.0.55 in 0.039s
+INFO Successful handshake with drivewaygate @ 192.168.0.55 in 0.099s
+[15:57:12][I][app:100]: ESPHome version 2024.7.3 compiled on Aug 18 2024, 09:56:52
+[15:57:12][C][wifi:599]: WiFi:
+[15:57:12][C][wifi:427]:   Local MAC: D4:8A:FC:F1:2A:54
+[15:57:12][C][wifi:432]:   SSID: 'Rowra'[redacted]
+[15:57:12][C][wifi:435]:   IP Address: 192.168.0.55
+[15:57:12][C][wifi:439]:   BSSID: E4:38:83:7A:0A:8E[redacted]
+[15:57:12][C][wifi:440]:   Hostname: 'drivewaygate'
+[15:57:12][C][wifi:442]:   Signal strength: -73 dB ▂▄▆█
+[15:57:12][C][wifi:446]:   Channel: 11
+[15:57:12][C][wifi:447]:   Subnet: 255.255.255.0
+[15:57:12][C][wifi:448]:   Gateway: 192.168.0.11
+[15:57:12][C][wifi:449]:   DNS1: 192.168.0.11
+[15:57:12][C][wifi:450]:   DNS2: 0.0.0.0
+[15:57:12][C][logger:185]: Logger:
+[15:57:12][C][logger:186]:   Level: DEBUG
+[15:57:12][C][logger:188]:   Log Baud Rate: 115200
+[15:57:12][C][logger:189]:   Hardware UART: UART0
+[15:57:12][C][uart.arduino_esp32:151]: UART Bus 1:
+[15:57:12][C][uart.arduino_esp32:152]:   TX Pin: GPIO17
+[15:57:12][C][uart.arduino_esp32:153]:   RX Pin: GPIO16
+[15:57:12][C][uart.arduino_esp32:155]:   RX Buffer Size: 256
+[15:57:12][C][uart.arduino_esp32:157]:   Baud Rate: 9600 baud
+[15:57:12][C][uart.arduino_esp32:158]:   Data Bits: 8
+[15:57:12][C][uart.arduino_esp32:159]:   Parity: NONE
+[15:57:12][C][uart.arduino_esp32:160]:   Stop bits: 1
+[15:57:12][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:12][C][template.sensor:022]: Template Sensor 'Gate open sensor'
+[15:57:12][C][template.sensor:022]:   State Class: ''
+[15:57:12][C][template.sensor:022]:   Unit of Measurement: ''
+[15:57:12][C][template.sensor:022]:   Accuracy Decimals: 1
+[15:57:12][C][template.sensor:023]:   Update Interval: never
+[15:57:12][C][uart.switch:068]: UART Switch 'Gate toggle switch'
+[15:57:12][C][uart.switch:091]:   Restore Mode: always OFF
+[15:57:12][C][copy.sensor:015]: Copy Sensor 'WiFi Signal Percentage'
+[15:57:12][C][copy.sensor:015]:   State Class: 'measurement'
+[15:57:12][C][copy.sensor:015]:   Unit of Measurement: 'Signal %'
+[15:57:12][C][copy.sensor:015]:   Accuracy Decimals: 0
+[15:57:12][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:12][D][custom:059]: 
+[15:57:12][C][gatepro:024]: GatePro sensor dump config
+[15:57:12][C][captive_portal:088]: Captive Portal:
+[15:57:12][C][web_server:173]: Web Server:
+[15:57:12][C][web_server:174]:   Address: drivewaygate.local:80
+[15:57:12][C][mdns:116]: mDNS:
+[15:57:12][C][mdns:117]:   Hostname: drivewaygate
+[15:57:12][C][esphome.ota:073]: Over-The-Air updates:
+[15:57:13][C][esphome.ota:074]:   Address: drivewaygate.local:3232
+[15:57:13][C][esphome.ota:075]:   Version: 2
+[15:57:13][C][esphome.ota:078]:   Password configured
+[15:57:13][C][safe_mode:018]: Safe Mode:
+[15:57:13][C][safe_mode:020]:   Boot considered successful after 60 seconds
+[15:57:13][C][safe_mode:021]:   Invoke after 10 boot attempts
+[15:57:13][C][safe_mode:023]:   Remain in safe mode for 300 seconds
+[15:57:13][D][uart_debug:158]: <<< "ACK RS:00,80,A2,01,40,00,FF,FF,FF\r\n"
+[15:57:13][D][custom:059]: 
+[15:57:13][C][api:139]: API Server:
+[15:57:13][C][api:140]:   Address: drivewaygate.local:6053
+[15:57:13][C][api:142]:   Using noise encryption: YES
+[15:57:13][C][wifi_signal.sensor:009]: WiFi Signal 'WiFi Signal dB'
+[15:57:13][C][wifi_signal.sensor:009]:   Device Class: 'signal_strength'
+[15:57:13][C][wifi_signal.sensor:009]:   State Class: 'measurement'
+[15:57:13][C][wifi_signal.sensor:009]:   Unit of Measurement: 'dBm'
+[15:57:13][C][wifi_signal.sensor:009]:   Accuracy Decimals: 0
+[15:57:13][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:13][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:13][D][custom:059]: 
+[15:57:13][D][uart_debug:158]: <<< "ACK RS:00,80,A2,01,40,00,FF,FF,FF\r\n"
+[15:57:13][D][custom:059]: 
+[15:57:13][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:13][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:13][D][custom:059]: 
+[15:57:13][D][uart_debug:158]: <<< "ACK RS:00,80,A2,01,40,00,FF,FF,FF\r\n"
+[15:57:14][D][custom:059]: 
+[15:57:14][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:14][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:14][D][custom:059]: 
+[15:57:14][D][uart_debug:158]: <<< "ACK RS:00,80,A2,01,40,00,FF,FF,FF\r\n"
+[15:57:14][D][custom:059]: 
+[15:57:14][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:14][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:14][D][custom:059]: 
+[15:57:14][D][uart_debug:158]: <<< "ACK RS:00,80,A2,01,40,00,FF,FF,FF\r\n"
+[15:57:15][D][custom:059]: 
+[15:57:15][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:15][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:15][D][custom:059]: 
+[15:57:15][D][uart_debug:158]: <<< "ACK RS:00,80,A2,01,40,00,FF,FF,FF\r\n"
+[15:57:15][D][custom:059]: 
+[15:57:15][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:15][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:15][D][custom:059]: 
+[15:57:15][D][uart_debug:158]: <<< "ACK RS:00,80,A2,01,40,00,FF,FF,FF\r\n"
+[15:57:16][D][custom:059]: 
+[15:57:16][D][sensor:094]: 'WiFi Signal dB': Sending state -71.00000 dBm with 0 decimals of accuracy
+[15:57:16][D][sensor:094]: 'WiFi Signal Percentage': Sending state 58.00000 Signal % with 0 decimals of accuracy
+[15:57:16][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:16][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:16][D][custom:059]: 
+[15:57:16][D][uart_debug:158]: <<< "ACK RS:00,80,A2,01,40,00,FF,FF,FF\r\n"
+[15:57:16][D][custom:059]: 
+[15:57:16][D][uart_debug:158]: <<< "$V1PKF0,21,Opening;src=0001BE9\r\n"
+[15:57:16][D][sensor:094]: 'Gate open sensor': Sending state 1.00000  with 1 decimals of accuracy
+[15:57:16][D][custom:059]: Gate open
+[15:57:16][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:16][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:16][D][custom:059]: 
+[15:57:17][D][uart_debug:158]: <<< "ACK RS:00,80,C4,80,28,19,FF,FF,FF\r\n"
+[15:57:17][D][custom:059]: 
+[15:57:17][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:17][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:17][D][custom:059]: 
+[15:57:17][D][uart_debug:158]: <<< "ACK RS:00,80,C4,82,1D,3A,FF,FF,FF\r\n"
+[15:57:17][D][custom:059]: 
+[15:57:17][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:17][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:17][D][custom:059]: 
+[15:57:17][D][uart_debug:158]: <<< "ACK RS:00,80,C4,86,3E,10,FF,FF,FF\r\n"
+[15:57:18][D][custom:059]: 
+[15:57:18][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:18][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:18][D][custom:059]: 
+[15:57:18][D][uart_debug:158]: <<< "ACK RS:00,80,C4,8A,3E,0E,FF,FF,FF\r\n"
+[15:57:18][D][custom:059]: 
+[15:57:18][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:18][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:18][D][custom:059]: 
+[15:57:18][D][uart_debug:158]: <<< "ACK RS:00,80,C4,8F,3E,14,FF,FF,FF\r\n"
+[15:57:18][D][custom:059]: 
+[15:57:19][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:19][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:19][D][custom:059]: 
+[15:57:19][D][uart_debug:158]: <<< "ACK RS:00,80,C4,93,3E,0E,FF,FF,FF\r\n"
+[15:57:19][D][custom:059]: 
+[15:57:19][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:19][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:19][D][custom:059]: 
+[15:57:19][D][uart_debug:158]: <<< "ACK RS:00,80,C4,98,3E,08,FF,FF,FF\r\n"
+[15:57:20][D][custom:059]: 
+[15:57:20][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:20][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:20][D][custom:059]: 
+[15:57:20][D][uart_debug:158]: <<< "ACK RS:00,80,C4,9C,3E,0E,FF,FF,FF\r\n"
+[15:57:20][D][custom:059]: 
+[15:57:20][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:20][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:20][D][custom:059]: 
+[15:57:20][D][uart_debug:158]: <<< "ACK RS:00,80,C4,A1,3E,18,FF,FF,FF\r\n"
+[15:57:21][D][custom:059]: 
+[15:57:21][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:21][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:21][D][custom:059]: 
+[15:57:21][D][uart_debug:158]: <<< "ACK RS:00,80,C4,A5,3E,0C,FF,FF,FF\r\n"
+[15:57:21][D][custom:059]: 
+[15:57:21][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:21][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:21][D][custom:059]: 
+[15:57:22][D][uart_debug:158]: <<< "ACK RS:00,80,C4,AA,3E,0E,FF,FF,FF\r\n"
+[15:57:22][D][custom:059]: 
+[15:57:22][D][uart_debug:158]: <<< "$V1PKF0,21,Stopped;src=0001BE9\r\n"
+[15:57:22][D][sensor:094]: 'Gate open sensor': Sending state 1.00000  with 1 decimals of accuracy
+[15:57:22][D][custom:059]: Gate open
+[15:57:22][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:22][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:22][D][custom:059]: 
+[15:57:22][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:22][D][custom:059]: 
+[15:57:22][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:22][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:22][D][custom:059]: 
+[15:57:22][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:23][D][custom:059]: 
+[15:57:23][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:23][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:23][D][custom:059]: 
+[15:57:23][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:23][D][custom:059]: 
+[15:57:23][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:23][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:23][D][custom:059]: 
+[15:57:24][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:24][D][custom:059]: 
+[15:57:24][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:24][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:24][D][custom:059]: 
+[15:57:24][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:24][D][custom:059]: 
+[15:57:24][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:24][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:24][D][custom:059]: 
+[15:57:24][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:25][D][custom:059]: 
+[15:57:25][D][uart_debug:158]: <<< "$V1PKF1,274-12.14.C.E.E.FF.FF.FF.FF.FF.FF-FF.FF.FF.FF.FF.FF.FF.FF.FF.FF.FF\r\n"
+[15:57:25][D][custom:059]: 
+[15:57:25][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:25][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:25][D][custom:059]: 
+[15:57:25][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:25][D][custom:059]: 
+[15:57:25][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:25][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:25][D][custom:059]: 
+[15:57:25][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:25][D][custom:059]: 
+[15:57:26][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:26][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:26][D][custom:059]: 
+[15:57:26][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:26][D][custom:059]: 
+[15:57:26][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:26][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:26][D][custom:059]: 
+[15:57:26][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:27][D][custom:059]: 
+[15:57:27][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:27][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:27][D][custom:059]: 
+[15:57:27][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:27][D][custom:059]: 
+[15:57:27][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:27][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:27][D][custom:059]: 
+[15:57:28][D][uart_debug:158]: <<< "ACK RS:00,80,E6,2A,00,00,FF,FF,FF\r\n"
+[15:57:28][D][custom:059]: 
+[15:57:28][D][uart_debug:158]: <<< "$V1PKF0,21,Closing;src=0001BE9\r\n"
+[15:57:28][D][sensor:094]: 'Gate open sensor': Sending state 1.00000  with 1 decimals of accuracy
+[15:57:28][D][custom:059]: Gate open
+[15:57:28][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:28][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:28][D][custom:059]: 
+[15:57:28][D][uart_debug:158]: <<< "ACK RS:00,80,C4,29,0D,29,FF,FF,FF\r\n"
+[15:57:28][D][custom:059]: 
+[15:57:28][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:28][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:28][D][custom:059]: 
+[15:57:28][D][uart_debug:158]: <<< "ACK RS:00,80,C4,26,30,16,FF,FF,FF\r\n"
+[15:57:29][D][custom:059]: 
+[15:57:29][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:29][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:29][D][custom:059]: 
+[15:57:29][D][uart_debug:158]: <<< "ACK RS:00,80,C4,23,38,0A,FF,FF,FF\r\n"
+[15:57:29][D][custom:059]: 
+[15:57:29][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:29][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:29][D][custom:059]: 
+[15:57:30][D][uart_debug:158]: <<< "ACK RS:00,80,C4,1F,37,0A,FF,FF,FF\r\n"
+[15:57:30][D][custom:059]: 
+[15:57:30][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:30][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:30][D][custom:059]: 
+[15:57:30][D][uart_debug:158]: <<< "ACK RS:00,80,C4,1B,37,0E,FF,FF,FF\r\n"
+[15:57:30][D][custom:059]: 
+[15:57:30][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:30][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:30][D][custom:059]: 
+[15:57:30][D][uart_debug:158]: <<< "ACK RS:00,80,C4,18,37,0A,FF,FF,FF\r\n"
+[15:57:31][D][custom:059]: 
+[15:57:31][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:31][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:31][D][custom:059]: 
+[15:57:31][D][uart_debug:158]: <<< "ACK RS:00,80,C4,14,36,06,FF,FF,FF\r\n"
+[15:57:31][D][custom:059]: 
+[15:57:31][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:31][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:31][D][custom:059]: 
+[15:57:32][D][uart_debug:158]: <<< "ACK RS:00,80,C4,11,38,04,FF,FF,FF\r\n"
+[15:57:32][D][custom:059]: 
+[15:57:32][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:32][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:32][D][custom:059]: 
+[15:57:32][D][uart_debug:158]: <<< "ACK RS:00,80,C4,0E,29,04,FF,FF,FF\r\n"
+[15:57:32][D][custom:059]: 
+[15:57:32][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:32][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:32][D][custom:059]: 
+[15:57:32][D][uart_debug:158]: <<< "ACK RS:00,80,C4,0C,20,04,FF,FF,FF\r\n"
+[15:57:33][D][custom:059]: 
+[15:57:33][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:33][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:33][D][custom:059]: 
+[15:57:33][D][uart_debug:158]: <<< "ACK RS:00,80,C4,0A,20,07,FF,FF,FF\r\n"
+[15:57:33][D][custom:059]: 
+[15:57:33][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:33][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:33][D][custom:059]: 
+[15:57:33][D][uart_debug:158]: <<< "ACK RS:00,80,C4,08,20,0F,FF,FF,FF\r\n"
+[15:57:34][D][custom:059]: 
+[15:57:34][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:34][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:34][D][custom:059]: 
+[15:57:34][D][uart_debug:158]: <<< "ACK RS:00,80,C4,06,20,0C,FF,FF,FF\r\n"
+[15:57:34][D][custom:059]: 
+[15:57:34][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:34][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:34][D][custom:059]: 
+[15:57:34][D][uart_debug:158]: <<< "ACK RS:00,80,C4,04,1D,07,FF,FF,FF\r\n"
+[15:57:35][D][custom:059]: 
+[15:57:35][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:35][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:35][D][custom:059]: 
+[15:57:35][D][uart_debug:158]: <<< "ACK RS:00,80,C4,02,11,0C,FF,FF,FF\r\n"
+[15:57:35][D][custom:059]: 
+[15:57:35][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:35][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:35][D][custom:059]: 
+[15:57:36][D][uart_debug:158]: <<< "ACK RS:00,80,C4,01,10,08,FF,FF,FF\r\n"
+[15:57:36][D][custom:059]: 
+[15:57:36][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:36][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:36][D][custom:059]: 
+[15:57:36][D][uart_debug:158]: <<< "ACK RS:00,80,C4,00,10,15,FF,FF,FF\r\n$V1PKF0,17,Closed;src=0001\r\n"
+[15:57:36][D][sensor:094]: 'Gate open sensor': Sending state 0.00000  with 1 decimals of accuracy
+[15:57:36][D][custom:059]: Gate closed
+[15:57:36][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:36][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:36][D][custom:059]: 
+[15:57:36][D][uart_debug:158]: <<< "ACK RS:00,80,A2,00,40,00,FF,FF,FF\r\n"
+[15:57:36][D][custom:059]: 
+[15:57:37][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:37][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:37][D][custom:059]: 
+[15:57:37][D][uart_debug:158]: <<< "ACK RS:00,80,A2,00,40,00,FF,FF,FF\r\n"
+[15:57:37][D][custom:059]: 
+[15:57:37][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:37][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:37][D][custom:059]: 
+[15:57:37][D][uart_debug:158]: <<< "ACK RS:00,80,A2,00,40,00,FF,FF,FF\r\n"
+[15:57:38][D][custom:059]: 
+[15:57:38][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:38][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:38][D][custom:059]: 
+[15:57:38][D][uart_debug:158]: <<< "ACK RS:00,80,A2,00,40,00,FF,FF,FF\r\n"
+[15:57:38][D][custom:059]: 
+[15:57:38][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:38][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:38][D][custom:059]: 
+[15:57:38][D][uart_debug:158]: <<< "ACK RS:00,80,A2,00,40,00,FF,FF,FF\r\n"
+[15:57:39][D][custom:059]: 
+[15:57:39][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:39][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:39][D][custom:059]: 
+[15:57:39][D][uart_debug:158]: <<< "ACK RS:00,80,A2,00,40,00,FF,FF,FF\r\n"
+[15:57:39][D][custom:059]: 
+[15:57:39][D][uart_debug:158]: <<< "$V1PKF1,287-14.9.A.C.FF.FF.FF.FF.FF.FF.FF-FF.FF.FF.FF.FF.FF.FF.FF.FF.FF.FF\r\n"
+[15:57:39][D][custom:059]: 
+[15:57:39][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy
+[15:57:39][D][uart_debug:158]: >>> "RS;src=P00287D7\r\n"
+[15:57:39][D][custom:059]: 
+[15:57:39][D][uart_debug:158]: <<< "ACK RS:00,80,A2,00,40,00,FF,FF,FF\r\n"
+[15:57:40][D][custom:059]: 
+[15:57:40][D][sensor:094]: 'GatePro component': Sending state 4444.00000  with 1 decimals of accuracy

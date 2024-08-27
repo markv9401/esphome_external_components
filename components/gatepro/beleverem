@@ -1,0 +1,105 @@
+esphome:
+  name: "drivewaygate"
+  friendly_name: DrivewayGateOG
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "1qQPk6j5F7fQjur9jVdOLrkSYA+mASsfAnZMhUKv9Hk="
+
+ota:
+  - platform: esphome
+    password: "6055d42f1bf803b9b2486ac747021376"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Drivewaygateog Fallback Hotspot"
+    password: "Fh6apQlf8x8V"
+
+captive_portal:
+
+web_server:
+  version: 3
+
+uart:
+  baud_rate: 9600
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+  debug:
+    direction: BOTH
+    dummy_receiver: true
+    sequence:     
+      - lambda: |-
+          UARTDebug::log_string(direction, bytes);
+          std::string sb(bytes.begin(), bytes.end());
+          std::string res;
+          if (sb.find("Opening") != std::string::npos ||
+              sb.find("Opened") != std::string::npos ||
+              sb.find("Stopped") != std::string::npos ||
+              sb.find("Closing") != std::string::npos) {
+            res = "Gate open";
+            id(gate_open_sensor).publish_state(1);
+            id(gate_toggle_switch).publish_state(true);
+          } else if (sb.find("Closed") != std::string::npos) {
+            res = "Gate closed";
+            id(gate_open_sensor).publish_state(0);
+            id(gate_toggle_switch).publish_state(false);
+          }
+          const char* cres = res.c_str();
+          ESP_LOGD("custom", cres);
+ 
+switch:
+  - platform: uart
+    name: "Gate toggle switch"
+    id: "gate_toggle_switch"
+    data:
+      turn_on: "FULL OPEN;src=P00287D7\r\n"
+      turn_off: "FULL CLOSE;src=P00287D7\r\n"
+
+sensor:
+  - platform: template
+    name: "Gate open sensor"
+    id: "gate_open_sensor"
+    update_interval: never
+
+  - platform: wifi_signal
+    name: "WiFi Signal dB"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+  - platform: copy
+    source_id: wifi_signal_db
+    name: "WiFi Signal Percentage"
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "Signal %"
+    entity_category: "diagnostic"
+    device_class: ""
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/markv9401/esphome-external-component-uart-reader
+      ref: main
+    components: [ gatepro ]
+    refresh: 0s
+
+gatepro:
+  update_interval: 1s
+  status:
+    name: "Gate status sensor"
+    id: gate_status_sensor
+  
