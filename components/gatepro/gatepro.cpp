@@ -13,7 +13,8 @@ static const char* TAG = "gatepro";
 
 // fn to abstract CoverOperations
 void GatePro::gatepro_cmd(GateProCmd cmd) {
-  this->write_str(GateProCmdMapping.at(cmd));
+  this->tx_queue.push(GateProCmdMapping.at(cmd));
+  //this->write_str(GateProCmdMapping.at(cmd));
 }
 
 // preprocessor (for the case if multiple messages read at once)
@@ -326,7 +327,10 @@ void GatePro::update() {
 
 
 void GatePro::loop() {
-
+  if (this->tx_queue.size()) {
+    this->write_str(this->tx_queue.front());
+    this->tx_queue.pop();
+  }
 }
 
 void GatePro::dump_config(){
