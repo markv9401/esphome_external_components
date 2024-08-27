@@ -45,7 +45,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   void read_uart();
   void debug();
   void stop_at_target();
-  std::dequeue<const char*> tx_queue;
+  std::queue<const char*> tx_queue;
   
   // sensor logic
   void correction_after_operation();
