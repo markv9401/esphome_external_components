@@ -194,6 +194,10 @@ void GatePro::control(const cover::CoverCall &call) {
       //this->publish_state();
     } else {
       ESP_LOGD(TAG, "CONTROL / GET POS / NOT AT POS");
+      // sanitize position input - there has to be a min diff.
+      if (abs(pos - this->position) < this->min_pos_diff) {
+        return;
+      }
       auto op = pos < this->position ? cover::COVER_OPERATION_CLOSING : cover::COVER_OPERATION_OPENING;
       this->target_position_ = pos;
       this->start_direction_(op);
