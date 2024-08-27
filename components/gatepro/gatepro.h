@@ -59,7 +59,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
 
   const int known_percentage_offset = 128;
   const float acceptable_diff = 0.05f;
-  const float min_pos_diff = 0.1f;
+  //const float min_pos_diff = 0.1f;
   float position_;
   float target_position_;
   bool operation_finished;
