@@ -51,7 +51,7 @@ void GatePro::process(std::string msg) {
           percentage -= this->known_percentage_offset;
         }
         this->position = (float)percentage / 100;
-        
+
         return;
     }
 
@@ -198,15 +198,15 @@ void GatePro::start_direction_(cover::CoverOperation dir) {
 
   switch (dir) {
     case cover::COVER_OPERATION_IDLE:
-      this->queue_gatepro_cmd(queue_gatepro_cmd_STOP);
+      this->queue_gatepro_cmd(GATEPRO_CMD_STOP);
       break;
     case cover::COVER_OPERATION_OPENING:
       this->last_operation_ = dir;
-      this->queue_gatepro_cmd(queue_gatepro_cmd_OPEN);
+      this->queue_gatepro_cmd(GATEPRO_CMD_OPEN);
       break;
     case cover::COVER_OPERATION_CLOSING:
       this->last_operation_ = dir;
-      this->queue_gatepro_cmd(queue_gatepro_cmd_CLOSE);
+      this->queue_gatepro_cmd(GATEPRO_CMD_CLOSE);
       break;
     default:
       return;
@@ -224,7 +224,7 @@ void GatePro::setup() {
     this->make_call().set_command_close().perform();
     this->make_call().set_command_stop().perform();
     this->operation_finished = true;
-    this->queue_gatepro_cmd(queue_gatepro_cmd_READ_STATUS);
+    this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     this->blocker = false;
 }
 
@@ -288,7 +288,7 @@ void GatePro::update() {
 
     // if gate is not stationary, continuously read status
     if (this->current_operation != cover::COVER_OPERATION_IDLE) {
-        this->queue_gatepro_cmd(queue_gatepro_cmd_READ_STATUS);
+        this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     }
 
     /*
