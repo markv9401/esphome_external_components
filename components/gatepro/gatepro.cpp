@@ -245,6 +245,15 @@ void GatePro::correction_after_operation() {
     }
 }
 
+void GatePro::publish() {
+    if (this->position_ == this->position) {
+      return;
+    }
+
+    this->position_ = this->position;
+    this->publish_state();
+}
+
 void GatePro::update() {
     if (this->blocker){
       ESP_LOGD(TAG, "TOO QUICK, SLOW DOWN!");
@@ -263,9 +272,6 @@ void GatePro::update() {
         this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     }
 
-    // keep the isopen sensor updated
-    this->publish_state();
-
     // correction after an opening / closing operation finished
     this->correction_after_operation();
 
@@ -279,7 +285,6 @@ void GatePro::update() {
 void GatePro::loop() {
   // keep reading uart for changes
   this->read_uart();
-  this->position_ = this->position;
 }
 
 void GatePro::dump_config(){
