@@ -41,10 +41,10 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   std::string convert(uint8_t*, size_t);
   void preprocess(std::string);
   void process(std::string);
-  void gatepro_cmd(GateProCmd cmd);
+  void queue_gatepro_cmd(GateProCmd cmd);
   void read_uart();
   void debug();
-  void stop_at_target();
+  //void stop_at_target();
   std::queue<const char*> tx_queue;
   bool blocker;
   

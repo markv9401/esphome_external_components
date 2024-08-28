@@ -12,9 +12,8 @@ static const char* TAG = "gatepro";
 ///////////////////////////////////
 
 // fn to abstract CoverOperations
-void GatePro::gatepro_cmd(GateProCmd cmd) {
+void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
   this->tx_queue.push(GateProCmdMapping.at(cmd));
-  //this->write_str(GateProCmdMapping.at(cmd));
 }
 
 // preprocessor (for the case if multiple messages read at once)
@@ -52,6 +51,7 @@ void GatePro::process(std::string msg) {
           percentage -= this->known_percentage_offset;
         }
         this->position = (float)percentage / 100;
+        
         return;
     }
 
@@ -59,6 +59,7 @@ void GatePro::process(std::string msg) {
     // example: $V1PKF0,17,Closed;src=0001\r\n
     if (msg.substr(0, 7) == "$V1PKF0") {
         if (msg.substr(11, 7) == "Opening") {
+            this->operation_finished = false;
             // invoking in case gate is controlled from remote
             if (this->current_operation != cover::COVER_OPERATION_OPENING) {
               this->make_call().set_command_open().perform();
@@ -67,10 +68,15 @@ void GatePro::process(std::string msg) {
         }
         if (msg.substr(11, 6) == "Opened") {
             this->operation_finished = true;
+            // invoking in case gate is controlled from remote
+            if (this->current_operation != cover::COVER_OPERATION_OPENING) {
+              this->make_call().set_command_open().perform();
+            }
             this->make_call().set_command_stop().perform();
             return;
         }
         if (msg.substr(11, 7) == "Closing") {
+            this->operation_finished = false;
             // invoking in case gate is controlled from remote
             if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
               this->make_call().set_command_close().perform();
@@ -79,6 +85,10 @@ void GatePro::process(std::string msg) {
         }
         if (msg.substr(11, 6) == "Closed") {
             this->operation_finished = true;
+            // invoking in case gate is controlled from remote
+            if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
+              this->make_call().set_command_close().perform();
+            }
             this->make_call().set_command_stop().perform();
             return;
         }
@@ -174,7 +184,7 @@ void GatePro::control(const cover::CoverCall &call) {
         return;
       }
       auto op = pos < this->position ? cover::COVER_OPERATION_CLOSING : cover::COVER_OPERATION_OPENING;
-      this->target_position_ = pos;
+      //this->target_position_ = pos;
       this->start_direction_(op);
     }
   }
@@ -188,19 +198,15 @@ void GatePro::start_direction_(cover::CoverOperation dir) {
 
   switch (dir) {
     case cover::COVER_OPERATION_IDLE:
-      //this->target_position_ = 0;
-      //this->operation_finished = true;
-      this->gatepro_cmd(GATEPRO_CMD_STOP);
+      this->queue_gatepro_cmd(queue_gatepro_cmd_STOP);
       break;
     case cover::COVER_OPERATION_OPENING:
-      this->operation_finished = false;
       this->last_operation_ = dir;
-      this->gatepro_cmd(GATEPRO_CMD_OPEN);
+      this->queue_gatepro_cmd(queue_gatepro_cmd_OPEN);
       break;
     case cover::COVER_OPERATION_CLOSING:
-      this->operation_finished = false;
       this->last_operation_ = dir;
-      this->gatepro_cmd(GATEPRO_CMD_CLOSE);
+      this->queue_gatepro_cmd(queue_gatepro_cmd_CLOSE);
       break;
     default:
       return;
@@ -218,7 +224,7 @@ void GatePro::setup() {
     this->make_call().set_command_close().perform();
     this->make_call().set_command_stop().perform();
     this->operation_finished = true;
-    this->gatepro_cmd(GATEPRO_CMD_READ_STATUS);
+    this->queue_gatepro_cmd(queue_gatepro_cmd_READ_STATUS);
     this->blocker = false;
 }
 
@@ -254,6 +260,7 @@ void GatePro::correction_after_operation() {
     }
 }
 
+/*
 void GatePro::stop_at_target() {
   // stop at target (except for full open / close)
   if (this->target_position_ != 0.0f && this->target_position_ != 1.0f) {
@@ -264,6 +271,7 @@ void GatePro::stop_at_target() {
     }
   }
 }
+*/
 
 void GatePro::update() {
     if (this->blocker){
@@ -280,11 +288,12 @@ void GatePro::update() {
 
     // if gate is not stationary, continuously read status
     if (this->current_operation != cover::COVER_OPERATION_IDLE) {
-        this->gatepro_cmd(GATEPRO_CMD_READ_STATUS);
+        this->queue_gatepro_cmd(queue_gatepro_cmd_READ_STATUS);
     }
 
+    /*
     // stop at target
-    this->stop_at_target();
+    this->stop_at_target();*/
 
     // keep reading uart for changes
     this->read_uart();
@@ -297,6 +306,7 @@ void GatePro::update() {
 
     // debug
     //this->debug();
+
     this->blocker = false;
 }
 
