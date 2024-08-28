@@ -23,13 +23,15 @@ void GatePro::preprocess(std::string msg) {
     uint8_t msg_length = msg.length();
     if (msg_length > delimiter_location + this->delimiter_length) {
         std::string msg1 = msg.substr(0, delimiter_location + this->delimiter_length);
-        this->process(msg1);
+        //this->process(msg1);
+        this->rx_queue.push(msg1);
         std::string msg2 = msg.substr(delimiter_location + this->delimiter_length);
         this->preprocess(msg2);
         return;
     }
 
-    this->process(msg);
+    //this->process(msg);
+    this->rx_queue.push(msg);
 }
 
 // main motor message processor
@@ -266,6 +268,7 @@ void GatePro::update() {
     // send first in queue UART cmd
     if (this->tx_queue.size()) {
       this->write_str(this->tx_queue.front());
+      ESP_LOGD(TAG, "UART RX: %s", this->tx_queue.front());
       this->tx_queue.pop();
     }
 
@@ -287,6 +290,10 @@ void GatePro::update() {
 void GatePro::loop() {
   // keep reading uart for changes
   this->read_uart();
+  if (this->rx_queue.size()) {
+    this->process(this->rx.rx_queue.front());
+    this->rx_queue.pop();
+  }
 }
 
 void GatePro::dump_config(){

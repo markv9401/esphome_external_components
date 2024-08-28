@@ -45,6 +45,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   void read_uart();
   void debug();
   std::queue<const char*> tx_queue;
+  std::queue<std::string> rx_queue;
   bool blocker;
   
   // sensor logic
