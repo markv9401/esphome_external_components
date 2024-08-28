@@ -257,12 +257,12 @@ void GatePro::publish() {
 void GatePro::update() {
     this->publish();
     
-    if (this->blocker){
+    /*if (this->blocker){
       ESP_LOGD(TAG, "TOO QUICK, SLOW DOWN!");
       return;
     }
 
-    this->blocker = true;
+    this->blocker = true;*/
     // send first in queue UART cmd
     if (this->tx_queue.size()) {
       this->write_str(this->tx_queue.front());
@@ -280,7 +280,7 @@ void GatePro::update() {
     // debug
     //this->debug();
 
-    this->blocker = false;
+    //this->blocker = false;
 }
 
 
