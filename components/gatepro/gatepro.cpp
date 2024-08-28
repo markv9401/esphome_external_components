@@ -170,7 +170,7 @@ cover::CoverTraits GatePro::get_traits() {
 void GatePro::control(const cover::CoverCall &call) {
   if (call.get_stop()) {
     this->start_direction_(cover::COVER_OPERATION_IDLE);
-    this->publish_state();
+    //this->publish_state();
   }
 
   //
@@ -255,6 +255,8 @@ void GatePro::publish() {
 }
 
 void GatePro::update() {
+    this->publish();
+    
     if (this->blocker){
       ESP_LOGD(TAG, "TOO QUICK, SLOW DOWN!");
       return;
