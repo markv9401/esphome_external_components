@@ -231,8 +231,8 @@ void GatePro::setup() {
 }
 
 void GatePro::correction_after_operation() {
-    if (this->get_state() != this->current_operation) {
-      ESP_LOGD(TAG, this->get_state());
+    if (this->state != this->current_operation) {
+      ESP_LOGD(TAG, this->state);
     }
 
     if (this->operation_finished) {
