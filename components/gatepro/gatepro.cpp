@@ -262,9 +262,10 @@ void GatePro::correction_after_operation() {
 }
 
 void GatePro::publish() {
-    if (this->position_ == this->position) {
+    // publish on each tick
+    /*if (this->position_ == this->position) {
       return;
-    }
+    }*/
 
     this->position_ = this->position;
     this->publish_state();
@@ -295,7 +296,7 @@ void GatePro::update() {
     this->correction_after_operation();
 
     // debug
-    this->debug();
+    //this->debug();
 
     //this->blocker = false;
 }
