@@ -281,7 +281,7 @@ void GatePro::update() {
     this->correction_after_operation();
 
     // debug
-    //this->debug();
+    this->debug();
 
     //this->blocker = false;
 }
