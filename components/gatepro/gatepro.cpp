@@ -85,7 +85,7 @@ void GatePro::process(std::string msg) {
             // invoking in case gate is controlled from remote
             if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
               //this->make_call().set_command_close().perform();
-              this->current_operation = cover:COVER_OPERATION_CLOSING;
+              this->current_operation = cover::COVER_OPERATION_CLOSING;
             }
             return;
         }
