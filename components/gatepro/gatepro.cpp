@@ -231,6 +231,10 @@ void GatePro::setup() {
 }
 
 void GatePro::correction_after_operation() {
+    if (this->get_state() != this->current_operation) {
+      ESP_LOGD(TAG, this->get_state());
+    }
+
     if (this->operation_finished) {
       if (this->current_operation == cover::COVER_OPERATION_IDLE &&
           this->last_operation_ == cover::COVER_OPERATION_CLOSING &&
@@ -268,7 +272,7 @@ void GatePro::update() {
     // send first in queue UART cmd
     if (this->tx_queue.size()) {
       this->write_str(this->tx_queue.front());
-      ESP_LOGD(TAG, "UART RX: %s", this->tx_queue.front());
+      ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
       this->tx_queue.pop();
     }
 
