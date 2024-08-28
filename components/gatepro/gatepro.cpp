@@ -301,6 +301,7 @@ void GatePro::dump_config(){
 }
 
 void GatePro::debug() {
+  this->publish_state();
   ESP_LOGD(TAG, "============================");
 
   ESP_LOGD(TAG, cover::cover_operation_to_str(this->current_operation));
