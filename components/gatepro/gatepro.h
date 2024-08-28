@@ -44,14 +44,11 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   void queue_gatepro_cmd(GateProCmd cmd);
   void read_uart();
   void debug();
-  //void stop_at_target();
   std::queue<const char*> tx_queue;
   bool blocker;
   
   // sensor logic
   void correction_after_operation();
-  void update_sensors();
-
   cover::CoverOperation last_operation_{cover::COVER_OPERATION_OPENING};
 
   // UART parser constants
@@ -62,7 +59,6 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   const float acceptable_diff = 0.05f;
   const float min_pos_diff = 0.1f;
   float position_;
-  float target_position_;
   bool operation_finished;
   cover::CoverCall* last_call_;
 };

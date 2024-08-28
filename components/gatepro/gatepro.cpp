@@ -228,21 +228,6 @@ void GatePro::setup() {
     this->blocker = false;
 }
 
-void GatePro::update_sensors() {
-  bool changes = false;
-
-  // position_
-  if (this->position_ != this->position) {
-      this->position_ = this->position;
-      changes = true;
-  }
-
-  // self
-  if (changes) {
-    this->publish_state();
-  }
-}
-
 void GatePro::correction_after_operation() {
     if (this->operation_finished) {
       if (this->current_operation == cover::COVER_OPERATION_IDLE &&
@@ -259,19 +244,6 @@ void GatePro::correction_after_operation() {
       }
     }
 }
-
-/*
-void GatePro::stop_at_target() {
-  // stop at target (except for full open / close)
-  if (this->target_position_ != 0.0f && this->target_position_ != 1.0f) {
-    const float diff = abs(this->position - this->target_position_);
-    if (diff < this->acceptable_diff) {
-      this->target_position_ = 0;
-      this->make_call().set_command_stop().perform();
-    }
-  }
-}
-*/
 
 void GatePro::update() {
     if (this->blocker){
@@ -291,15 +263,8 @@ void GatePro::update() {
         this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     }
 
-    /*
-    // stop at target
-    this->stop_at_target();*/
-
-    // keep reading uart for changes
-    this->read_uart();
-
     // keep the isopen sensor updated
-    this->update_sensors();
+    this->publish_state();
 
     // correction after an opening / closing operation finished
     this->correction_after_operation();
@@ -312,6 +277,9 @@ void GatePro::update() {
 
 
 void GatePro::loop() {
+  // keep reading uart for changes
+  this->read_uart();
+  this->position_ = this->position;
 }
 
 void GatePro::dump_config(){
