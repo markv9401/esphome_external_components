@@ -291,7 +291,7 @@ void GatePro::loop() {
   // keep reading uart for changes
   this->read_uart();
   if (this->rx_queue.size()) {
-    this->process(this->rx.rx_queue.front());
+    this->process(this->rx_queue.front());
     this->rx_queue.pop();
   }
 }
