@@ -173,12 +173,6 @@ cover::CoverTraits GatePro::get_traits() {
 }
 
 void GatePro::control(const cover::CoverCall &call) {
-  if (this->blocker) {
-    ESP_LOGD(TAG, "Control blocked for now.");
-    return;
-  }
-  this->blocker = true;
-  
   if (call.get_stop()) {
     this->start_direction_(cover::COVER_OPERATION_IDLE);
     //this->publish_state();
@@ -201,8 +195,6 @@ void GatePro::control(const cover::CoverCall &call) {
       this->start_direction_(op);
     }
   }
-
-  this->blocker = false;
 }
 
 // cover logic
@@ -266,9 +258,9 @@ void GatePro::correction_after_operation() {
 
 void GatePro::publish() {
     // publish on each tick
-    if (this->position_ == this->position) {
+    /*if (this->position_ == this->position) {
       return;
-    }
+    }*/
 
     this->position_ = this->position;
     this->publish_state();
@@ -276,7 +268,13 @@ void GatePro::publish() {
 
 void GatePro::update() {
     this->publish();
+    
+    /*if (this->blocker){
+      ESP_LOGD(TAG, "TOO QUICK, SLOW DOWN!");
+      return;
+    }
 
+    this->blocker = true;*/
     // send first in queue UART cmd
     if (this->tx_queue.size()) {
       this->write_str(this->tx_queue.front());
@@ -294,6 +292,8 @@ void GatePro::update() {
 
     // debug
     //this->debug();
+
+    //this->blocker = false;
 }
 
 
@@ -304,8 +304,6 @@ void GatePro::loop() {
     this->process(this->rx_queue.front());
     this->rx_queue.pop();
   }
-
-
 }
 
 void GatePro::dump_config(){
