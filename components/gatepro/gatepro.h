@@ -49,7 +49,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   bool blocker;
   
   // sensor logic
-  void correction_after_operation();
+  //void correction_after_operation();
   cover::CoverOperation last_operation_{cover::COVER_OPERATION_OPENING};
   void publish();
 
