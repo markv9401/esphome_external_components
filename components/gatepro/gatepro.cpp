@@ -270,7 +270,8 @@ void GatePro::correction_after_operation() {
 
 void GatePro::publish() {
     // publish on each tick
-    if (this->position_ == this->position) {
+    if (this->position_ == this->position ||
+        this->state != "Closed") {
       return;
     }
 
