@@ -94,7 +94,7 @@ void GatePro::process(std::string msg) {
               this->make_call().set_command_close().perform();
             }*/
             this->position = cover::COVER_CLOSED;
-            //this->make_call().set_command_stop().perform();
+            this->make_call().set_command_stop().perform();
             return;
         }
         if (msg.substr(11, 7) == "Stopped") {
@@ -270,9 +270,9 @@ void GatePro::correction_after_operation() {
 
 void GatePro::publish() {
     // publish on each tick
-    /*if (this->position_ == this->position) {
+    if (this->position_ == this->position) {
       return;
-    }*/
+    }
 
     this->position_ = this->position;
     this->publish_state();
