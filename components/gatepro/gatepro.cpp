@@ -241,7 +241,7 @@ void GatePro::setup() {
     if (this->position < 0.1) {
       this->position = cover::COVER_CLOSED;
     } else if (this->position > 0.9) {
-      this->position = cover:COVER_CLOSED;
+      this->position = cover::COVER_CLOSED;
     }
     this->operation_finished = true;
     this->make_call().set_command_stop().perform();
