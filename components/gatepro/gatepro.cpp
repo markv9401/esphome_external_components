@@ -238,7 +238,7 @@ void GatePro::setup() {
     this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     this->blocker = false;*/
     this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
-    this->write_str(this->tx_queue.first());
+    this->write_str(this->tx_queue.front());
     thi->tx_queue.pop();
 
     this->current_operation = cover::COVER_OPERATION_IDLE;
