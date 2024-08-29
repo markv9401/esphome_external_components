@@ -275,12 +275,7 @@ void GatePro::update() {
     }
 
     this->blocker = true;*/
-    // send first in queue UART cmd
-    if (this->tx_queue.size()) {
-      this->write_str(this->tx_queue.front());
-      ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
-      this->tx_queue.pop();
-    }
+
 
     // if gate is not stationary, continuously read status
     if (this->current_operation != cover::COVER_OPERATION_IDLE) {
@@ -303,6 +298,13 @@ void GatePro::loop() {
   if (this->rx_queue.size()) {
     this->process(this->rx_queue.front());
     this->rx_queue.pop();
+  }
+
+  // send first in queue UART cmd
+  if (this->tx_queue.size()) {
+    this->write_str(this->tx_queue.front());
+    ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
+    this->tx_queue.pop();
   }
 }
 
