@@ -72,11 +72,11 @@ void GatePro::process(std::string msg) {
         if (msg.substr(11, 6) == "Opened") {
             this->operation_finished = true;
             // invoking in case gate is controlled from remote
-            if (this->current_operation != cover::COVER_OPERATION_OPENING) {
+            /*if (this->current_operation != cover::COVER_OPERATION_OPENING) {
               this->make_call().set_command_open().perform();
-            }
-            this->make_call().set_command_stop().perform();
+            }*/
             this->position = cover::COVER_OPEN;
+            this->make_call().set_command_stop().perform();
             return;
         }
         if (msg.substr(11, 7) == "Closing") {
@@ -90,9 +90,10 @@ void GatePro::process(std::string msg) {
         if (msg.substr(11, 6) == "Closed") {
             this->operation_finished = true;
             // invoking in case gate is controlled from remote
-            if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
+            /*if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
               this->make_call().set_command_close().perform();
-            }
+            }*/
+            this->position = cover::COVER_CLOSED;
             this->make_call().set_command_stop().perform();
             return;
         }
@@ -231,11 +232,19 @@ void GatePro::start_direction_(cover::CoverOperation dir) {
 
 void GatePro::setup() {
     ESP_LOGD(TAG, "Setting up GatePro component..");
-    this->make_call().set_command_close().perform();
+    /*this->make_call().set_command_close().perform();
     this->make_call().set_command_stop().perform();
     this->operation_finished = true;
     this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
-    this->blocker = false;
+    this->blocker = false;*/
+    this->current_operation = cover::COVER_OPERATION_IDLE;
+    if (this->position < 0.1) {
+      this->position = cover::COVER_CLOSED;
+    } else if (this->position > 0.9) {
+      this->position = cover:COVER_CLOSED;
+    }
+    this->operation_finished = true;
+    this->make_call().set_command_stop().perform();
 }
 
 void GatePro::correction_after_operation() {
