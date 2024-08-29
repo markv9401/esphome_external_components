@@ -53,6 +53,7 @@ void GatePro::process(std::string msg) {
         if (percentage > 100) {
           percentage -= this->known_percentage_offset;
         }
+        // bugfix as position: 0 sometimes hits the last few ticks already
         if (percentage == this->position_) {
           percentage++;
         }
