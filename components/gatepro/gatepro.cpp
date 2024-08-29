@@ -178,10 +178,11 @@ void GatePro::control(const cover::CoverCall &call) {
     return;
   }
   this->blocker = true;
-  
+
   if (call.get_stop()) {
     this->start_direction_(cover::COVER_OPERATION_IDLE);
     //this->publish_state();
+    this->blocker = false;
     return;
   }
 
@@ -194,6 +195,7 @@ void GatePro::control(const cover::CoverCall &call) {
     } else {
       // sanitize position input - there has to be a min diff.
       if (abs(pos - this->position) < this->min_pos_diff) {
+        this->blocker = false;
         return;
       }
       auto op = pos < this->position ? cover::COVER_OPERATION_CLOSING : cover::COVER_OPERATION_OPENING;
