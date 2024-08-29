@@ -303,7 +303,7 @@ void GatePro::loop() {
   // send first in queue UART cmd
   if (this->tx_queue.size()) {
     //this->write_str(this->tx_queue.front());
-    std::string temp = tx.tx_queue.front();
+    std::string temp = this->tx_queue.front();
     std::vector<uint8_t> cmdrn(temp.begin(), temp.end());
     this->write_array(cmdrn);
     //ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
