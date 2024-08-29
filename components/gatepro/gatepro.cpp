@@ -53,6 +53,9 @@ void GatePro::process(std::string msg) {
         if (percentage > 100) {
           percentage -= this->known_percentage_offset;
         }
+        if (percentage == this->position_) {
+          percentage++;
+        }
         this->position = (float)percentage / 100;
 
         return;
@@ -270,8 +273,7 @@ void GatePro::correction_after_operation() {
 
 void GatePro::publish() {
     // publish on each tick
-    if (this->position_ == this->position ||
-        this->state != "Closed") {
+    if (this->position_ == this->position ) {
       return;
     }
 
