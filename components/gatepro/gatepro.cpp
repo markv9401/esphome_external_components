@@ -237,16 +237,8 @@ void GatePro::setup() {
     this->operation_finished = true;
     this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     this->blocker = false;*/
-    this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
-    this->write_str(this->tx_queue.front());
-    this->tx_queue.pop();
 
-    this->current_operation = cover::COVER_OPERATION_IDLE;
-    if (this->position < 0.1) {
-      this->position = cover::COVER_CLOSED;
-    } else if (this->position > 0.9) {
-      this->position = cover::COVER_CLOSED;
-    }
+    this->current_operation = cover::COVER_OPERATION_CLOSING;
     this->operation_finished = true;
     this->make_call().set_command_stop().perform();
 }
