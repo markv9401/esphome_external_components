@@ -305,6 +305,8 @@ void GatePro::loop() {
     //this->write_str(this->tx_queue.front());
     std::string temp = this->tx_queue.front();
     std::vector<uint8_t> cmdrn(temp.begin(), temp.end());
+    cmdrn.push_back(0x13);
+    cmdrn.push_back(0x10);
     this->write_array(cmdrn);
     //ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
     this->tx_queue.pop();
