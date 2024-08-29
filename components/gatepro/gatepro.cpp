@@ -65,53 +65,40 @@ void GatePro::process(std::string msg) {
             this->operation_finished = false;
             // invoking in case gate is controlled from remote
             if (this->current_operation != cover::COVER_OPERATION_OPENING) {
-              //this->make_call().set_command_open().perform();
-              this->last_operation_ = this->current_operation;
-              this->current_operation = cover::COVER_OPERATION_OPENING;
+              this->make_call().set_command_open().perform();
             }
             return;
         }
         if (msg.substr(11, 6) == "Opened") {
             this->operation_finished = true;
             // invoking in case gate is controlled from remote
-            /*if (this->current_operation != cover::COVER_OPERATION_OPENING) {
-              //this->make_call().set_command_open().perform();
-              this->current_operation = cover::COVER_OPERATION_OPENING;
-            }*/
-            //this->make_call().set_command_stop().perform();
+            if (this->current_operation != cover::COVER_OPERATION_OPENING) {
+              this->make_call().set_command_open().perform();
+            }
+            this->make_call().set_command_stop().perform();
             this->position = cover::COVER_OPEN;
-            this->last_operation_ = this->current_operation;
-            this->current_operation = cover::COVER_OPERATION_IDLE;
             return;
         }
         if (msg.substr(11, 7) == "Closing") {
             this->operation_finished = false;
             // invoking in case gate is controlled from remote
             if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
-              //this->make_call().set_command_close().perform();
-              this->last_operation_ = this->current_operation;
-              this->current_operation = cover::COVER_OPERATION_CLOSING;
+              this->make_call().set_command_close().perform();
             }
             return;
         }
         if (msg.substr(11, 6) == "Closed") {
             this->operation_finished = true;
             // invoking in case gate is controlled from remote
-            /*if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
-              //this->make_call().set_command_close().perform();
-              this->current_operation = cover::COVER_OPERATION_CLOSING;
-            }*/
-            //this->make_call().set_command_stop().perform();
-
-            this->position = cover::COVER_CLOSED;
-            this->last_operation_ = this->current_operation;
-            this->current_operation = cover::COVER_OPERATION_IDLE;
+            if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
+              this->make_call().set_command_close().perform();
+            }
+            this->make_call().set_command_stop().perform();
             return;
         }
         if (msg.substr(11, 7) == "Stopped") {
             // invoking in case gate is controlled from remote
-            //this->make_call().set_command_stop().perform();
-            this->current_operation = cover::COVER_OPERATION_IDLE;
+            this->make_call().set_command_stop().perform();
             return;
         }
     }
@@ -251,7 +238,7 @@ void GatePro::setup() {
     this->blocker = false;
 }
 
-/*void GatePro::correction_after_operation() {
+void GatePro::correction_after_operation() {
     if (this->operation_finished) {
       if (this->current_operation == cover::COVER_OPERATION_IDLE &&
           this->last_operation_ == cover::COVER_OPERATION_CLOSING &&
@@ -266,7 +253,7 @@ void GatePro::setup() {
         this->position = cover::COVER_OPEN;
       }
     }
-}*/
+}
 
 void GatePro::publish() {
     // publish on each tick
@@ -300,7 +287,7 @@ void GatePro::update() {
     }
 
     // correction after an opening / closing operation finished
-    //this->correction_after_operation();
+    this->correction_after_operation();
 
     // debug
     //this->debug();
