@@ -191,6 +191,7 @@ void GatePro::control(const cover::CoverCall &call) {
     auto pos = *call.get_position();
     if (pos == this->position) {
       //this->publish_state();
+      this->blocker = false;
       return;
     } else {
       // sanitize position input - there has to be a min diff.
@@ -217,6 +218,7 @@ void GatePro::start_direction_(cover::CoverOperation dir) {
     case cover::COVER_OPERATION_IDLE:
       // if just setting logic to idling but opening / closing is finished
       if (this->operation_finished) {
+        this->publish_state();
         break;
       }
       this->queue_gatepro_cmd(GATEPRO_CMD_STOP);
