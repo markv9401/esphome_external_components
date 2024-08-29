@@ -73,10 +73,10 @@ void GatePro::process(std::string msg) {
         if (msg.substr(11, 6) == "Opened") {
             this->operation_finished = true;
             // invoking in case gate is controlled from remote
-            if (this->current_operation != cover::COVER_OPERATION_OPENING) {
+            /*if (this->current_operation != cover::COVER_OPERATION_OPENING) {
               //this->make_call().set_command_open().perform();
               this->current_operation = cover::COVER_OPERATION_OPENING;
-            }
+            }*/
             //this->make_call().set_command_stop().perform();
             this->current_operation = cover::COVER_OPERATION_IDLE;
             return;
@@ -93,10 +93,10 @@ void GatePro::process(std::string msg) {
         if (msg.substr(11, 6) == "Closed") {
             this->operation_finished = true;
             // invoking in case gate is controlled from remote
-            if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
+            /*if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
               //this->make_call().set_command_close().perform();
               this->current_operation = cover::COVER_OPERATION_CLOSING;
-            }
+            }*/
             //this->make_call().set_command_stop().perform();
             this->current_operation = cover::COVER_OPERATION_IDLE;
             return;
