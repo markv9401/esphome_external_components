@@ -69,7 +69,7 @@ void GatePro::process(std::string msg) {
               this->current_operation = cover::COVER_OPERATION_OPENING;
             }
             if (this->last_operation_ != cover::COVER_OPERATION_OPENING) {
-              this->last_operation_ = coer::COVER_OPERATION_OPENING;
+              this->last_operation_ = cover::COVER_OPERATION_OPENING;
             }
             return;
         }
@@ -92,7 +92,7 @@ void GatePro::process(std::string msg) {
               this->current_operation = cover::COVER_OPERATION_CLOSING;
             }
             if (this->last_operation_ != cover::COVER_OPERATION_CLOSING) {
-              this->last_operation_ = coer::COVER_OPERATION_CLOSING;
+              this->last_operation_ = cover::COVER_OPERATION_CLOSING;
             }
             return;
         }
