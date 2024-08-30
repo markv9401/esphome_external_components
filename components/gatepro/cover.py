@@ -36,7 +36,7 @@ async def to_code(config):
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
 
-    template_ = await cg.templatable(CONF_LEARN_STATUS, args, bool)
+    template_ = await cg.templatable(CONF_LEARN_STATUS, bool)
     cg.add(var.set_learn_status_btn(template_))
     
     #sensor_isopen = await sensor.new_sensor(config[CONF_ISOPEN])
