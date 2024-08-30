@@ -10,7 +10,7 @@ GatePro = gatepro_ns.class_(
     "GatePro", cover.Cover, cg.PollingComponent, uart.UARTDevice
 )
 
-CONF_POSITION = "position"
+#CONF_POSITION = "position"
 #CONF_ISOPEN = "isopen"
 
 CONF_LEARN_STATUS = "learn_status"
@@ -37,7 +37,7 @@ async def to_code(config):
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
 
-    btn_learn_status = await button.new_button(CONF_LEARN_STATUS)
+    btn_learn_status = await button.new_button(config[CONF_LEARN_STATUS])
     cg.add(var.set_learn_status_btn(btn_learn_status))
     
     #sensor_isopen = await sensor.new_sensor(config[CONF_ISOPEN])
