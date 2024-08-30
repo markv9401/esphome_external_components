@@ -274,6 +274,7 @@ void GatePro::stop_at_position() {
 
 void GatePro::update() {
     this->publish();
+    this->stop_at_position();
     
     // send first in queue UART cmd
     if (this->tx_queue.size()) {
