@@ -13,7 +13,7 @@ GatePro = gatepro_ns.class_(
 #CONF_POSITION = "position"
 #CONF_ISOPEN = "isopen"
 
-#CONF_LEARN_STATUS = "learn_status"
+CONF_LEARN_STATUS = "learn_status"
 
 cover.COVER_OPERATIONS.update({
     "READ_STATUS": cover.CoverOperation.COVER_OPERATION_READ_STATUS,
