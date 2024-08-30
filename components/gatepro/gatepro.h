@@ -64,7 +64,11 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   float position_;
   bool operation_finished;
   cover::CoverCall* last_call_;
-  button::Button btn = new button::Button();
+  button::Button btn;
+
+  void set_btn(button::Button* btn) {
+    this->btn = btn;
+  }
 };
 
 }  // namespace gatepro

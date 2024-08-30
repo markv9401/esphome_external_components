@@ -25,7 +25,7 @@ CONFIG_SCHEMA = cover.COVER_SCHEMA.extend(
         cv.GenerateID(): cv.declare_id(GatePro),
         #cv.GenerateID(CONF_ISOPEN): sensor.sensor_schema(),
         #cv.GenerateID(CONF_POSITION): sensor.sensor_schema(),
-        #cv.GenerateID(CONF_LEARN_STATUS): button.button_schema(GatePro),
+        cv.GenerateID(CONF_LEARN_STATUS): button.button_schema(GatePro),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
 
@@ -37,8 +37,8 @@ async def to_code(config):
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
 
-    #btn_learn_status = await button.new_button(config[CONF_LEARN_STATUS])
-    #cg.add(var.set_learn_status_btn(btn_learn_status))
+    btn_learn_status = await button.new_button(config[CONF_LEARN_STATUS])
+    cg.add(var.set_btn(btn_learn_status))
     
     #sensor_isopen = await sensor.new_sensor(config[CONF_ISOPEN])
     #cg.add(var.set_isopen_sensor(sensor_isopen))
