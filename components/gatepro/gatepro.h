@@ -5,6 +5,7 @@
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/cover/cover.h"
 #include "esphome/components/sensor/sensor.h"
+#include "helpers.h"
 
 namespace esphome {
 namespace gatepro {
