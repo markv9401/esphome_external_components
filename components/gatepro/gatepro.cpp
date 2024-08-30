@@ -8,10 +8,6 @@ namespace gatepro {
 ////////////////////////////////////
 static const char* TAG = "gatepro";
 
-////////////////////////////////////
-// Device logic below
-///////////////////////////////////
-
 // fn to abstract CoverOperations
 void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
   this->tx_queue.push(GateProCmdMapping.at(cmd));
@@ -19,86 +15,74 @@ void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
 
 // preprocessor (for the case if multiple messages read at once)
 void GatePro::preprocess(std::string msg) {
-    // check if there are multiple messages in one msg
     uint8_t delimiter_location = msg.find(this->delimiter);
     uint8_t msg_length = msg.length();
     if (msg_length > delimiter_location + this->delimiter_length) {
         std::string msg1 = msg.substr(0, delimiter_location + this->delimiter_length);
-        //this->process(msg1);
         this->rx_queue.push(msg1);
         std::string msg2 = msg.substr(delimiter_location + this->delimiter_length);
         this->preprocess(msg2);
         return;
     }
-
-    //this->process(msg);
     this->rx_queue.push(msg);
 }
 
 // main motor message processor
 void GatePro::process(std::string msg) {
-    ESP_LOGD(TAG, "UART RX: %s", (const char*)msg.c_str());
+  //ESP_LOGD(TAG, "UART RX: %s", (const char*)msg.c_str());
 
-    // Answer to RS (read status)
-    // example: ACK RS:00,80,C4,C6,3E,16,FF,FF,FF\r\n
-    //                          ^- percentage in hex
-    if (msg.substr(0, 6) == "ACK RS") {
-        // status only matters when in motion (operation not finished) 
-        if (this->operation_finished) {
-          return;
-        }
-        msg = msg.substr(16, 2);
-        int percentage = stoi(msg, 0, 16);
-        // percentage correction with known offset, if necessary
-        if (percentage > 100) {
-          percentage -= this->known_percentage_offset;
-        }
-        this->position = (float)percentage / 100;
-
-        return;
+  // Answer to RS (read status)
+  // example: ACK RS:00,80,C4,C6,3E,16,FF,FF,FF\r\n
+  //                          ^- percentage in hex
+  if (msg.substr(0, 6) == "ACK RS") {
+    // status only matters when in motion (operation not finished) 
+    if (this->operation_finished) {
+      return;
     }
-
-    // Event message from the motor
-    // example: $V1PKF0,17,Closed;src=0001\r\n
-    if (msg.substr(0, 7) == "$V1PKF0") {
-        if (msg.substr(11, 7) == "Opening") {
-            this->operation_finished = false;
-            //if (this->current_operation != cover::COVER_OPERATION_OPENING) {
-              this->current_operation = cover::COVER_OPERATION_OPENING;
-            //}
-            //if (this->last_operation_ != cover::COVER_OPERATION_OPENING) {
-              this->last_operation_ = cover::COVER_OPERATION_OPENING;
-            //}
-            return;
-        }
-        if (msg.substr(11, 6) == "Opened") {
-            this->operation_finished = true;
-            this->target_position_ = 0.0f;
-            this->current_operation = cover::COVER_OPERATION_IDLE;
-            return;
-        }
-        if (msg.substr(11, 7) == "Closing") {
-            this->operation_finished = false;
-            //if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
-              this->current_operation = cover::COVER_OPERATION_CLOSING;
-            //}
-            //if (this->last_operation_ != cover::COVER_OPERATION_CLOSING) {
-              this->last_operation_ = cover::COVER_OPERATION_CLOSING;
-            //}
-            return;
-        }
-        if (msg.substr(11, 6) == "Closed") {
-            this->operation_finished = true;
-            this->target_position_ = 0.0f;
-            this->current_operation = cover::COVER_OPERATION_IDLE;
-            return;
-        }
-        if (msg.substr(11, 7) == "Stopped") {
-            this->target_position_ = 0.0f;
-            this->current_operation = cover::COVER_OPERATION_IDLE;
-            return;
-        }
+    msg = msg.substr(16, 2);
+    int percentage = stoi(msg, 0, 16);
+    // percentage correction with known offset, if necessary
+    if (percentage > 100) {
+      percentage -= this->known_percentage_offset;
     }
+    this->position = (float)percentage / 100;
+
+    return;
+  }
+
+  // Event message from the motor
+  // example: $V1PKF0,17,Closed;src=0001\r\n
+  if (msg.substr(0, 7) == "$V1PKF0") {
+    if (msg.substr(11, 7) == "Opening") {
+      this->operation_finished = false;
+      this->current_operation = cover::COVER_OPERATION_OPENING;
+      this->last_operation_ = cover::COVER_OPERATION_OPENING;
+      return;
+    }
+    if (msg.substr(11, 6) == "Opened") {
+      this->operation_finished = true;
+      this->target_position_ = 0.0f;
+      this->current_operation = cover::COVER_OPERATION_IDLE;
+      return;
+    }
+    if (msg.substr(11, 7) == "Closing") {
+      this->operation_finished = false;
+      this->current_operation = cover::COVER_OPERATION_CLOSING;
+      this->last_operation_ = cover::COVER_OPERATION_CLOSING;
+      return;
+    }
+    if (msg.substr(11, 6) == "Closed") {
+      this->operation_finished = true;
+      this->target_position_ = 0.0f;
+      this->current_operation = cover::COVER_OPERATION_IDLE;
+      return;
+    }
+    if (msg.substr(11, 7) == "Stopped") {
+      this->target_position_ = 0.0f;
+      this->current_operation = cover::COVER_OPERATION_IDLE;
+      return;
+    }
+  }
 }
 
 
@@ -151,11 +135,6 @@ void GatePro::read_uart() {
     this->preprocess(this->convert(bytes, available));
 }
 
-
-////////////////////////////////////
-// Abstract (cover) logic below
-///////////////////////////////////
-
 // set supported traits
 cover::CoverTraits GatePro::get_traits() {
   auto traits = cover::CoverTraits();
@@ -171,25 +150,17 @@ cover::CoverTraits GatePro::get_traits() {
 void GatePro::control(const cover::CoverCall &call) {
   if (call.get_stop()) {
     this->start_direction_(cover::COVER_OPERATION_IDLE);
-    //this->publish_state();
     return;
   }
 
-  //
   if (call.get_position().has_value()) {
     auto pos = *call.get_position();
     if (pos == this->position) {
-      //this->publish_state();
       return;
-    } else {
-      // sanitize position input - there has to be a min diff.
-      /*if (abs(pos - this->position) < this->min_pos_diff) {
-        return;
-      }*/
-      auto op = pos < this->position ? cover::COVER_OPERATION_CLOSING : cover::COVER_OPERATION_OPENING;
-      this->target_position_ = pos;
-      this->start_direction_(op);
     }
+    auto op = pos < this->position ? cover::COVER_OPERATION_CLOSING : cover::COVER_OPERATION_OPENING;
+    this->target_position_ = pos;
+    this->start_direction_(op);
   }
 }
 
@@ -201,35 +172,24 @@ void GatePro::start_direction_(cover::CoverOperation dir) {
 
   switch (dir) {
     case cover::COVER_OPERATION_IDLE:
-      // if just setting logic to idling but opening / closing is finished
       if (this->operation_finished) {
         break;
       }
       this->queue_gatepro_cmd(GATEPRO_CMD_STOP);
       break;
     case cover::COVER_OPERATION_OPENING:
-      //this->last_operation_ = dir;
       this->queue_gatepro_cmd(GATEPRO_CMD_OPEN);
       break;
     case cover::COVER_OPERATION_CLOSING:
-      //this->last_operation_ = dir;
       this->queue_gatepro_cmd(GATEPRO_CMD_CLOSE);
       break;
     default:
       return;
   }
-
-  //this->current_operation = dir;
 }
-
-////////////////////////////////////
-// Sensor logic below
-///////////////////////////////////
 
 void GatePro::setup() {
     ESP_LOGD(TAG, "Setting up GatePro component..");
-    //this->make_call().set_command_close().perform();
-    //this->make_call().set_command_stop().perform();
     this->last_operation_ = cover::COVER_OPERATION_CLOSING;
     this->current_operation = cover::COVER_OPERATION_IDLE;
     this->operation_finished = true;
@@ -278,19 +238,16 @@ void GatePro::update() {
     this->publish();
     this->stop_at_target_position();
     
-    // send first in queue UART cmd
     if (this->tx_queue.size()) {
       this->write_str(this->tx_queue.front());
       ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
       this->tx_queue.pop();
     }
 
-    // if gate is not stationary, continuously read status
     if (this->current_operation != cover::COVER_OPERATION_IDLE) {
         this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     }
 
-    // correction after an opening / closing operation finished
     this->correction_after_operation();
 }
 
