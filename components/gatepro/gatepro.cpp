@@ -228,8 +228,10 @@ void GatePro::start_direction_(cover::CoverOperation dir) {
 
 void GatePro::setup() {
     ESP_LOGD(TAG, "Setting up GatePro component..");
-    this->make_call().set_command_close().perform();
-    this->make_call().set_command_stop().perform();
+    //this->make_call().set_command_close().perform();
+    //this->make_call().set_command_stop().perform();
+    this->last_operation_ = cover::COVER_OPERATION_CLOSING;
+    this->current_operation = cover::COVER_OPERATION_IDLE;
     this->operation_finished = true;
     this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     this->blocker = false;
