@@ -5,6 +5,7 @@
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/cover/cover.h"
 #include "esphome/components/sensor/sensor.h"
+#include "esphome/componenets/button/button.h"
 
 namespace esphome {
 namespace gatepro {
@@ -63,6 +64,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   float position_;
   bool operation_finished;
   cover::CoverCall* last_call_;
+  button::Button btn = new button::Button();
 };
 
 }  // namespace gatepro
