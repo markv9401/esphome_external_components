@@ -52,6 +52,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   void correction_after_operation();
   cover::CoverOperation last_operation_{cover::COVER_OPERATION_OPENING};
   void publish();
+  void stop_at_position();
 
   // UART parser constants
   const std::string delimiter = "\\r\\n";
