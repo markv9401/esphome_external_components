@@ -63,9 +63,7 @@ void GatePro::process(std::string msg) {
     if (msg.substr(0, 7) == "$V1PKF0") {
         if (msg.substr(11, 7) == "Opening") {
             this->operation_finished = false;
-            // invoking in case gate is controlled from remote
             if (this->current_operation != cover::COVER_OPERATION_OPENING) {
-              //this->make_call().set_command_open().perform();
               this->current_operation = cover::COVER_OPERATION_OPENING;
             }
             if (this->last_operation_ != cover::COVER_OPERATION_OPENING) {
@@ -75,20 +73,13 @@ void GatePro::process(std::string msg) {
         }
         if (msg.substr(11, 6) == "Opened") {
             this->operation_finished = true;
-            // invoking in case gate is controlled from remote
-            /*if (this->current_operation != cover::COVER_OPERATION_OPENING) {
-              //this->make_call().set_command_open().perform();
-              this->current_operation = cover::COVER_OPERATION_OPENING;
-            }*/
-            //this->make_call().set_command_stop().perform();
+            this->target_position_ = 0.0f;
             this->current_operation = cover::COVER_OPERATION_IDLE;
             return;
         }
         if (msg.substr(11, 7) == "Closing") {
             this->operation_finished = false;
-            // invoking in case gate is controlled from remote
             if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
-              //this->make_call().set_command_close().perform();
               this->current_operation = cover::COVER_OPERATION_CLOSING;
             }
             if (this->last_operation_ != cover::COVER_OPERATION_CLOSING) {
@@ -98,18 +89,12 @@ void GatePro::process(std::string msg) {
         }
         if (msg.substr(11, 6) == "Closed") {
             this->operation_finished = true;
-            // invoking in case gate is controlled from remote
-            /*if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
-              //this->make_call().set_command_close().perform();
-              this->current_operation = cover::COVER_OPERATION_CLOSING;
-            }*/
-            //this->make_call().set_command_stop().perform();
+            this->target_position_ = 0.0f;
             this->current_operation = cover::COVER_OPERATION_IDLE;
             return;
         }
         if (msg.substr(11, 7) == "Stopped") {
-            // invoking in case gate is controlled from remote
-            //this->make_call().set_command_stop().perform();
+            this->target_position_ = 0.0f;
             this->current_operation = cover::COVER_OPERATION_IDLE;
             return;
         }
@@ -198,11 +183,11 @@ void GatePro::control(const cover::CoverCall &call) {
       return;
     } else {
       // sanitize position input - there has to be a min diff.
-      if (abs(pos - this->position) < this->min_pos_diff) {
+      /*if (abs(pos - this->position) < this->min_pos_diff) {
         return;
-      }
+      }*/
       auto op = pos < this->position ? cover::COVER_OPERATION_CLOSING : cover::COVER_OPERATION_OPENING;
-      //this->target_position_ = pos;
+      this->target_position_ = pos;
       this->start_direction_(op);
     }
   }
@@ -248,6 +233,7 @@ void GatePro::setup() {
     this->operation_finished = true;
     this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     this->blocker = false;
+    this->target_position_ = 0.0f;
 }
 
 void GatePro::correction_after_operation() {
@@ -277,15 +263,18 @@ void GatePro::publish() {
     this->publish_state();
 }
 
+void GatePro::stop_at_position() {
+  if (this->target_position_) {
+    const float diff = abs(this->position - this->target_position_);
+    if (diff < this->acceptable_diff) {
+      this->make_call().set_command_stop().perform();
+    }
+  }
+}
+
 void GatePro::update() {
     this->publish();
     
-    /*if (this->blocker){
-      ESP_LOGD(TAG, "TOO QUICK, SLOW DOWN!");
-      return;
-    }
-
-    this->blocker = true;*/
     // send first in queue UART cmd
     if (this->tx_queue.size()) {
       this->write_str(this->tx_queue.front());
@@ -300,11 +289,6 @@ void GatePro::update() {
 
     // correction after an opening / closing operation finished
     this->correction_after_operation();
-
-    // debug
-    //this->debug();
-
-    //this->blocker = false;
 }
 
 
@@ -319,19 +303,6 @@ void GatePro::loop() {
 
 void GatePro::dump_config(){
     ESP_LOGCONFIG(TAG, "GatePro sensor dump config");
-}
-
-void GatePro::debug() {
-  this->publish_state();
-  ESP_LOGD(TAG, "============================");
-
-  ESP_LOGD(TAG, cover::cover_operation_to_str(this->current_operation));
-  ESP_LOGD(TAG, cover::cover_operation_to_str(this->last_operation_));
-  ESP_LOGD(TAG, (const char*)std::to_string(this->operation_finished).c_str());
-  ESP_LOGD(TAG, (const char*)std::to_string(this->position).c_str());
-
-  ESP_LOGD(TAG, "");
-  ESP_LOGD(TAG, "");
 }
 
 }  // namespace gatepro
