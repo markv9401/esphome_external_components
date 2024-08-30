@@ -1,6 +1,6 @@
-// VERY GOOD STATE
 #include "esphome/core/log.h"
 #include "gatepro.h"
+#include "helpers.h"
 
 namespace esphome {
 namespace gatepro {
