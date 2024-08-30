@@ -1,9 +1,9 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import uart, sensor, cover, button
+from esphome.components import uart, sensor, cover, select
 from esphome.const import CONF_ID, ICON_EMPTY, UNIT_EMPTY
 
-DEPENDENCIES = ["uart", "cover", "button"]
+DEPENDENCIES = ["uart", "cover", "select"]
 
 gatepro_ns = cg.esphome_ns.namespace("gatepro")
 GatePro = gatepro_ns.class_(
@@ -13,7 +13,7 @@ GatePro = gatepro_ns.class_(
 #CONF_POSITION = "position"
 #CONF_ISOPEN = "isopen"
 
-CONF_LEARN_STATUS = "learn_status"
+CONF_AUTO_CLOSE = "auto_close"
 
 cover.COVER_OPERATIONS.update({
     "READ_STATUS": cover.CoverOperation.COVER_OPERATION_READ_STATUS,
@@ -26,6 +26,7 @@ CONFIG_SCHEMA = cover.COVER_SCHEMA.extend(
         #cv.GenerateID(CONF_ISOPEN): sensor.sensor_schema(),
         #cv.GenerateID(CONF_POSITION): sensor.sensor_schema(),
         #cv.GenerateID(CONF_LEARN_STATUS): button.BUTTON_SCHEMA,
+        cv.GenerateID(CONF_AUTO_CLOSE): select.select_schema(),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
 
@@ -37,8 +38,8 @@ async def to_code(config):
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
 
-    #btn_learn_status = await button.new_button(config[CONF_LEARN_STATUS])
-    #cg.add(var.set_btn(btn_learn_status))
+    sel_auto_close = await select.new_select(config[CONF_AUTO_CLOSE])
+    cg.add(var.set_sel_auto_close(sel_auto_close))
     
     #sensor_isopen = await sensor.new_sensor(config[CONF_ISOPEN])
     #cg.add(var.set_isopen_sensor(sensor_isopen))
