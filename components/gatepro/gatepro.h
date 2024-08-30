@@ -66,7 +66,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   cover::CoverCall* last_call_;
   button::Button btn;
 
-  void set_btn(button::Button* btn) {
+  void set_btn(button::Button &btn) {
     this->btn = btn;
   }
 };
