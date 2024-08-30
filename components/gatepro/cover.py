@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import uart, sensor, cover
+from esphome.components import uart, sensor, cover, button
 from esphome.const import CONF_ID, ICON_EMPTY, UNIT_EMPTY
 
 DEPENDENCIES = ["uart", "cover"]
@@ -12,6 +12,8 @@ GatePro = gatepro_ns.class_(
 
 CONF_POSITION = "position"
 #CONF_ISOPEN = "isopen"
+
+CONF_LEARN_STATUS = "learn_status"
 
 cover.COVER_OPERATIONS.update({
     "READ_STATUS": cover.CoverOperation.COVER_OPERATION_READ_STATUS,
@@ -33,6 +35,9 @@ async def to_code(config):
     await cg.register_component(var, config)
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
+
+    template_ = await cg.templatable(CONF_LEARN_STATUS, args, bool)
+    cg.add(var.set_learn_status_btn(template_))
     
     #sensor_isopen = await sensor.new_sensor(config[CONF_ISOPEN])
     #cg.add(var.set_isopen_sensor(sensor_isopen))
