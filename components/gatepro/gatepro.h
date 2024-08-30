@@ -40,9 +40,10 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   // device logic
   std::string convert(uint8_t*, size_t);
   void preprocess(std::string);
-  void process(std::string);
+  void process();
   void queue_gatepro_cmd(GateProCmd cmd);
   void read_uart();
+  void write_uart();
   void debug();
   std::queue<const char*> tx_queue;
   std::queue<std::string> rx_queue;
@@ -60,7 +61,6 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
 
   const int known_percentage_offset = 128;
   const float acceptable_diff = 0.05f;
-  const float min_pos_diff = 0.1f;
   float target_position_;
   float position_;
   bool operation_finished;
