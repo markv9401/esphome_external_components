@@ -20,18 +20,13 @@ validate_cover_operation = cv.enum(cover.COVER_OPERATIONS, upper=True)
 CONFIG_SCHEMA = cover.COVER_SCHEMA.extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
-
-        cv.GenerateID(CONF_AUTO_CLOSE): select.select_schema(),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
 
 
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
+    #var = await sensor.new_sensor(config)
     await cg.register_component(var, config)
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
-
-    sel_auto_close = await select.new_select(config[CONF_AUTO_CLOSE])
-    cg.add(var.set_sel_auto_close(sel_auto_close))
-    
