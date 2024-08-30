@@ -25,7 +25,7 @@ CONFIG_SCHEMA = cover.COVER_SCHEMA.extend(
         cv.GenerateID(): cv.declare_id(GatePro),
         #cv.GenerateID(CONF_ISOPEN): sensor.sensor_schema(),
         #cv.GenerateID(CONF_POSITION): sensor.sensor_schema(),
-        cv.GenerateID(CONF_LEARN_STATUS): button.BUTTON_SCHEMA,
+        cv.GenerateID(CONF_LEARN_STATUS): cv.declare_id(button.BUTTON_SCHEMA),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
 
