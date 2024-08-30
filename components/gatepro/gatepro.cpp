@@ -240,7 +240,7 @@ void GatePro::update() {
     
     if (this->tx_queue.size()) {
       this->write_str(this->tx_queue.front());
-      ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
+      //ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
       this->tx_queue.pop();
     }
 
