@@ -63,12 +63,12 @@ void GatePro::process(std::string msg) {
     if (msg.substr(0, 7) == "$V1PKF0") {
         if (msg.substr(11, 7) == "Opening") {
             this->operation_finished = false;
-            if (this->current_operation != cover::COVER_OPERATION_OPENING) {
+            //if (this->current_operation != cover::COVER_OPERATION_OPENING) {
               this->current_operation = cover::COVER_OPERATION_OPENING;
-            }
-            if (this->last_operation_ != cover::COVER_OPERATION_OPENING) {
+            //}
+            //if (this->last_operation_ != cover::COVER_OPERATION_OPENING) {
               this->last_operation_ = cover::COVER_OPERATION_OPENING;
-            }
+            //}
             return;
         }
         if (msg.substr(11, 6) == "Opened") {
@@ -79,12 +79,12 @@ void GatePro::process(std::string msg) {
         }
         if (msg.substr(11, 7) == "Closing") {
             this->operation_finished = false;
-            if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
+            //if (this->current_operation != cover::COVER_OPERATION_CLOSING) {
               this->current_operation = cover::COVER_OPERATION_CLOSING;
-            }
-            if (this->last_operation_ != cover::COVER_OPERATION_CLOSING) {
+            //}
+            //if (this->last_operation_ != cover::COVER_OPERATION_CLOSING) {
               this->last_operation_ = cover::COVER_OPERATION_CLOSING;
-            }
+            //}
             return;
         }
         if (msg.substr(11, 6) == "Closed") {
@@ -208,18 +208,18 @@ void GatePro::start_direction_(cover::CoverOperation dir) {
       this->queue_gatepro_cmd(GATEPRO_CMD_STOP);
       break;
     case cover::COVER_OPERATION_OPENING:
-      this->last_operation_ = dir;
+      //this->last_operation_ = dir;
       this->queue_gatepro_cmd(GATEPRO_CMD_OPEN);
       break;
     case cover::COVER_OPERATION_CLOSING:
-      this->last_operation_ = dir;
+      //this->last_operation_ = dir;
       this->queue_gatepro_cmd(GATEPRO_CMD_CLOSE);
       break;
     default:
       return;
   }
 
-  this->current_operation = dir;
+  //this->current_operation = dir;
 }
 
 ////////////////////////////////////
@@ -263,7 +263,7 @@ void GatePro::publish() {
     this->publish_state();
 }
 
-void GatePro::stop_at_position() {
+void GatePro::stop_at_target_position() {
   if (this->target_position_) {
     const float diff = abs(this->position - this->target_position_);
     if (diff < this->acceptable_diff) {
@@ -274,7 +274,7 @@ void GatePro::stop_at_position() {
 
 void GatePro::update() {
     this->publish();
-    this->stop_at_position();
+    this->stop_at_target_position();
     
     // send first in queue UART cmd
     if (this->tx_queue.size()) {
