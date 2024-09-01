@@ -152,7 +152,9 @@ void GatePro::correction_after_operation() {
 }
 
 void GatePro::stop_at_target_position() {
-  if (this->target_position_) {
+  if (this->target_position_ &&
+      this->target_position_ != cover::COVER_OPEN &&
+      this->target_position_ != cover::COVER_CLOSED) {
     const float diff = abs(this->position - this->target_position_);
     if (diff < this->acceptable_diff) {
       this->make_call().set_command_stop().perform();
