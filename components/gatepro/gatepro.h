@@ -5,7 +5,7 @@
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/cover/cover.h"
 #include "esphome/components/sensor/sensor.h"
-#include "esphome/compnenets/number/number.h"
+#include "esphome/components/number/number.h"
 
 namespace esphome {
 namespace gatepro {
