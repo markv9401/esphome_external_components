@@ -33,5 +33,5 @@ async def to_code(config):
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
 
-    number_operational_speed = await number.new_number(config[CONF_OPERATIONAL_SPEED])
+    number_operational_speed = await number.new_number(config[CONF_OPERATIONAL_SPEED], min_value=1, max_value=4, step=1)
     cg.add(var.set_operational_speed_number(number_operational_speed))
