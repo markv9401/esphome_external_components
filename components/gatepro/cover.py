@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import uart, sensor, cover
+from esphome.components import uart, sensor, cover, number
 from esphome.components.template import number as template_number
 from esphome.const import CONF_ID, ICON_EMPTY, UNIT_EMPTY
 
@@ -33,5 +33,5 @@ async def to_code(config):
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
 
-    number_operational_speed = await template_number.new_number(config[CONF_OPERATIONAL_SPEED])
+    number_operational_speed = await number.new_number(config[CONF_OPERATIONAL_SPEED])
     cg.add(var.set_operational_speed_number(number_operational_speed))
