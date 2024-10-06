@@ -32,7 +32,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   void loop() override;
   void dump_config() override;
   cover::CoverTraits get_traits() override;
-  void set_operational_speed_number(number::number &nr) {
+  void set_operational_speed_number(number::Number &nr) {
     this->operational_speed = nr;
   }
 
@@ -52,7 +52,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   std::queue<const char*> tx_queue;
   std::queue<std::string> rx_queue;
   bool blocker;
-  number::number operational_speed;
+  number::Number operational_speed;
   
   // sensor logic
   void correction_after_operation();
