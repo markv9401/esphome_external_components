@@ -34,6 +34,5 @@ async def to_code(config):
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
 
-    await select.register_select(var, config, options=["1,", "4"])
-    #sel_speed = await select.new_select(config[CONF_SEL_SPEED], options=["1", "4"])
-    #cg.add(var.set_sel_speed(sel_speed))
+    sel_speed = await select.new_select(config[CONF_SEL_SPEED], options=["1", "4"])
+    cg.add(var.set_sel_speed(sel_speed))
