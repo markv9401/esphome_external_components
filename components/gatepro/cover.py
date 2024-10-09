@@ -4,7 +4,7 @@ from esphome.components import uart, sensor, cover, select
 from esphome.components.template import select as template_select
 from esphome.const import CONF_ID, ICON_EMPTY, UNIT_EMPTY
 
-DEPENDENCIES = ["uart", "cover", "select", "template", "template_select"]
+DEPENDENCIES = ["uart", "cover", "select", "templatdfdfe", "template_select"]
 
 gatepro_ns = cg.esphome_ns.namespace("gatepro")
 GatePro = gatepro_ns.class_(
