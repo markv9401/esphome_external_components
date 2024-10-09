@@ -8,7 +8,7 @@ DEPENDENCIES = ["uart", "cover"]
 
 gatepro_ns = cg.esphome_ns.namespace("gatepro")
 GatePro = gatepro_ns.class_(
-    "GatePro", cover.Cover, cg.PollingComponent, uart.UARTDevice
+    "GatePro", cover.Cover, cg.PollingComponent, uart.UARTDevice, select.Select
 )
 
 CONF_SEL_SPEED = "sel_speed"
