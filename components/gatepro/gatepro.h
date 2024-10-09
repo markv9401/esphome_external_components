@@ -6,7 +6,6 @@
 #include "esphome/components/cover/cover.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/select/select.h"
-#include "esphome/components/template/select/template_select.h"
 
 namespace esphome {
 namespace gatepro {
@@ -33,6 +32,10 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   void loop() override;
   void dump_config() override;
   cover::CoverTraits get_traits() override;
+
+  void set_sel_speed(select::Select* sp) {
+    this-> sel_speed = sp;
+  }
 
  protected:
   // abstract (cover) logic
@@ -67,6 +70,8 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   float position_;
   bool operation_finished;
   cover::CoverCall* last_call_;
+
+  select::Select* sel_speed;
 };
 
 }  // namespace gatepro
