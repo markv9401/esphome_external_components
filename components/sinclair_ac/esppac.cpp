@@ -49,7 +49,7 @@ void SinclairAC::setup()
 
 void SinclairAC::loop()
 {
-    read_data();  // Read data from UART (if there is any)
+    //read_data();  // Read data from UART (if there is any)
 }
 
 void SinclairAC::read_data()
