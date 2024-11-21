@@ -173,7 +173,7 @@ class SinclairACCNT : public SinclairAC {
 
         bool processUnitReport();
 
-        void send_packet();
+        void send_packet(bool);
 
         bool verify_packet();
         void handle_packet();
