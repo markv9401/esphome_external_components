@@ -227,9 +227,11 @@ std::string GatePro::convert_char(uint8_t byte) {
       return "\\\\";
     } else if (byte < 32 || byte > 127) {
       //sprintf(buf, "\\x%02X", bytes[i]);
-      return std::string str(1, byte);
+      std::string str(1, byte);
+      return str;
     } else {
-      return std::string str(1, byte);
+      std::string str(1, byte);
+      return str;
     }
   //ESP_LOGD(TAG, "%s", res.c_str());
 }
