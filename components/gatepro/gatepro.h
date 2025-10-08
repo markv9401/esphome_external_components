@@ -57,7 +57,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   void stop_at_target_position();
 
   // UART parser constants
-  const std::string delimiter = "\\r\\n";
+  const std::string delimiter = "\r\n";
   const uint8_t delimiter_length = delimiter.length();
   std::string msg_buff;
 
