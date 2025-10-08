@@ -174,6 +174,11 @@ void GatePro::read_uart() {
     
     uint8_t* bytes = new byte[available];
     this->read_array(bytes, available);
+    std::string str((char*)bytes, sizeof(bytes));
+    ESP_LOGD(TAG, "XXXXXXX: %s", str.c_str());
+    ESP_LOGD(TAG, "YYYYYYY: %d", available);
+
+
     this->preprocess(this->convert(bytes, available));
 }
 
@@ -219,12 +224,7 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
     }
   }
 
-  ESP_LOGD(TAG, "XXXXXXXXXXX");
-  std::string str((char*)bytes, sizeof(bytes));
-  ESP_LOGD(TAG, "%s", str.c_str());
-  ESP_LOGD(TAG, "%s", res.c_str());
-  
-  ESP_LOGD(TAG, "XXXXXXXXXXX");
+  //ESP_LOGD(TAG, "%s", res.c_str());
   return res;
 }
 
