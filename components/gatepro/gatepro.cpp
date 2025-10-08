@@ -167,25 +167,24 @@ void GatePro::stop_at_target_position() {
 ////////////////////////////////////////////
 
 void GatePro::read_uart() {
+    // check if anything on UART buffer
     int available = this->available();
     if (!available) {
         return;
     }
     
+    // read the whole buffer into our own buffer
+    // (if there's remainder from previous msgs, concatenate)
     uint8_t* bytes = new byte[available];
     this->read_array(bytes, available);
     this->msg_buff += this->convert(bytes, available);
-    //ESP_LOGD(TAG, "AAAA: %s", this->msg_buff.c_str());
 
+    // find delimiter, thus a whole msg, send it to processor, then remove from buffer and keep remainder (if any)
     size_t pos = this->msg_buff.find(this->delimiter);
-    //ESP_LOGD(TAG, "AAA2 %u", static_cast<unsigned int>(pos));
     if (pos != std::string::npos) {
        std::string sub = this->msg_buff.substr(0, pos + this->delimiter_length);
-       //ESP_LOGD(TAG, "BBBB: %s", sub.c_str());
-       //this->preprocess(sub);
        this->rx_queue.push(sub);
        this->msg_buff = this->msg_buff.substr(pos + this->delimiter_length, this->msg_buff.length() - pos);
-       //ESP_LOGD(TAG, "CCCC: %s", this->msg_buff.c_str());
     }
 }
 
@@ -195,40 +194,6 @@ void GatePro::write_uart() {
     ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
     this->tx_queue.pop();
   }
-}
-
-std::string GatePro::convert_char(uint8_t byte) {
-    if (byte == 7) {
-      return "\\a";
-    } else if (byte == 8) {
-      return "\\b";
-    } else if (byte == 9) {
-      return "\\t";
-    } else if (byte == 10) {
-      return "\\n";
-    } else if (byte == 11) {
-      return "\\v";
-    } else if (byte == 12) {
-      return "\\f";
-    } else if (byte == 13) {
-      return "\\r";
-    } else if (byte == 27) {
-      return "\\e";
-    } else if (byte == 34) {
-      return "\\\"";
-    } else if (byte == 39) {
-      return "\\'";
-    } else if (byte == 92) {
-      return "\\\\";
-    } else if (byte < 32 || byte > 127) {
-      //sprintf(buf, "\\x%02X", bytes[i]);
-      std::string str(1, byte);
-      return str;
-    } else {
-      std::string str(1, byte);
-      return str;
-    }
-  //ESP_LOGD(TAG, "%s", res.c_str());
 }
 
 std::string GatePro::convert(uint8_t* bytes, size_t len) {
@@ -267,19 +232,6 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
 
   //ESP_LOGD(TAG, "%s", res.c_str());
   return res;
-}
-
-void GatePro::preprocess(std::string msg) {
-    uint8_t delimiter_location = msg.find(this->delimiter);
-    uint8_t msg_length = msg.length();
-    if (msg_length > delimiter_location + this->delimiter_length) {
-        std::string msg1 = msg.substr(0, delimiter_location + this->delimiter_length);
-        this->rx_queue.push(msg1);
-        std::string msg2 = msg.substr(delimiter_location + this->delimiter_length);
-        this->preprocess(msg2);
-        return;
-    }
-    this->rx_queue.push(msg);
 }
 
 ////////////////////////////////////////////
