@@ -220,7 +220,8 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
   }
 
   ESP_LOGD(TAG, "XXXXXXXXXXX");
-  ESP_LOGD(TAG, "%s", bytes.c_str());
+  std::string str((char*)data, sizeof(data));
+  ESP_LOGD(TAG, "%s", str.c_str());
   ESP_LOGD(TAG, "%s", res.c_str());
   
   ESP_LOGD(TAG, "XXXXXXXXXXX");
