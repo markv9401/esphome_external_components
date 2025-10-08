@@ -178,8 +178,8 @@ void GatePro::read_uart() {
     std::string buffer;
     while(this->available()) {
         char c = this->read();
-        buffer += c;
-	ESP_LOGD(TAG, "AAAA: %c", c);
+        buffer += this->convert_char(c);
+	ESP_LOGD(TAG, "AAAA: %c", this->convert_char(c));
 	ESP_LOGD(TAG, "BBBB: %s", buffer.c_str());
 
 	if (buffer.size() >= 2 && buffer[buffer.size() -2] == '\r' && buffer[buffer.size() -1] == '\n') {
@@ -200,6 +200,38 @@ void GatePro::write_uart() {
     ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
     this->tx_queue.pop();
   }
+}
+
+char GatePro::convert_char(uint8_t byte) {
+    if (byte == 7) {
+      return "\\a";
+    } else if (byte == 8) {
+      return "\\b";
+    } else if (byte == 9) {
+      return "\\t";
+    } else if (byte == 10) {
+      return "\\n";
+    } else if (byte == 11) {
+      return "\\v";
+    } else if (byte == 12) {
+      return "\\f";
+    } else if (byte == 13) {
+      return "\\r";
+    } else if (byte == 27) {
+      return "\\e";
+    } else if (byte == 34) {
+      return "\\\"";
+    } else if (byte == 39) {
+      return "\\'";
+    } else if (byte == 92) {
+      return "\\\\";
+    } else if (byte < 32 || byte > 127) {
+      //sprintf(buf, "\\x%02X", bytes[i]);
+      return byte;
+    } else {
+      return byte;
+    }
+  //ESP_LOGD(TAG, "%s", res.c_str());
 }
 
 std::string GatePro::convert(uint8_t* bytes, size_t len) {
