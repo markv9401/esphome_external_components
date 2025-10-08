@@ -174,21 +174,18 @@ void GatePro::read_uart() {
     
     uint8_t* bytes = new byte[available];
     this->read_array(bytes, available);
-
     this->msg_buff += this->convert(bytes, available);
-
-    ESP_LOGD(TAG, "AAAA: %s", this->msg_buff.c_str());
+    //ESP_LOGD(TAG, "AAAA: %s", this->msg_buff.c_str());
 
     size_t pos = this->msg_buff.find(this->delimiter);
-    ESP_LOGD(TAG, "AAA2 %u", static_cast<unsigned int>(pos));
+    //ESP_LOGD(TAG, "AAA2 %u", static_cast<unsigned int>(pos));
     if (pos != std::string::npos) {
        std::string sub = this->msg_buff.substr(0, pos + this->delimiter_length);
-       ESP_LOGD(TAG, "BBBB: %s", sub.c_str());
-
-       this->preprocess(sub);
-
+       //ESP_LOGD(TAG, "BBBB: %s", sub.c_str());
+       //this->preprocess(sub);
+       this->rx_queue.push(sub);
        this->msg_buff = this->msg_buff.substr(pos + this->delimiter_length, this->msg_buff.length() - pos);
-       ESP_LOGD(TAG, "CCCC: %s", this->msg_buff.c_str());
+       //ESP_LOGD(TAG, "CCCC: %s", this->msg_buff.c_str());
     }
 }
 
