@@ -182,7 +182,7 @@ void GatePro::read_uart() {
 	ESP_LOGD(TAG, "AAAA: %c", this->convert_char(c));
 	ESP_LOGD(TAG, "BBBB: %s", buffer.c_str());
 	if (buffer.size() >= this->delimiter_length &&
-	    buffer.compare(buffer.size() - this->delimiter_size, this->delimiter_size, this->delimiter) == 0 ) {
+	    buffer.compare(buffer.length() - this->delimiter_length, this->delimiter_length, this->delimiter) == 0 ) {
 	    
 	    ESP_LOGD(TAG, "XXXX: %s", buffer.c_str());
 	    this->preprocess(buffer);
