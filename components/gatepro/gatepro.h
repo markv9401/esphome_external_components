@@ -59,6 +59,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   // UART parser constants
   const std::string delimiter = "\\r\\n";
   const uint8_t delimiter_length = delimiter.length();
+  std::string msg_buff;
 
   const int known_percentage_offset = 128;
   const float acceptable_diff = 0.05f;
