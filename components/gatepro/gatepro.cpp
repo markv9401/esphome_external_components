@@ -180,7 +180,7 @@ void GatePro::read_uart() {
 void GatePro::write_uart() {
   if (this->tx_queue.size()) {
     this->write_str(this->tx_queue.front());
-    //ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
+    ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
     this->tx_queue.pop();
   }
 }
@@ -218,7 +218,7 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
       res += bytes[i];
     }
   }
-  //ESP_LOGD(TAG, "%s", res.c_str());
+  ESP_LOGD(TAG, "%s", res.c_str());
   return res;
 }
 
