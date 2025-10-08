@@ -172,12 +172,12 @@ void GatePro::read_uart() {
         return;
     }
     
-    uint8_t* bytes = new byte[available];
-    this->read_array(bytes, available);
+    //uint8_t* bytes = new byte[available];
+    //this->read_array(bytes, available);
 
     std::string buffer;
     while(this->available()) {
-        char c = this->read_byte();
+        char c = this->read();
         buffer += c;
 
 	if (buffer.size() >= 2 && buffer[buffer.size() -2] == '\r' && buffer[buffer.size() -1] == '\n') {
