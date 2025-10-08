@@ -189,7 +189,7 @@ void GatePro::read_uart() {
     }
 
 
-    this->preprocess(this->convert(bytes, available));
+    //this->preprocess(this->convert(bytes, available));
 }
 
 void GatePro::write_uart() {
