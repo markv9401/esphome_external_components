@@ -39,7 +39,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
 
   // device logic
   std::string convert(uint8_t*, size_t);
-  char convert_char(uint8_t);
+  std::string convert_char(uint8_t);
   void preprocess(std::string);
   void process();
   void queue_gatepro_cmd(GateProCmd cmd);

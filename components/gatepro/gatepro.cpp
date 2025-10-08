@@ -202,7 +202,7 @@ void GatePro::write_uart() {
   }
 }
 
-char GatePro::convert_char(uint8_t byte) {
+std::string GatePro::convert_char(uint8_t byte) {
     if (byte == 7) {
       return "\\a";
     } else if (byte == 8) {
