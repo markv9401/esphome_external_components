@@ -199,7 +199,7 @@ void GatePro::read_uart() {
 
     size_t pos = this->msg_buff.find(this->delimiter);
     ESP_LOGD(TAG, "AAA2 %u", static_cast<unsigned int>(pos));
-    if (pos != std::string::npos) {
+    if (pos != 0) {
        std::string sub = this->msg_buff.substr(0, pos);
        ESP_LOGD(TAG, "BBBB: %s", sub.c_str());
 
