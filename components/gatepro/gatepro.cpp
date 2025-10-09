@@ -19,10 +19,15 @@ void GatePro::publish() {
    // publish on each tick
    // might have to comment out this one
    if (this->position_ == this->position) {
-      return;
+      this->after_tick--;
+      if (this->after_tick == 0) {
+         return;
+      }
+   } else {
+      this->position_ = this->position;
+      this->after_tick = 10;
    }
 
-   this->position_ = this->position;
    this->publish_state();
 }
 
