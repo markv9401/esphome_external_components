@@ -331,9 +331,6 @@ void GatePro::loop() {
   // keep reading uart for changes
   this->read_uart();
   this->process();
-  if (!this->params_lock && this->params.empty()) {
-    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
-  }
 }
 
 void GatePro::dump_config(){
