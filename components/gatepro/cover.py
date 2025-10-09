@@ -32,8 +32,6 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
         cv.Optional(CONF_DECEL_SPEED_SLIDER): cv.use_id(number.Number),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
-
-
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     #var = await sensor.new_sensor(config)
@@ -54,8 +52,7 @@ async def to_code(config):
       slider = await cg.get_variable(config[CONF_DECEL_SPEED_SLIDER])
       cg.add(var.set_decel_speed_slider(slider))
 
-    GateProNumber = cg.global_ns.get("GateProNumber")
-    op_speed_slider = cg.new_Pvariable("set_operational_speed", GateProNumber)
+    op_speed_slider = cg.new_Pvariable("set_operational_speed")
     cg.add(op_speed_slider.set_name("Operational speed"))
     cg.add(op_speed_slider.set_min_value(1))
     cg.add(op_speed_slider.set_max_value(4))
