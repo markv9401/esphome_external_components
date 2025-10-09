@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 #include "esphome.h"
 #include "esphome/core/component.h"
 #include "esphome/components/uart/uart.h"
@@ -28,12 +29,6 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
  public:
   void set_speed_4();
-  void set_btn_set_speed_4(esphome::button::Button *btn) {
-    my_button_ = btn;
-    btn->add_on_press_callback([this]() {
-      this->set_speed_4();
-    });
-  }
 
   void setup() override;
   void update() override;
@@ -42,7 +37,9 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   cover::CoverTraits get_traits() override;
 
  protected:
-  esphome::button::Button *my_button_{nullptr};
+  void add_button(const std::string &name, std::function<void()> callback);
+  std::vector<button::Button *> buttons_;
+
   // abstract (cover) logic
   void control(const cover::CoverCall &call) override;
   void start_direction_(cover::CoverOperation dir);

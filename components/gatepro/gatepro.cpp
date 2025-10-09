@@ -1,5 +1,6 @@
 #include "esphome/core/log.h"
 #include "gatepro.h"
+#include "esphome/componenets/button/button.h"
 
 namespace esphome {
 namespace gatepro {
@@ -265,6 +266,16 @@ void GatePro::setup() {
     this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     this->blocker = false;
     this->target_position_ = 0.0f;
+
+    this->add_button("Set speed 4", [this](){ this->set_speed_4(); });
+}
+
+void GatePro::add_button(const std::string &name, std::function<void()> callback) {
+    auto btn = new button::Button();
+    btn->set_name(name.c_str());
+    btn->add_on_press_callback([callback]() { callback(); });
+    this->buttons_.push_back(btn);
+    add_child(btn);
 }
 
 void GatePro::update() {
