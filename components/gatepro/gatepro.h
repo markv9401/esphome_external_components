@@ -7,7 +7,7 @@
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/cover/cover.h"
 #include "esphome/components/sensor/sensor.h"
-#include "genericbutton.h"
+#include "esphome/componenets/button/button.h"
 
 namespace esphome {
 namespace gatepro {
@@ -30,6 +30,7 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
  public:
   void set_speed_4();
+  button::Button *btn_speed_4;
 
   void setup() override;
   void update() override;
@@ -38,9 +39,6 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   cover::CoverTraits get_traits() override;
 
  protected:
-  void add_button(const std::string &name, std::function<void()> callback);
-  std::vector<button::Button *> buttons_;
-
   // abstract (cover) logic
   void control(const cover::CoverCall &call) override;
   void start_direction_(cover::CoverOperation dir);

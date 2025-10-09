@@ -266,14 +266,9 @@ void GatePro::setup() {
     this->blocker = false;
     this->target_position_ = 0.0f;
 
-    this->add_button("Set speed 4", [this](){ this->set_speed_4(); });
-}
-
-void GatePro::add_button(const std::string &name, std::function<void()> callback) {
-    auto btn = new GenericButton(callback);
-    btn->set_name(name.c_str());
-    this->buttons_.push_back(btn);
-    this->add_child(btn);
+    if (btn_speed_4) {
+        this->btn_speed_4->add_on_press_callback([this](){this->set_speed_4();});
+    } 
 }
 
 void GatePro::update() {
