@@ -26,6 +26,8 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
 
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
  public:
+  void set_speed_4();
+
   void setup() override;
   void update() override;
   void loop() override;
