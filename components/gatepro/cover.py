@@ -22,7 +22,7 @@ CONF_SPEED_4 = "speed_4"
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
-        cv.Optional(CONF_SPEED_4): button.BUTTONS_SCHEMA.extend({
+        cv.Optional(CONF_SPEED_4): button.BUTTON_SCHEMA.extend({
             cv.generateId(): cv.declare_id(button.Button),
             cv.Required(CONF_NAME): cv.string,
         }),
