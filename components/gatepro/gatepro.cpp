@@ -260,6 +260,7 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
 ////////////////////////////////////////////
 void GatePro::set_param(int idx, int val) {
    ESP_LOGD(TAG, "Initiating setting param %d to %d", idx, val);
+   this->param_no_pub = true;
    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
 
    this->paramTaskQueue.push(
@@ -294,13 +295,14 @@ void GatePro::parse_params(std::string msg) {
    this->speed_slider->publish_state(this->params[3]);
    this->decel_dist_slider->publish_state(this->params[4]);
    this->decel_speed_slider->publish_state(this->params[5]);
-   ////////
+   ////////////
 
    // write new params if any task is up
    while (!this->paramTaskQueue.empty()) {
       auto task = this->paramTaskQueue.front();
       this->paramTaskQueue.pop();
       task();
+      this->param_no_pub = false;
    }
 }
 
