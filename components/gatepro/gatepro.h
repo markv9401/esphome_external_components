@@ -32,7 +32,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
     my_button_ = btn;
     btn->add_on_press_callback([this]() {
       this->set_speed_4();
-    }
+    });
   }
 
   void setup() override;
