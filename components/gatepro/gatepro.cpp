@@ -307,8 +307,9 @@ void GatePro::write_params() {
       }
    }
    //msg += ";src=P00287D7";
-   ESP_LOGD(TAG, "BUILT PARAMS: %s", msg.c_str());
-   this->tx_queue.push(msg.c_str());
+   std::strcpy(this->params_cmd, str.c_str());
+   ESP_LOGD(TAG, "BUILT PARAMS: %s", this->params_cmd);
+   this->tx_queue.push(this->params_cmd);
 }
 
 ////////////////////////////////////////////

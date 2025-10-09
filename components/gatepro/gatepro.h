@@ -53,6 +53,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
    protected:
       // param logic
       std::vector<int> params;
+      char params_cmd[50];
       void parse_params(std::string msg);
       void write_params();
       std::queue<std::function<void()>> paramTaskQueue;
