@@ -290,6 +290,11 @@ void GatePro::parse_params(std::string msg) {
       ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
    }
 
+   ////////////
+   this->speed_slider->publish_state(this->params[4]);
+
+   ////////
+
    // write new params if any task is up
    while (!this->paramTaskQueue.empty()) {
       auto task = this->paramTaskQueue.front();
