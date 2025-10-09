@@ -25,7 +25,10 @@ enum GateProCmd : uint8_t {
    GATEPRO_CMD_DEVINFO,
    GATEPRO_CMD_READ_LEARN_STATUS,
    GATEPRO_CMD_REMOTE_LEARN,
-   GATEPRO_CMD_CLEAR_REMOTE_LEARN,
+   GATEPRO_CMD_CLEAR_REMOTE_LEARN, // untested
+   GATEPRO_CMD_RESTORE, // untested
+   GATEPRO_CMD_PED_OPEN, // untested
+   GATEPRO_CMD_READ_FUNCTION, // untested
 };  
 
 const std::map<GateProCmd, const char*> GateProCmdMapping = {
@@ -40,6 +43,9 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
    {GATEPRO_CMD_READ_LEARN_STATUS, "READ LEARN STATUS;src=P00287D7"},
    {GATEPRO_CMD_REMOTE_LEARN, "REMOTE LEARN;src=P00287D7"},
    {GATEPRO_CMD_CLEAR_REMOTE_LEARN, "CLEAR REMOTE LEARN;src=P00287D7"},
+   {GATEPRO_CMD_RESTORE, "RESTORE;src=P00287D7"},
+   {GATEPRO_CMD_PED_OPEN, "PED OPEN;src=P00287D7"},
+   {GATEPRO_CMD_READ_FUNCTION, "READ FUNCTION;src=P00287D7"},
 };
 
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
