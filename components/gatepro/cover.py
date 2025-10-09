@@ -46,7 +46,7 @@ async def to_code(config):
       slider = await cg.get_variable(config[CONF_SPEED_SLIDER])
       cg.add(var.set_speed_slider(slider))
     if CONF_DECEL_DIST_SLIDER in config: 
-      selsliderect = await cg.get_variable(config[CONF_DECEL_DIST_SLIDER])
+      slider = await cg.get_variable(config[CONF_DECEL_DIST_SLIDER])
       cg.add(var.set_decel_dist_slider(slider))
     if CONF_DECEL_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_DECEL_SPEED_SLIDER])
