@@ -36,7 +36,7 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
    public:
       esphome::button::Button *btn_learn;
-      void set_btn_set_learn(esphome::button::Button *btn) { btn_learn = btn; }
+      void set_btn_learn(esphome::button::Button *btn) { btn_learn = btn; }
 
       // speed control
       void set_param(int idx, int val);
