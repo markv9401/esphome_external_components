@@ -263,7 +263,7 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
 ////////////////////////////////////////////
 void GatePro::set_speed_4() {
   ESP_LOGD(TAG, "SET SPEEEEEED FOO");
-  this->queue_gatepro-cmd(GATEPRO_CMD_READ_PARAMS);
+  this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
 }
 
 
