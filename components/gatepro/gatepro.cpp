@@ -253,7 +253,7 @@ void GatePro::set_speed_4() {
 
 void GatePro::parse_params(std::string msg) {
     this->params_lock = true;
-    this->params.empty()
+    this->params.clear();
     msg = msg.substr(9, 33);
     size_t start = 0;
     size_t end;
