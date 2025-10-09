@@ -16,7 +16,7 @@ void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
 }
 
 void GatePro::publish() {
-   if (this->txt_devinfo && this->txt_devinfo->status() != this->devinfo) {
+   if (this->txt_devinfo && this->txt_devinfo->state() != this->devinfo) {
       this->txt_devinfo->publish_state(this->devinfo);
    }
 
