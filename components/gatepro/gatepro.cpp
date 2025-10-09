@@ -347,6 +347,15 @@ void GatePro::setup() {
    if (btn_speed_4) {
       this->btn_speed_4->add_on_press_callback([this](){this->set_speed(4);});
    } 
+
+   if (speed_slider) {
+      this->speed_slider->add_on_state_callback([this](int value){
+         if (this->cur_speed == value) {
+            return;
+         }
+         ESP_LOGD(TAG, "HAHAHA %d", value);
+      });
+   }
 }
 
 void GatePro::update() {

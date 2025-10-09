@@ -8,6 +8,7 @@
 #include "esphome/components/cover/cover.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/button/button.h"
+#include "esphome/components/button/number.h"
 
 namespace esphome {
 namespace gatepro {
@@ -43,6 +44,9 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       void set_btn_set_speed_2(esphome::button::Button *btn) { btn_speed_2 = btn; }
       void set_btn_set_speed_3(esphome::button::Button *btn) { btn_speed_3 = btn; }
       void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_4 = btn; }
+      number::Number *speed_slider{nullptr};
+      int cur_speed = 4;
+      void set_speed_slider(number::Number *slider) { speed_slider_ = slider; }
 
       void setup() override;
       void update() override;
