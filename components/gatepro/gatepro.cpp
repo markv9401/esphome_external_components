@@ -58,24 +58,8 @@ void GatePro::process() {
 
   // Read param example: ACK RP,1:1,0,0,1,2,2,0,0,0,3,0,0,3,0,0,0,0\r\n"
   if (msg.substr(0, 6) == "ACK RP") {
-    msg = msg.substr(11, 31);
-    std::vector<int> ps;
-    size_t start = 0;
-    size_t end;
-
-    while((end = msg.find(',', start)) != std::string::npos) {
-        ps.push_back(stoi(msg.substr(start, end - start)));
-	start = end + 1;
-    }
-    ps.push_back(stoi(msg.substr(start)));
-    
-    ESP_LOGD(TAG, "Vector contents (%zu elements):", ps.size());
-    for (size_t i = 0; i < ps.size(); ++i) {
-        ESP_LOGD(TAG, "  [%zu] = %d", i, ps[i]);
-    }
-
-     
-
+    this->parse_params(msg);
+    return;
   }
 
   // Event message from the motor
@@ -263,9 +247,40 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
 ////////////////////////////////////////////
 void GatePro::set_speed_4() {
   ESP_LOGD(TAG, "SET SPEEEEEED FOO");
-  this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
+  this->params[4] = 4;
+  this->write_params();
 }
 
+void GatePro::parse_params(std::string msg) {
+    this->params.clear();
+
+    msg = msg.substr(9, 33);
+    size_t start = 0;
+    size_t end;
+
+    while((end = msg.find(',', start)) != std::string::npos) {
+        this->params.push_back(stoi(msg.substr(start, end - start)));
+	start = end + 1;
+    }
+    this->params.push_back(stoi(msg.substr(start)));
+    
+    ESP_LOGD(TAG, "Vector contents (%zu elements):", this->params.size());
+    for (size_t i = 0; i < this->params.size(); ++i) {
+        ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
+    }
+}
+
+void GatePro::write_params() {
+    std::string msg = "WP,1:";
+    for (size_t i = 0, i < this->params.size(); i++) {
+        msg += to_string(this->params[i]);
+	if (i != this->params.size() -1) {
+            msg += ",";
+	}
+    }
+    msg += "\r\n";
+    ESP_LOGD(TAG, "BUILT PARAMS: %s", msg.c_str());
+}
 
 ////////////////////////////////////////////
 // Component functions
@@ -289,6 +304,7 @@ void GatePro::setup() {
     this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
     this->blocker = false;
     this->target_position_ = 0.0f;
+    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
 
     if (btn_speed_4) {
         this->btn_speed_4->add_on_press_callback([this](){this->set_speed_4();});
@@ -313,6 +329,9 @@ void GatePro::loop() {
   // keep reading uart for changes
   this->read_uart();
   this->process();
+  if (this->params.empty()) {
+    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
+  }
 }
 
 void GatePro::dump_config(){

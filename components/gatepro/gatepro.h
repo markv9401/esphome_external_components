@@ -43,8 +43,9 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
 
  protected:
   // param logic
-  int params[16];
-  void read_params();
+  std::vector<int> params;
+  void parse_params(std::string msg);
+  void write_params();
 
   // abstract (cover) logic
   void control(const cover::CoverCall &call) override;
