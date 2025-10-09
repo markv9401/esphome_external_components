@@ -17,7 +17,8 @@ enum GateProCmd : uint8_t {
    GATEPRO_CMD_CLOSE,
    GATEPRO_CMD_STOP,
    GATEPRO_CMD_READ_STATUS,
-   GATEPRO_CMD_READ_PARAMS
+   GATEPRO_CMD_READ_PARAMS,
+   GATEPRO_CMD_WRITE_PARAMS,
 };  
 
 const std::map<GateProCmd, const char*> GateProCmdMapping = {
@@ -26,6 +27,7 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
    {GATEPRO_CMD_STOP, "STOP;src=P00287D7"},
    {GATEPRO_CMD_READ_STATUS, "RS;src=P00287D7"},
    {GATEPRO_CMD_READ_PARAMS, "RP,1:;src=P00287D7"},
+   {GATEPRO_CMD_WRITE_PARAMS, "WP,1:"},
 };
 
 
@@ -42,6 +44,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       cover::CoverTraits get_traits() override;
 
    protected:
+      void verify_tx(const char* msg_in);
       // param logic
       std::vector<int> params;
       void parse_params(std::string msg);
@@ -67,7 +70,9 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       cover::CoverOperation last_operation_{cover::COVER_OPERATION_OPENING};
       void publish();
       void stop_at_target_position();
-      int after_tick;
+      // how many 'ticks' to update after position hasn't changed
+      const int after_tick_max = 10;
+      int after_tick = after_tick_max;
 
       // UART parser constants
       const std::string delimiter = "\\r\\n";

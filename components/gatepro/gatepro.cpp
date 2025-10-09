@@ -16,17 +16,19 @@ void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
 }
 
 void GatePro::publish() {
-   // publish on each tick
-   // might have to comment out this one
+   // if position is unchanged
    if (this->position_ == this->position) {
+      // ..and the after ticks are up, then don't update
       if (this->after_tick == 0) {
          return;
+      // ..but there are some after tick counts left, then update and take away 1 after tick
       } else {
          this->after_tick--;
       }
+   // otherwise update and reset after tick remaning count
    } else {
       this->position_ = this->position;
-      this->after_tick = 10;
+      this->after_tick = this->after_tick_max;
    }
 
    this->publish_state();
@@ -204,11 +206,34 @@ void GatePro::read_uart() {
    }
 }
 
+void GatePro::verify_tx(const char* msg_in) {
+   char msg[4];
+   std::strncpy(msg, msg_in, 4);
+
+   GateProCmd* matchedKey = nullptr;
+
+   for (const auto& pair : GateProCmdMapping) {
+      const char* value = pair.second;
+      // Check if 'msg' matches the beginning of the value
+      if (std::strncmp(msg, value, std::strlen(msg)) == 0) {
+         matchedKey = const_cast<GateProCmd*>(&pair.first);
+         break;
+      }
+   }
+
+   if (matchedKey) {
+      std::cout << "Found matching key: " << *matchedKey << std::endl;
+   } else {
+      std::cout << "No match found" << std::endl;
+   }
+}
+
 void GatePro::write_uart() {
    if (this->tx_queue.size()) {
       std::string tmp = this->tx_queue.front();
       tmp += this->tx_delimiter;
       const char* out = tmp.c_str();
+      this->verify_tx(out);
       this->write_str(out);
       ESP_LOGD(TAG, "UART TX: %s", out);
       this->tx_queue.pop();
