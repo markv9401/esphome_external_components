@@ -445,7 +445,7 @@ void GatePro::setup() {
       });
    }
 
-   /*if (sw_infra1) {
+   if (sw_infra1) {
       this->sw_infra1->add_on_state_callback([this](bool state){
          if (this->params[13] == state) {
             return;
@@ -461,7 +461,7 @@ void GatePro::setup() {
          }
          this->set_param(14, state ? 1 : 0);
       });
-   }*/
+   }
 }
 
 void GatePro::update() {
