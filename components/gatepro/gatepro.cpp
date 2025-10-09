@@ -288,6 +288,7 @@ void GatePro::write_params() {
     }
     msg += "\r\n";
     ESP_LOGD(TAG, "BUILT PARAMS: %s", msg.c_str());
+    this->tx_queue.push(msg);
 }
 
 ////////////////////////////////////////////
