@@ -41,13 +41,13 @@ async def to_code(config):
 
     if CONF_SPEED_1 in config:
         btn = await cg.get_variable(config[CONF_SPEED_1])
-        cg.add(var.set_btn_set_speed_4(btn))
+        cg.add(var.set_btn_set_speed_1(btn))
     if CONF_SPEED_2 in config:
         btn = await cg.get_variable(config[CONF_SPEED_2])
-        cg.add(var.set_btn_set_speed_4(btn))
+        cg.add(var.set_btn_set_speed_2(btn))
     if CONF_SPEED_3 in config:
         btn = await cg.get_variable(config[CONF_SPEED_3])
-        cg.add(var.set_btn_set_speed_4(btn))
+        cg.add(var.set_btn_set_speed_3(btn))
     if CONF_SPEED_4 in config:
         btn = await cg.get_variable(config[CONF_SPEED_4])
         cg.add(var.set_btn_set_speed_4(btn))
