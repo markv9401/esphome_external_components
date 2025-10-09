@@ -54,7 +54,7 @@ async def to_code(config):
       slider = await cg.get_variable(config[CONF_DECEL_SPEED_SLIDER])
       cg.add(var.set_decel_speed_slider(slider))
 
-    op_speed_slider = cg.new_Pvariable("set_operational_speed")
+    op_speed_slider = cg.new_Pvariable("set_operational_speed", number.Number)
     cg.add(op_speed_slider.set_name("Operational speed"))
     cg.add(op_speed_slider.set_min_value(1))
     cg.add(op_speed_slider.set_max_value(4))
