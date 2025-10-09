@@ -114,7 +114,7 @@ void GatePro::process() {
       return;
    }
 
-   // Devinfo example: ACK LEARN STATUS:SYSTEM LEARN COMPLETE,0\r\n
+   // Devinfo example: ACK LEARN STATUS:SYSTEM LEARN COMPLETE,0\r\n /
    if (msg.substr(0, 16) == "ACK LEARN STATUS") {
       this->txt_learn_status->publish_state(msg.substr(17, msg.size() - (17 + 4)));
       return;
