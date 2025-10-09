@@ -16,8 +16,6 @@ void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
 }
 
 void GatePro::publish() {
-   this->txt_devinfo->publish_state(this->devinfo);
-
    // if position is unchanged
    if (this->position_ == this->position) {
       // ..and the after ticks are up, then don't update
@@ -112,7 +110,8 @@ void GatePro::process() {
 
    // Devinfo example: ACK READ DEVINFO:P500BU,PS21053C,V01\r\n
    if (msg.substr(0, 16) == "ACK READ DEVINFO") {
-      this->devinfo = msg.substr(17, msg.size() - (17 + 2));
+      this->devinfo = msg.substr(17, msg.size() - (17 + 4));
+      this->txt_devinfo->publish_state(this->devinfo);
       return;
    }
 }
