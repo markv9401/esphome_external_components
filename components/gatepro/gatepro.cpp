@@ -292,7 +292,7 @@ void GatePro::write_params() {
          msg += ",";
       }
    }
-   msg += ";src=P00287D7";
+   //msg += ";src=P00287D7";
    ESP_LOGD(TAG, "BUILT PARAMS: %s", msg.c_str());
    this->tx_queue.push(msg.c_str());
 }
