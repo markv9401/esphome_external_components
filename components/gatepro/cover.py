@@ -53,6 +53,6 @@ async def to_code(config):
     #if CONF_SPEED_4 in config:
     #    btn = await cg.get_variable(config[CONF_SPEED_4])
     #    cg.add(var.set_btn_set_speed_4(btn))
-    if CONF_SPEED_SLIDER in config:
+    if CONF_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_SPEED_SLIDER])
       cg.add(var.set_speed_slider(slider))
