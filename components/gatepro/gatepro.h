@@ -44,6 +44,10 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       esphome::button::Button *btn_learn;
       void set_btn_learn(esphome::button::Button *btn) { btn_learn = btn; }
 
+      // get params od btn
+      esphome::button::Button *btn_params_od;
+      void set_btn_params_od(esphome::button::Button *btn) { btn_params_od = btn; }
+
       // devinfo
       text_sensor::TextSensor *txt_devinfo{nullptr};
       void set_txt_devinfo(esphome::text_sensor::TextSensor *txt) { txt_devinfo = txt; }

@@ -19,6 +19,7 @@ validate_cover_operation = cv.enum(cover.COVER_OPERATIONS, upper=True)
 
 
 CONF_LEARN = "set_learn"
+CONF_PARAMS_OD = "get_params"
 CONF_SPEED_SLIDER = "set_speed"
 CONF_DECEL_DIST_SLIDER = "set_decel_dist"
 CONF_DECEL_SPEED_SLIDER = "set_decel_speed"
@@ -29,6 +30,7 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
         cv.Optional(CONF_LEARN): cv.use_id(button.Button),
+        cv.Optional(CONF_PARAMS_OD): cv.use_id(button.Button),
         cv.Optional(CONF_SPEED_SLIDER): cv.use_id(number.Number),
         cv.Optional(CONF_DECEL_DIST_SLIDER): cv.use_id(number.Number),
         cv.Optional(CONF_DECEL_SPEED_SLIDER): cv.use_id(number.Number),
@@ -46,6 +48,9 @@ async def to_code(config):
     if CONF_LEARN in config:
         btn = await cg.get_variable(config[CONF_LEARN])
         cg.add(var.set_btn_learn(btn))
+    if CONF_PARAMS_OD in config:
+        btn = await cg.get_variable(config[CONF_PARAMS_OD])
+        cg.add(var.set_btn_params_od(btn))
     if CONF_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_SPEED_SLIDER])
       cg.add(var.set_speed_slider(slider))
