@@ -47,7 +47,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       void set_decel_dist_select(select::Select *select) { decel_dist_select = select; }
 
       select::Select *decel_speed_select{nullptr};
-      void set_decel_speed_select(select::Select *select) { decel_speed_slider = select; }
+      void set_decel_speed_select(select::Select *select) { decel_speed_select = select; }
 
       void setup() override;
       void update() override;
