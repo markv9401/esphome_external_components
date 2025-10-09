@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import uart, sensor, cover, button, number, text_sensor
+from esphome.components import uart, sensor, cover, button, number, text_sensor, switch
 from esphome.const import CONF_ID, ICON_EMPTY, UNIT_EMPTY, CONF_NAME
 
 DEPENDENCIES = ["uart", "cover", "button"]
@@ -26,6 +26,7 @@ CONF_DECEL_DIST_SLIDER = "set_decel_dist"
 CONF_DECEL_SPEED_SLIDER = "set_decel_speed"
 CONF_DEVINFO = "txt_devinfo"
 CONF_LEARN_STATUS = "txt_learn_status"
+CONF_PERMALOCK = "sw_permalock"
 
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
@@ -38,6 +39,7 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
         cv.Optional(CONF_DECEL_SPEED_SLIDER): cv.use_id(number.Number),
         cv.Optional(CONF_DEVINFO): cv.use_id(text_sensor.TextSensor),
         cv.Optional(CONF_LEARN_STATUS): cv.use_id(text_sensor.TextSensor),
+        cv.Optional(CONF_PERMALOCK): cv.use_id(switch.Switch),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
 async def to_code(config):
@@ -71,3 +73,6 @@ async def to_code(config):
     if CONF_LEARN_STATUS in config:
       txt = await cg.get_variable(config[CONF_LEARN_STATUS])
       cg.add(var.set_txt_learn_status(txt))
+    if CONF_PERMALOCK in config:
+      sw = await cg.get_variable(config[CONF_PERMALOCK])
+      cg.add(var.set_sw_permalock(sw))

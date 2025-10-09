@@ -10,6 +10,7 @@
 #include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/components/button/button.h"
 #include "esphome/components/number/number.h"
+#include "esphome/components/number/switch.h"
 
 namespace esphome {
 namespace gatepro {
@@ -50,6 +51,10 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
 
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
    public:
+      // perma lock
+      switch_::Switch *sw_permalock{nullptr};
+      void set_sw_permalock(switch_::Switch *sw) { sw_permalock = sw; }
+
       // auto-learn btn
       esphome::button::Button *btn_learn;
       void set_btn_learn(esphome::button::Button *btn) { btn_learn = btn; }

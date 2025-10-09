@@ -308,6 +308,7 @@ void GatePro::parse_params(std::string msg) {
       this->speed_slider->publish_state(this->params[3]);
       this->decel_dist_slider->publish_state(this->params[4]);
       this->decel_speed_slider->publish_state(this->params[5]);
+      this->sw_permalock->publish_state(this->params[15]);
    }
    ////////////
 
@@ -404,6 +405,15 @@ void GatePro::setup() {
             return;
          }
          this->set_param(5, value);
+      });
+   }
+
+   if (sw_permalock) {
+      this->sw_permalock->add_on_state_callback([this](bool state){
+         if (this->params[15] == state) {
+            return;
+         }
+         this->set_param(15, state ? 1 : 0);
       });
    }
 }
