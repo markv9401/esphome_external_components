@@ -258,14 +258,14 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
 ////////////////////////////////////////////
 // Paramater functions
 ////////////////////////////////////////////
-void GatePro::set_speed_4() {
+void GatePro::set_speed(int speed) {
    ESP_LOGD(TAG, "SET SPEEEEEED FOO");
    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
 
    this->paramTaskQueue.push(
       [this](){
          ESP_LOGD(TAG, "HALÓÓÓÓ ZSÓÓÓTI");
-         this->params[4] = 4;
+         this->params[4] = speed;
          this->write_params();
       });
 }
@@ -334,8 +334,17 @@ void GatePro::setup() {
    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
 
    // set up buttons
+   if (btn_speed_1) {
+      this->btn_speed_1->add_on_press_callback([this](){this->set_speed(1);});
+   } 
+   if (btn_speed_2) {
+      this->btn_speed_2->add_on_press_callback([this](){this->set_speed(2);});
+   } 
+   if (btn_speed_3) {
+      this->btn_speed_3->add_on_press_callback([this](){this->set_speed(3);});
+   } 
    if (btn_speed_4) {
-      this->btn_speed_4->add_on_press_callback([this](){this->set_speed_4();});
+      this->btn_speed_4->add_on_press_callback([this](){this->set_speed(4);});
    } 
 }
 

@@ -33,8 +33,15 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
 
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
    public:
-      void set_speed_4();
+      // buttons
+      void set_speed(int speed);
+      esphome::button::Button *btn_speed_1;
+      esphome::button::Button *btn_speed_2;
+      esphome::button::Button *btn_speed_3;
       esphome::button::Button *btn_speed_4;
+      void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_1 = btn; }
+      void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_2 = btn; }
+      void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_3 = btn; }
       void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_4 = btn; }
 
       void setup() override;
