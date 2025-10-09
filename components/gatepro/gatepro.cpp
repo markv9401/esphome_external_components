@@ -247,16 +247,11 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
 ////////////////////////////////////////////
 void GatePro::set_speed_4() {
   ESP_LOGD(TAG, "SET SPEEEEEED FOO");
-  this->params_lock = true;
   this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
-
-  while (this->params_lock) {
-    ESP_LOGD(TAG, "STILL WAITING..");
-    delay(500);
-  }
-  
-  this->params[4] = 4;
-  this->write_params();
+ 
+  this->paramTaskQueue.push([](){
+    this->params[4] = 4;
+    this->write_params(); });
 }
 
 void GatePro::parse_params(std::string msg) {
@@ -276,7 +271,11 @@ void GatePro::parse_params(std::string msg) {
         ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
     }
 
-    this->params_lock = false;
+    while (!this->paramTaskQueue.empty()) {
+       auto task = this->paramTaskQueue.front();
+       this->paramTaskQueue.pop();
+       task();
+    }
 }
 
 void GatePro::write_params() {

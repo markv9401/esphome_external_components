@@ -47,6 +47,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   bool params_lock = false;
   void parse_params(std::string msg);
   void write_params();
+  std::queue<std::function<void()>> paramTaskQueue;
 
   // abstract (cover) logic
   void control(const cover::CoverCall &call) override;
