@@ -16,9 +16,7 @@ void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
 }
 
 void GatePro::publish() {
-   if (this->txt_devinfo && this->txt_devinfo->state() != this->devinfo) {
-      this->txt_devinfo->publish_state(this->devinfo);
-   }
+   this->txt_devinfo->publish_state(this->devinfo);
 
    // if position is unchanged
    if (this->position_ == this->position) {
