@@ -250,6 +250,7 @@ void GatePro::set_speed_4() {
   this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
  
   this->paramTaskQueue.push([this](){
+    ESP_LOGD(TAG, "HALÓÓÓÓ ZSÓÓÓTI");
     this->params[4] = 4;
     this->write_params(); });
 }
