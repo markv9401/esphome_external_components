@@ -1,5 +1,6 @@
 #include "esphome/core/log.h"
 #include "gatepro.h"
+#include <vector>
 
 namespace esphome {
 namespace gatepro {
@@ -53,6 +54,28 @@ void GatePro::process() {
     this->position = (float)percentage / 100;
 
     return;
+  }
+
+  // Read param example: ACK RP,1:1,0,0,1,2,2,0,0,0,3,0,0,3,0,0,0,0\r\n"
+  if (msg.substr(0, 6) == "ACK RP") {
+    msg = msg.substr(11, 31);
+    vector<string> ps;
+    size_t start = 0;
+    size_t end;
+
+    while((end = msg.find(',', start)) != std::string::npos) {
+        ps.push_back(stoi(msg.substr(start, end - start)));
+	start = end + 1;
+    }
+    ps.push_back(stoi(msg.substr(start)));
+    
+    ESP_LOGD(TAG, "Vector contents (%zu elements):", ps.size());
+    for (size_t i = 0; i < ps.size(); ++i) {
+        ESP_LOGD(TAG, "  [%zu] = %d", i, ps[i]);
+    }
+
+     
+
   }
 
   // Event message from the motor
@@ -239,7 +262,8 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
 // Paramater functions
 ////////////////////////////////////////////
 void GatePro::set_speed_4() {
-  ESP_LOGD(TAG, "SET SPEEEEEED FOOOO");
+  ESP_LOGD(TAG, "SET SPEEEEEED FOO");
+  this->queue_gatepro-cmd(GATEPRO_CMD_READ_PARAMS);
 }
 
 

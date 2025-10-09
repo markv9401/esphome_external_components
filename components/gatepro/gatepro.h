@@ -23,7 +23,8 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
   {GATEPRO_CMD_OPEN, "FULL OPEN;src=P00287D7\r\n"},
   {GATEPRO_CMD_CLOSE, "FULL CLOSE;src=P00287D7\r\n"},
   {GATEPRO_CMD_STOP, "STOP;src=P00287D7\r\n"},
-  {GATEPRO_CMD_READ_STATUS, "RS;src=P00287D7\r\n"}
+  {GATEPRO_CMD_READ_STATUS, "RS;src=P00287D7\r\n"},
+  {GATEPRO_CMD_READ_PARAMS, "RP,1:;src=P00287D7\r\n"},
 };
 
 
@@ -40,6 +41,10 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   cover::CoverTraits get_traits() override;
 
  protected:
+  // param logic
+  int params[16];
+  void read_params();
+
   // abstract (cover) logic
   void control(const cover::CoverCall &call) override;
   void start_direction_(cover::CoverOperation dir);
