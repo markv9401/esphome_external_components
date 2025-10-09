@@ -252,6 +252,12 @@ void GatePro::set_speed_4() {
       [this](){
          ESP_LOGD(TAG, "HALÓÓÓÓ ZSÓÓÓTI");
          this->params[4] = 4;
+
+         ESP_LOGD(TAG, "CURRRRR:", this->params.size());
+         for (size_t i = 0; i < this->params.size(); ++i) {
+            ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
+         }
+
          this->write_params();
       });
 }
