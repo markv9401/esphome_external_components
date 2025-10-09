@@ -263,7 +263,7 @@ void GatePro::set_speed(int speed) {
    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
 
    this->paramTaskQueue.push(
-      [this](){
+      [this, speed](){
          ESP_LOGD(TAG, "HALÓÓÓÓ ZSÓÓÓTI");
          this->params[4] = speed;
          this->write_params();
