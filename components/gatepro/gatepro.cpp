@@ -196,8 +196,9 @@ void GatePro::write_uart() {
    if (this->tx_queue.size()) {
       std::string tmp = this->tx_queue.front();
       tmp += this->delimiter;
-      this->write_str(tmp);
-      ESP_LOGD(TAG, "UART TX: %s", tmp);
+      const char* out = tmp.c_str();
+      this->write_str(out);
+      ESP_LOGD(TAG, "UART TX: %s", out);
       this->tx_queue.pop();
    }
 }
