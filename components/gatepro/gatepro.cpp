@@ -355,10 +355,10 @@ void GatePro::setup() {
 
    if (speed_slider) {
       this->speed_slider->add_on_state_callback([this](int value){
-         if (this->cur_speed == value) {
+         if (this->params[4] == value) {
             return;
          }
-         ESP_LOGD(TAG, "HAHAHA %d", value);
+         this->set_speed(value);
       });
    }
 }
