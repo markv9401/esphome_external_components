@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import uart, sensor, cover, button
-from esphome.const import CONF_ID, ICON_EMPTY, UNIT_EMPTY
+from esphome.const import CONF_ID, ICON_EMPTY, UNIT_EMPTY, CONF_NAME
 
 DEPENDENCIES = ["uart", "cover"]
 
