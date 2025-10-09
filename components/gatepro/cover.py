@@ -29,6 +29,8 @@ CONF_AUTO_CLOSE = "set_auto_close"
 CONF_DEVINFO = "txt_devinfo"
 CONF_LEARN_STATUS = "txt_learn_status"
 CONF_PERMALOCK = "sw_permalock"
+CONF_INFRA1 = "sw_infra1"
+CONF_INFRA2 = "sw_infra2"
 
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
@@ -44,6 +46,8 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
         cv.Optional(CONF_DEVINFO): cv.use_id(text_sensor.TextSensor),
         cv.Optional(CONF_LEARN_STATUS): cv.use_id(text_sensor.TextSensor),
         cv.Optional(CONF_PERMALOCK): cv.use_id(switch.Switch),
+        cv.Optional(CONF_INFRA1): cv.use_id(switch.Switch),
+        cv.Optional(CONF_INFRA2): cv.use_id(switch.Switch),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
 async def to_code(config):
@@ -86,3 +90,9 @@ async def to_code(config):
     if CONF_PERMALOCK in config:
       sw = await cg.get_variable(config[CONF_PERMALOCK])
       cg.add(var.set_sw_permalock(sw))
+    if CONF_INFRA1 in config:
+      sw = await cg.get_variable(config[CONF_INFRA1])
+      cg.add(var.set_sw_infra1(sw))
+    if CONF_INFRA2 in config:
+      sw = await cg.get_variable(config[CONF_INFRA2])
+      cg.add(var.set_sw_infra2(sw))
