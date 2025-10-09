@@ -272,7 +272,7 @@ void GatePro::parse_params(std::string msg) {
 
 void GatePro::write_params() {
     std::string msg = "WP,1:";
-    for (size_t i = 0, i < this->params.size(); i++) {
+    for (size_t i = 0; i < this->params.size(); i++) {
         msg += to_string(this->params[i]);
 	if (i != this->params.size() -1) {
             msg += ",";
