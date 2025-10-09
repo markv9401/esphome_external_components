@@ -373,6 +373,12 @@ void GatePro::setup() {
          this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
       });
    }
+
+   if (btn_remote_learn) {
+      this->btn_remote_learn->add_on_press_callback([this](){
+         this->queue_gatepro_cmd(GATEPRO_CMD_REMOTE_LEARN);
+      });
+   }
    
    if (speed_slider) {
       this->speed_slider->add_on_state_callback([this](int value){

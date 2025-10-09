@@ -24,6 +24,8 @@ enum GateProCmd : uint8_t {
    GATEPRO_CMD_LEARN,
    GATEPRO_CMD_DEVINFO,
    GATEPRO_CMD_READ_LEARN_STATUS,
+   GATEPRO_CMD_REMOTE_LEARN,
+   GATEPRO_CMD_CLEAR_REMOTE_LEARN,
 };  
 
 const std::map<GateProCmd, const char*> GateProCmdMapping = {
@@ -35,7 +37,9 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
    {GATEPRO_CMD_WRITE_PARAMS, "WP,1:"},
    {GATEPRO_CMD_LEARN, "AUTO LEARN;src=P00287D7"},
    {GATEPRO_CMD_DEVINFO, "READ DEVINFO;src=P00287D7"},
-   {GATEPRO_CMD_READ_LEARN_STATUS, "READ LEARN STATUS;src=P00287D7"}
+   {GATEPRO_CMD_READ_LEARN_STATUS, "READ LEARN STATUS;src=P00287D7"},
+   {GATEPRO_CMD_REMOTE_LEARN, "REMOTE LEARN;src=P00287D7"},
+   {GATEPRO_CMD_CLEAR_REMOTE_LEARN, "CLEAR REMOTE LEARN;src=P00287D7"},
 };
 
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
@@ -47,6 +51,10 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       // get params od btn
       esphome::button::Button *btn_params_od;
       void set_btn_params_od(esphome::button::Button *btn) { btn_params_od = btn; }
+
+      // remote learn btn
+      esphome::button::Button *btn_remote_learn;
+      void set_btn_remote_learn(esphome::button::Button *btn) { btn_remote_learn = btn; }
 
       // devinfo
       text_sensor::TextSensor *txt_devinfo{nullptr};
