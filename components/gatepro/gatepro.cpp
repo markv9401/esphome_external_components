@@ -291,10 +291,12 @@ void GatePro::parse_params(std::string msg) {
       ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
    }
 
-   //////////// publish 
-   this->speed_slider->publish_state(this->params[3]);
-   this->decel_dist_slider->publish_state(this->params[4]);
-   this->decel_speed_slider->publish_state(this->params[5]);
+   //////////// publish
+   if (!this->param_no_pub) {
+      this->speed_slider->publish_state(this->params[3]);
+      this->decel_dist_slider->publish_state(this->params[4]);
+      this->decel_speed_slider->publish_state(this->params[5]);
+   }
    ////////////
 
    // write new params if any task is up
