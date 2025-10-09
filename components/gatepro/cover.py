@@ -24,6 +24,7 @@ CONF_REMOTE_LEARN = "remote_learn"
 CONF_SPEED_SLIDER = "set_speed"
 CONF_DECEL_DIST_SLIDER = "set_decel_dist"
 CONF_DECEL_SPEED_SLIDER = "set_decel_speed"
+CONF_MAX_AMP = "set_max_amp"
 CONF_DEVINFO = "txt_devinfo"
 CONF_LEARN_STATUS = "txt_learn_status"
 CONF_PERMALOCK = "sw_permalock"
@@ -37,6 +38,7 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
         cv.Optional(CONF_SPEED_SLIDER): cv.use_id(number.Number),
         cv.Optional(CONF_DECEL_DIST_SLIDER): cv.use_id(number.Number),
         cv.Optional(CONF_DECEL_SPEED_SLIDER): cv.use_id(number.Number),
+        cv.Optional(CONF_MAX_AMP): cv.use_id(number.Number),
         cv.Optional(CONF_DEVINFO): cv.use_id(text_sensor.TextSensor),
         cv.Optional(CONF_LEARN_STATUS): cv.use_id(text_sensor.TextSensor),
         cv.Optional(CONF_PERMALOCK): cv.use_id(switch.Switch),
@@ -67,6 +69,9 @@ async def to_code(config):
     if CONF_DECEL_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_DECEL_SPEED_SLIDER])
       cg.add(var.set_decel_speed_slider(slider))
+    if CONF_MAX_AMP in config: 
+      slider = await cg.get_variable(config[CONF_MAX_AMP])
+      cg.add(var.set_max_amp_slider(slider))
     if CONF_DEVINFO in config:
       txt = await cg.get_variable(config[CONF_DEVINFO])
       cg.add(var.set_txt_devinfo(txt))

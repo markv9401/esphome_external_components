@@ -54,30 +54,24 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       // perma lock
       switch_::Switch *sw_permalock{nullptr};
       void set_sw_permalock(switch_::Switch *sw) { sw_permalock = sw; }
-
       // auto-learn btn
       esphome::button::Button *btn_learn;
       void set_btn_learn(esphome::button::Button *btn) { btn_learn = btn; }
-
       // get params od btn
       esphome::button::Button *btn_params_od;
       void set_btn_params_od(esphome::button::Button *btn) { btn_params_od = btn; }
-
       // remote learn btn
       esphome::button::Button *btn_remote_learn;
       void set_btn_remote_learn(esphome::button::Button *btn) { btn_remote_learn = btn; }
-
       // devinfo
       text_sensor::TextSensor *txt_devinfo{nullptr};
       void set_txt_devinfo(esphome::text_sensor::TextSensor *txt) { txt_devinfo = txt; }
-
       // learn status
       text_sensor::TextSensor *txt_learn_status{nullptr};
       void set_txt_learn_status(esphome::text_sensor::TextSensor *txt) { txt_learn_status = txt; }
 
       // generic re-used param setter
       void set_param(int idx, int val);
-
       // speed control
       number::Number *speed_slider{nullptr};
       void set_speed_slider(number::Number *slider) { speed_slider = slider; }
@@ -87,6 +81,9 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       // deceleration speed slider
       number::Number *decel_speed_slider{nullptr};
       void set_decel_speed_slider(number::Number *slider) { decel_speed_slider = slider; }
+      // max amp slider
+      number::Number *max_amp_slider{nullptr};
+      void set_max_amp_slider(number::Number *slider) { max_amp_slider = slider; }
 
       void setup() override;
       void update() override;
