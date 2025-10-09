@@ -1,6 +1,6 @@
 #include "esphome/core/log.h"
 #include "gatepro.h"
-#include "esphome/components/button/button.h"
+#include "esphome/components/button/template_button.h"
 
 namespace esphome {
 namespace gatepro {
@@ -271,7 +271,7 @@ void GatePro::setup() {
 }
 
 void GatePro::add_button(const std::string &name, std::function<void()> callback) {
-    auto btn = new button::Button();
+    auto btn = new button::TemplateButton();
     btn->set_name(name.c_str());
     btn->add_on_press_callback([callback]() { callback(); });
     this->buttons_.push_back(btn);
