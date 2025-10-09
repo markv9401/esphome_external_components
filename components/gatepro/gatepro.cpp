@@ -252,23 +252,24 @@ void GatePro::set_speed_4() {
 }
 
 void GatePro::parse_params(std::string msg) {
+    this->params_lock = true;
+    this->params.empty()
     msg = msg.substr(9, 33);
     size_t start = 0;
     size_t end;
 
-    std::vector<int> temp;
     while((end = msg.find(',', start)) != std::string::npos) {
-        temp.push_back(stoi(msg.substr(start, end - start)));
+        this->params.push_back(stoi(msg.substr(start, end - start)));
 	start = end + 1;
     }
-    temp.push_back(stoi(msg.substr(start)));
+    this->params.push_back(stoi(msg.substr(start)));
     
-    ESP_LOGD(TAG, "Vector contents (%zu elements):", temp.size());
+    ESP_LOGD(TAG, "Vector contents (%zu elements):", this->params.size());
     for (size_t i = 0; i < this->params.size(); ++i) {
-        ESP_LOGD(TAG, "  [%zu] = %d", i, temp[i]);
+        ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
     }
 
-    this->params = temp;
+    this->params_lock = false;
 }
 
 void GatePro::write_params() {
@@ -330,7 +331,7 @@ void GatePro::loop() {
   // keep reading uart for changes
   this->read_uart();
   this->process();
-  if (this->params.empty()) {
+  if (!this->params_lock && this->params.empty()) {
     this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
   }
 }

@@ -44,6 +44,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
  protected:
   // param logic
   std::vector<int> params;
+  bool params_lock = false;
   void parse_params(std::string msg);
   void write_params();
 
