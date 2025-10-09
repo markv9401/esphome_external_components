@@ -17,16 +17,18 @@ cover.COVER_OPERATIONS.update({
 })
 validate_cover_operation = cv.enum(cover.COVER_OPERATIONS, upper=True)
 
-CONF_SPEED_1 = "set_speed_1"
-CONF_SPEED_2 = "set_speed_2"
-CONF_SPEED_3 = "set_speed_3"
-CONF_SPEED_4 = "set_speed_4"
+#CONF_SPEED_1 = "set_speed_1"
+
 CONF_SPEED_SLIDER = "set_speed"
+CONF_DECEL_DIST_SLIDER = "set_decel_dist"
+CONF_DECEL_SPEED_SLIDER = "set_decel_speed"
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
         #cv.Optional(CONF_SPEED_1): cv.use_id(button.Button),
         cv.Optional(CONF_SPEED_SLIDER): cv.use_id(number.Number),
+        cv.Optional(CONF_DECEL_DIST_SLIDER): cv.use_id(number.Number),
+        cv.Optional(CONF_DECEL_SPEED_SLIDER): cv.use_id(number.Number),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
 
@@ -44,3 +46,9 @@ async def to_code(config):
     if CONF_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_SPEED_SLIDER])
       cg.add(var.set_speed_slider(slider))
+    if CONF_DECEL_DIST_SLIDER in config: 
+      slider = await cg.get_variable(config[CONF_DECEL_DIST_SLIDER])
+      cg.add(var.set_decel_dist_slider(slider))
+    if CONF_DECEL_SPEED_SLIDER in config: 
+      slider = await cg.get_variable(config[CONF_DECEL_SPEED_SLIDER])
+      cg.add(var.set_decel_speed_slider(slider))
