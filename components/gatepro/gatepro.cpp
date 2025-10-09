@@ -252,7 +252,7 @@ void GatePro::set_speed_4() {
 
   while (this->params_lock) {
     ESP_LOGD(TAG, "STILL WAITING..");
-    delay(10);
+    delay(500);
   }
   
   this->params[4] = 4;
