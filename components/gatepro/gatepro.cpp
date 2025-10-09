@@ -1,6 +1,6 @@
 #include "esphome/core/log.h"
 #include "gatepro.h"
-#include "esphome/componenets/button/button.h"
+#include "esphome/components/button/button.h"
 
 namespace esphome {
 namespace gatepro {
