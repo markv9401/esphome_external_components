@@ -18,7 +18,7 @@ cover.COVER_OPERATIONS.update({
 validate_cover_operation = cv.enum(cover.COVER_OPERATIONS, upper=True)
 
 
-CONF_SPEED_4 = "speed_4"
+CONF_SPEED_4 = "set_speed_4"
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
