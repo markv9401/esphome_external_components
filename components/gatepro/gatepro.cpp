@@ -18,9 +18,10 @@ void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
 
 void GatePro::publish() {
     // publish on each tick
-    /*if (this->position_ == this->position) {
+    // might have to comment out this one
+    if (this->position_ == this->position) {
       return;
-    }*/
+    }
 
     this->position_ = this->position;
     this->publish_state();
@@ -267,7 +268,7 @@ void GatePro::parse_params(std::string msg) {
     }
     this->params.push_back(stoi(msg.substr(start)));
     
-    ESP_LOGD(TAG, "Vector contents (%zu elements):", this->params.size());
+    ESP_LOGD(TAG, "Parsed current params:", this->params.size());
     for (size_t i = 0; i < this->params.size(); ++i) {
         ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
     }
