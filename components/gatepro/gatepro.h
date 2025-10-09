@@ -46,7 +46,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_4 = btn; }
       number::Number *speed_slider{nullptr};
       int cur_speed = 4;
-      void set_speed_slider(number::Number *slider) { speed_slider_ = slider; }
+      void set_speed_slider(number::Number *slider) { speed_slider = slider; }
 
       void setup() override;
       void update() override;
