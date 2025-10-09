@@ -1,0 +1,143 @@
+# only relevant parts are shown
+
+uart:
+  baud_rate: 9600
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/markv9401/esphome_external_components
+      ref: main
+    components: [ gatepro ]
+    refresh: 0s    
+
+cover:
+  - platform: gatepro
+    name: "Driveway gate"
+    device_class: gate
+    update_interval: 0.5s
+    set_speed: speed_slider
+    set_decel_dist: decel_dist_slider
+    set_decel_speed: decel_speed_slider
+    set_learn: auto_learn
+    get_params: get_params_od
+    txt_devinfo: devinfo
+    txt_learn_status: learn_status
+    sw_permalock: permalock
+    set_max_amp: max_amp
+    #sw_infra1: infra1
+    #sw_infra2: infra2
+    #set_auto_close: auto_close
+
+################################################
+# P A R A M E T E R S
+# NOTE: All values are most likely just indices, and thus are -1 offset from
+# the values of "leds" in the official user guide. The echoed param list is also
+# -1 offset, thus param with index 3 and value 2 here, is led 4, value 3 in the guide.
+################################################
+number:
+  - platform: template
+    name: "Operational speed"
+    id: speed_slider
+    min_value: 0
+    max_value: 3
+    step: 1
+    optimistic: True
+
+  # from 75% to 95%, in 5% steps
+  - platform: template
+    name: "Deceleration distance"
+    id: decel_dist_slider
+    min_value: 0
+    max_value: 4
+    step: 1
+    optimistic: True
+
+  # from 80% of operational speed to 25% in steps of 15-20%
+  - platform: template
+    name: "Deceleration speed"
+    id: decel_speed_slider
+    min_value: 0
+    max_value: 3
+    step: 1
+    optimistic: True
+
+  # from 2A up to 10A, in 1A steps
+  - platform: template
+    name: "Maximum amperage (torque)"
+    id: max_amp
+    min_value: 0
+    max_value: 8
+    step: 1
+    optimistic: True
+
+  # off, or from 5s to 180s in 10-15-20s increments
+  #- platform: template
+  #  name: "Auto-close time"
+  #  id: auto_close
+  #  min_value: 0
+  #  max_value: 7
+  #  step: 1
+  #  optimistic: True
+
+switch:
+  - platform: template
+    name: "Stop terminal function"
+    id: permalock
+    optimistic: True
+  #- platform: template
+  #  name: "Infra gate 1"
+  #  id: infra1
+  #  optimistic: True
+  #- platform: template
+  #  name: "Infra gate 2"
+  #  id: infra2
+  #  optimistic: True
+
+button:
+  - platform: template
+    name: "Auto Learn"
+    id: auto_learn
+  - platform: template
+    name: "Get params on-demand"
+    id: get_params_od
+  - platform: template
+    name: "Learn new remote"
+    id: remote_learn
+
+  - platform: restart
+    name: "Reboot"
+    id: reboot_btn
+    entity_category: "diagnostic"
+
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal dB sensor"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+  - platform: uptime
+    type: seconds
+    name: "Uptime sensor"
+    id: uptime_sensor
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+    id: esphome_version
+    entity_category: "diagnostic"
+
+  - platform: template
+    name: "Dev Info"
+    id: devinfo
+    entity_category: "diagnostic"
+
+  - platform: template
+    name: "Learn Status"
+    id: learn_status
+    entity_category: "diagnostic"
+
