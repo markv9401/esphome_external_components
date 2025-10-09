@@ -28,8 +28,8 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
         cv.GenerateID(): cv.declare_id(GatePro),
         #cv.Optional(CONF_SPEED_1): cv.use_id(button.Button),
         cv.Optional(CONF_SPEED_SLIDER): cv.use_id(number.Number),
-        cv.Optional(CONF_DECEL_DIST_SLIDER): cv.use_id(select.Select),
-        cv.Optional(CONF_DECEL_SPEED_SLIDER): cv.use_id(select.Select),
+        cv.Optional(CONF_DECEL_DIST_SELECT): cv.use_id(select.Select),
+        cv.Optional(CONF_DECEL_SPEED_SELECT): cv.use_id(select.Select),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
 async def to_code(config):
