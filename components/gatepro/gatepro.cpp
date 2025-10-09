@@ -317,8 +317,8 @@ void GatePro::parse_params(std::string msg) {
       this->max_amp_slider->publish_state(this->params[6]);
       this->auto_close_slider->publish_state(this->params[1]);
       this->sw_permalock->publish_state(this->params[15]);
-      this->sw_infra1->publish_state(this->params[13]);
-      this->sw_infra2->publish_state(this->params[14]);
+      //this->sw_infra1->publish_state(this->params[13]);
+      //this->sw_infra2->publish_state(this->params[14]);
    }
    ////////////
 
@@ -445,7 +445,7 @@ void GatePro::setup() {
       });
    }
 
-   if (sw_infra1) {
+   /*if (sw_infra1) {
       this->sw_infra1->add_on_state_callback([this](bool state){
          if (this->params[13] == state) {
             return;
@@ -461,7 +461,7 @@ void GatePro::setup() {
          }
          this->set_param(14, state ? 1 : 0);
       });
-   }
+   }*/
 }
 
 void GatePro::update() {

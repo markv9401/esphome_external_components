@@ -54,12 +54,12 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       // perma lock
       switch_::Switch *sw_permalock{nullptr};
       void set_sw_permalock(switch_::Switch *sw) { sw_permalock = sw; }
-      // infra1
+      /*// infra1
       switch_::Switch *sw_infra1{nullptr};
       void set_sw_infra1(switch_::Switch *sw) { sw_infra1 = sw; }
       // infra2
       switch_::Switch *sw_infra2{nullptr};
-      void set_sw_infra2(switch_::Switch *sw) { sw_infra2 = sw; }
+      void set_sw_infra2(switch_::Switch *sw) { sw_infra2 = sw; }*/
       // auto-learn btn
       esphome::button::Button *btn_learn;
       void set_btn_learn(esphome::button::Button *btn) { btn_learn = btn; }
