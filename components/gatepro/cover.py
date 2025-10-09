@@ -23,6 +23,7 @@ CONF_SPEED_SLIDER = "set_speed"
 CONF_DECEL_DIST_SLIDER = "set_decel_dist"
 CONF_DECEL_SPEED_SLIDER = "set_decel_speed"
 
+
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),

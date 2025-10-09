@@ -21,6 +21,8 @@ enum GateProCmd : uint8_t {
    GATEPRO_CMD_READ_PARAMS,
    GATEPRO_CMD_WRITE_PARAMS,
    GATEPRO_CMD_LEARN,
+   GATEPRO_CMD_DEVINFO,
+   GATEPRO_CMD_READ_LEARN_STATUS,
 };  
 
 const std::map<GateProCmd, const char*> GateProCmdMapping = {
@@ -31,21 +33,26 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
    {GATEPRO_CMD_READ_PARAMS, "RP,1:;src=P00287D7"},
    {GATEPRO_CMD_WRITE_PARAMS, "WP,1:"},
    {GATEPRO_CMD_LEARN, "AUTO LEARN;src=P00287D7"},
+   {GATEPRO_CMD_DEVINFO, "READ DEVINFO;src=P00287D7"},
+   {GATEPRO_CMD_READ_LEARN_STATUS, "READ LEARN STATUS;src=P00287D7"}
 };
 
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
    public:
+      // auto-learn btn
       esphome::button::Button *btn_learn;
       void set_btn_learn(esphome::button::Button *btn) { btn_learn = btn; }
 
-      // speed control
+      // generic re-used param setter
       void set_param(int idx, int val);
+
+      // speed control
       number::Number *speed_slider{nullptr};
       void set_speed_slider(number::Number *slider) { speed_slider = slider; }
-
+      // deceleration distance slider
       number::Number *decel_dist_slider{nullptr};
       void set_decel_dist_slider(number::Number *slider) { decel_dist_slider = slider; }
-
+      // deceleration speed slider
       number::Number *decel_speed_slider{nullptr};
       void set_decel_speed_slider(number::Number *slider) { decel_speed_slider = slider; }
 
