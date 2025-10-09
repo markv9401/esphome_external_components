@@ -39,9 +39,9 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       esphome::button::Button *btn_speed_2;
       esphome::button::Button *btn_speed_3;
       esphome::button::Button *btn_speed_4;
-      void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_1 = btn; }
-      void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_2 = btn; }
-      void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_3 = btn; }
+      void set_btn_set_speed_1(esphome::button::Button *btn) { btn_speed_1 = btn; }
+      void set_btn_set_speed_2(esphome::button::Button *btn) { btn_speed_2 = btn; }
+      void set_btn_set_speed_3(esphome::button::Button *btn) { btn_speed_3 = btn; }
       void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_4 = btn; }
 
       void setup() override;
