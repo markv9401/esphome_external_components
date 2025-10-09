@@ -20,6 +20,7 @@ enum GateProCmd : uint8_t {
    GATEPRO_CMD_READ_STATUS,
    GATEPRO_CMD_READ_PARAMS,
    GATEPRO_CMD_WRITE_PARAMS,
+   GATEPRO_CMD_LEARN,
 };  
 
 const std::map<GateProCmd, const char*> GateProCmdMapping = {
@@ -29,13 +30,13 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
    {GATEPRO_CMD_READ_STATUS, "RS;src=P00287D7"},
    {GATEPRO_CMD_READ_PARAMS, "RP,1:;src=P00287D7"},
    {GATEPRO_CMD_WRITE_PARAMS, "WP,1:"},
+   {GATEPRO_CMD_LEARN, "AUTO LEARN;src=P00287D7"},
 };
 
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
    public:
-      // buttons
-      //esphome::button::Button *btn_speed_1;
-      //void set_btn_set_speed_1(esphome::button::Button *btn) { btn_speed_1 = btn; }
+      esphome::button::Button *btn_learn;
+      void set_btn_set_learn(esphome::button::Button *btn) { btn_learn = btn; }
 
       // speed control
       void set_param(int idx, int val);
