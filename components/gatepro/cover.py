@@ -23,7 +23,7 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
         cv.Optional(CONF_SPEED_4): cv.Schema({
-            cv.Required("name"): cv.String
+            cv.Required("name"): cv.string
         }),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
