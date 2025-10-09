@@ -206,31 +206,11 @@ void GatePro::read_uart() {
    }
 }
 
-void GatePro::verify_tx(const char* msg_in) {
-   char msg[3];
-   std::strncpy(msg, msg_in, 3);
-
-   for (const auto& pair : GateProCmdMapping) {
-      const char* value = pair.second;
-      // Check if 'msg' matches the beginning of the value
-      if (std::strncmp(msg, value, std::strlen(msg)) == 0) {
-         break;
-      }
-   }
-
-   if (matchedKey) {
-      ESP_LOGD(TAG, "Found matching key: ");
-   } else {
-      ESP_LOGD(TAG, "No match found");
-   }
-}
-
 void GatePro::write_uart() {
    if (this->tx_queue.size()) {
       std::string tmp = this->tx_queue.front();
       tmp += this->tx_delimiter;
       const char* out = tmp.c_str();
-      //this->verify_tx(out);
       this->write_str(out);
       ESP_LOGD(TAG, "UART TX[%d]: %s", this->tx_queue.size(), out);
       this->tx_queue.pop();

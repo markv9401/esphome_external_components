@@ -44,7 +44,6 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       cover::CoverTraits get_traits() override;
 
    protected:
-      void verify_tx(const char* msg_in);
       // param logic
       std::vector<int> params;
       void parse_params(std::string msg);
