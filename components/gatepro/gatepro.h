@@ -21,11 +21,11 @@ enum GateProCmd : uint8_t {
 };  
 
 const std::map<GateProCmd, const char*> GateProCmdMapping = {
-   {GATEPRO_CMD_OPEN, "FULL OPEN;src=P00287D7\r\n"},
-   {GATEPRO_CMD_CLOSE, "FULL CLOSE;src=P00287D7\r\n"},
-   {GATEPRO_CMD_STOP, "STOP;src=P00287D7\r\n"},
-   {GATEPRO_CMD_READ_STATUS, "RS;src=P00287D7\r\n"},
-   {GATEPRO_CMD_READ_PARAMS, "RP,1:;src=P00287D7\r\n"},
+   {GATEPRO_CMD_OPEN, "FULL OPEN;src=P00287D7"},
+   {GATEPRO_CMD_CLOSE, "FULL CLOSE;src=P00287D7"},
+   {GATEPRO_CMD_STOP, "STOP;src=P00287D7"},
+   {GATEPRO_CMD_READ_STATUS, "RS;src=P00287D7"},
+   {GATEPRO_CMD_READ_PARAMS, "RP,1:;src=P00287D7"},
 };
 
 
@@ -69,7 +69,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       void stop_at_target_position();
 
       // UART parser constants
-      const std::string delimiter = "\r\n";
+      const std::string delimiter = "\\r\\n";
       const uint8_t delimiter_length = delimiter.length();
       std::string msg_buff;
 

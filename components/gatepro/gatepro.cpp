@@ -193,11 +193,13 @@ void GatePro::read_uart() {
 }
 
 void GatePro::write_uart() {
-  if (this->tx_queue.size()) {
-    this->write_str(this->tx_queue.front());
-    ESP_LOGD(TAG, "UART TX: %s", this->tx_queue.front());
-    this->tx_queue.pop();
-  }
+   if (this->tx_queue.size()) {
+      std::string tmp = this->tx_queue.front();
+      tmp += this->delimiter;
+      this->write_str(tmp);
+      ESP_LOGD(TAG, "UART TX: %s", tmp);
+      this->tx_queue.pop();
+   }
 }
 
 std::string GatePro::convert(uint8_t* bytes, size_t len) {
@@ -289,7 +291,7 @@ void GatePro::write_params() {
          msg += ",";
       }
    }
-   msg += ";src=P00287D7\r\n";
+   msg += ";src=P00287D7";
    ESP_LOGD(TAG, "BUILT PARAMS: %s", msg.c_str());
    this->tx_queue.push(msg.c_str());
 }
