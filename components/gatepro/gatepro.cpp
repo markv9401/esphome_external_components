@@ -222,9 +222,9 @@ void GatePro::verify_tx(const char* msg_in) {
    }
 
    if (matchedKey) {
-      std::cout << "Found matching key: " << *matchedKey << std::endl;
+      ESP_LOGD(TAG, "Found matching key: ");
    } else {
-      std::cout << "No match found" << std::endl;
+      ESP_LOGD(TAG, "No match found");
    }
 }
 
