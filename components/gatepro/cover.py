@@ -22,7 +22,7 @@ CONF_SPEED_4 = "speed_4"
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
-        cv.Optional(CONF_SPEED_4): button.button_schema(GatePro, press_action="set_speed_4"),
+        #cv.Optional(CONF_SPEED_4): button.button_schema(GatePro, press_action="set_speed_4"),
     }).extend(cv.COMPONENT_SCHEMA)
       .extend(cv.polling_component_schema("60s"))
       .extend(uart.UART_DEVICE_SCHEMA)
@@ -36,5 +36,5 @@ async def to_code(config):
     await cover.register_cover(var, config)
     await uart.register_uart_device(var, config)
 
-    if CONF_SPEED_4 in config:
-        btn_set_speed_4 = await button.new_button(config[CONF_SPEED_4], var)
+    #if CONF_SPEED_4 in config:
+    #    btn_set_speed_4 = await button.new_button(config[CONF_SPEED_4], var)
