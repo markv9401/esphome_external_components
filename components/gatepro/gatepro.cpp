@@ -61,7 +61,7 @@ void GatePro::process() {
    }
 
    // ACK WP example: ACK WP,1\r\n
-   if (msg.substr(0, 6) == "ACK WP")) {
+   if (msg.substr(0, 6) == "ACK WP") {
       ESP_LOGD(TAG, "Write params acknowledged");
       return;
    }
