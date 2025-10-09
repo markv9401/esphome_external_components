@@ -192,6 +192,7 @@ void GatePro::read_uart() {
     if (pos != std::string::npos) {
        std::string sub = this->msg_buff.substr(0, pos + this->delimiter_length);
        this->rx_queue.push(sub);
+       ESP_LOGD(TAG, "UART RX: %s", sub.c_str());
        this->msg_buff = this->msg_buff.substr(pos + this->delimiter_length, this->msg_buff.length() - pos);
     }
 }
