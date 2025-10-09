@@ -270,9 +270,8 @@ void GatePro::setup() {
 }
 
 void GatePro::add_button(const std::string &name, std::function<void()> callback) {
-    auto btn = new GenericButton();
+    auto btn = new GenericButton(callback);
     btn->set_name(name.c_str());
-    btn->add_on_press_callback([callback]() { callback(); });
     this->buttons_.push_back(btn);
     add_child(btn);
 }
