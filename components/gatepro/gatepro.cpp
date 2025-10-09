@@ -249,7 +249,7 @@ void GatePro::set_speed_4() {
   ESP_LOGD(TAG, "SET SPEEEEEED FOO");
   this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
  
-  this->paramTaskQueue.push([](){
+  this->paramTaskQueue.push([this](){
     this->params[4] = 4;
     this->write_params(); });
 }
