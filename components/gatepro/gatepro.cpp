@@ -201,22 +201,19 @@ void GatePro::read_uart() {
    if (pos != std::string::npos) {
       std::string sub = this->msg_buff.substr(0, pos + this->delimiter_length);
       this->rx_queue.push(sub);
-      ESP_LOGD(TAG, "UART RX: %s", sub.c_str());
+      ESP_LOGD(TAG, "UART RX[%d]: %s", this->rx_queue.size(), sub.c_str());
       this->msg_buff = this->msg_buff.substr(pos + this->delimiter_length, this->msg_buff.length() - pos);
    }
 }
 
 void GatePro::verify_tx(const char* msg_in) {
-   char msg[4];
-   std::strncpy(msg, msg_in, 4);
-
-   GateProCmd* matchedKey = nullptr;
+   char msg[3];
+   std::strncpy(msg, msg_in, 3);
 
    for (const auto& pair : GateProCmdMapping) {
       const char* value = pair.second;
       // Check if 'msg' matches the beginning of the value
       if (std::strncmp(msg, value, std::strlen(msg)) == 0) {
-         matchedKey = const_cast<GateProCmd*>(&pair.first);
          break;
       }
    }
@@ -233,9 +230,9 @@ void GatePro::write_uart() {
       std::string tmp = this->tx_queue.front();
       tmp += this->tx_delimiter;
       const char* out = tmp.c_str();
-      this->verify_tx(out);
+      //this->verify_tx(out);
       this->write_str(out);
-      ESP_LOGD(TAG, "UART TX: %s", out);
+      ESP_LOGD(TAG, "UART TX[%d]: %s", this->tx_queue.size(), out);
       this->tx_queue.pop();
    }
 }
