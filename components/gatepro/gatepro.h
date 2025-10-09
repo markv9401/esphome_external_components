@@ -42,6 +42,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
   cover::CoverTraits get_traits() override;
 
  protected:
+  esphome::button::Button *my_button_{nullptr};
   // abstract (cover) logic
   void control(const cover::CoverCall &call) override;
   void start_direction_(cover::CoverOperation dir);
