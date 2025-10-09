@@ -49,6 +49,9 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       number::Number *decel_speed_slider{nullptr};
       void set_decel_speed_slider(number::Number *slider) { decel_speed_slider = slider; }
 
+      number::Number *op_speed_slider{nullptr};
+      void set_op_speed_slider(number::Number *slider) { op_speed_slider = slider; }
+
       void setup() override;
       void update() override;
       void loop() override;

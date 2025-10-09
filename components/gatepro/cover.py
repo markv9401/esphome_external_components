@@ -22,6 +22,7 @@ validate_cover_operation = cv.enum(cover.COVER_OPERATIONS, upper=True)
 CONF_SPEED_SLIDER = "set_speed"
 CONF_DECEL_DIST_SLIDER = "set_decel_dist"
 CONF_DECEL_SPEED_SLIDER = "set_decel_speed"
+
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
@@ -52,3 +53,12 @@ async def to_code(config):
     if CONF_DECEL_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_DECEL_SPEED_SLIDER])
       cg.add(var.set_decel_speed_slider(slider))
+
+   op_speed_slider = cg.new_Pvariable("set_operational_speed")
+   cg.add(op_speed_slider.set_name("Operational speed"))
+   cg.add(op_speed_slider.set_min_value(1))
+   cg.add(op_speed_slider.set_max_value(4))
+   cg.add(op_speed_slider.set_step(1))
+   cg.add(op_speed_slider.set_optimistic(True))
+   cg.add(var.set_op_speed_slider(op_speed_slider))
+   cg.add_var(op_speed_slider)
