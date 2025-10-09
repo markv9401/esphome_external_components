@@ -214,13 +214,13 @@ std::string GatePro::convert(uint8_t* bytes, size_t len) {
 		} else if (bytes[i] == 9) {
 			res += "\\t";
 		} else if (bytes[i] == 10) {
-			res += "\\n";
+			res += "\n";
 		} else if (bytes[i] == 11) {
 			res += "\\v";
 		} else if (bytes[i] == 12) {
 			res += "\\f";
 		} else if (bytes[i] == 13) {
-			res += "\\r";
+			res += "\r";
 		} else if (bytes[i] == 27) {
 			res += "\\e";
 		} else if (bytes[i] == 34) {
