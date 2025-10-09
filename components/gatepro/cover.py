@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import uart, sensor, cover
+from esphome.components import uart, sensor, cover, button
 from esphome.const import CONF_ID, ICON_EMPTY, UNIT_EMPTY
 
 DEPENDENCIES = ["uart", "cover"]
@@ -19,10 +19,10 @@ validate_cover_operation = cv.enum(cover.COVER_OPERATIONS, upper=True)
 
 
 CONF_SPEED_4 = "speed_4"
-CONFIG_SCHEMA = cover.cover_schema(cover.Cover).extend(
+CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
-        cv.Optional(CONF_SPEED_4): button.button_schema(GatePro, press_action="set_speed_4")
+        cv.Optional(CONF_SPEED_4): button.button_schema(GatePro, press_action="set_speed_4"),
     }).extend(cv.COMPONENT_SCHEMA)
       .extend(cv.polling_component_schema("60s"))
       .extend(uart.UART_DEVICE_SCHEMA)
