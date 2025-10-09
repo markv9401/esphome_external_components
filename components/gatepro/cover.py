@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import uart, sensor, cover, button, number
+from esphome.components import uart, sensor, cover, button, number, text_sensor
 from esphome.const import CONF_ID, ICON_EMPTY, UNIT_EMPTY, CONF_NAME
 
 DEPENDENCIES = ["uart", "cover", "button"]
@@ -22,7 +22,7 @@ CONF_LEARN = "set_learn"
 CONF_SPEED_SLIDER = "set_speed"
 CONF_DECEL_DIST_SLIDER = "set_decel_dist"
 CONF_DECEL_SPEED_SLIDER = "set_decel_speed"
-
+CONF_DEVINFO = "txt_devinfo"
 
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
@@ -31,6 +31,7 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
         cv.Optional(CONF_SPEED_SLIDER): cv.use_id(number.Number),
         cv.Optional(CONF_DECEL_DIST_SLIDER): cv.use_id(number.Number),
         cv.Optional(CONF_DECEL_SPEED_SLIDER): cv.use_id(number.Number),
+        cv.Optional(CONF_DEVINFO): cv.use_id(text_sensor.TextSensor),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
 async def to_code(config):
@@ -52,3 +53,6 @@ async def to_code(config):
     if CONF_DECEL_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_DECEL_SPEED_SLIDER])
       cg.add(var.set_decel_speed_slider(slider))
+    if CONF_DEVINFO in config:
+      txt = await cg.get_variable(config[CONF_DEVINFO])
+      cg.add(var.set_txt_devinfo(txt))

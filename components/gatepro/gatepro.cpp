@@ -16,6 +16,10 @@ void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
 }
 
 void GatePro::publish() {
+   if (this->txt_devinfo && this->txt_devinfo->status() != this->devinfo) {
+      this->txt_devinfo->publish_state(this->devinfo);
+   }
+
    // if position is unchanged
    if (this->position_ == this->position) {
       // ..and the after ticks are up, then don't update
@@ -83,30 +87,36 @@ void GatePro::process() {
       this->last_operation_ = cover::COVER_OPERATION_OPENING;
       return;
       }
-   if (msg.substr(11, 6) == "Opened") {
-      this->operation_finished = true;
-      this->target_position_ = 0.0f;
-      this->current_operation = cover::COVER_OPERATION_IDLE;
+      if (msg.substr(11, 6) == "Opened") {
+         this->operation_finished = true;
+         this->target_position_ = 0.0f;
+         this->current_operation = cover::COVER_OPERATION_IDLE;
+         return;
+      }
+      if (msg.substr(11, 7) == "Closing") {
+         this->operation_finished = false;
+         this->current_operation = cover::COVER_OPERATION_CLOSING;
+         this->last_operation_ = cover::COVER_OPERATION_CLOSING;
+         return;
+      }
+      if (msg.substr(11, 6) == "Closed") {
+         this->operation_finished = true;
+         this->target_position_ = 0.0f;
+         this->current_operation = cover::COVER_OPERATION_IDLE;
+         return;
+      }
+      if (msg.substr(11, 7) == "Stopped") {
+         this->target_position_ = 0.0f;
+         this->current_operation = cover::COVER_OPERATION_IDLE;
+         return;
+      }
+   }
+
+   // Devinfo example: ACK READ DEVINFO:P500BU,PS21053C,V01\r\n
+   if (msg.substr(0, 16) == "ACK READ DEVINFO") {
+      this->devinfo = msg.substr(17, msg.size() - (17 + 2));
       return;
    }
-   if (msg.substr(11, 7) == "Closing") {
-      this->operation_finished = false;
-      this->current_operation = cover::COVER_OPERATION_CLOSING;
-      this->last_operation_ = cover::COVER_OPERATION_CLOSING;
-      return;
-   }
-   if (msg.substr(11, 6) == "Closed") {
-      this->operation_finished = true;
-      this->target_position_ = 0.0f;
-      this->current_operation = cover::COVER_OPERATION_IDLE;
-      return;
-   }
-   if (msg.substr(11, 7) == "Stopped") {
-      this->target_position_ = 0.0f;
-      this->current_operation = cover::COVER_OPERATION_IDLE;
-      return;
-   }
-  }
 }
 
 ////////////////////////////////////////////
@@ -346,6 +356,7 @@ void GatePro::setup() {
    this->queue_gatepro_cmd(GATEPRO_CMD_READ_STATUS);
    this->target_position_ = 0.0f;
    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
+   this->queue_gatepro_cmd(GATEPRO_CMD_DEVINFO);
 
    // set up frontend controllers
    if (btn_learn) {

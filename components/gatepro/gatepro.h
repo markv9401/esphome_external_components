@@ -7,6 +7,7 @@
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/cover/cover.h"
 #include "esphome/components/sensor/sensor.h"
+#include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/components/button/button.h"
 #include "esphome/components/number/number.h"
 
@@ -43,6 +44,10 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       esphome::button::Button *btn_learn;
       void set_btn_learn(esphome::button::Button *btn) { btn_learn = btn; }
 
+      // devinfo
+      text_sensor::TextSensor *txt_devinfo{nullptr};
+      void set_txt_devinfo(esphome::text_sensor::TextSensor *txt) { txt_devinfo = txt; }
+
       // generic re-used param setter
       void set_param(int idx, int val);
 
@@ -70,6 +75,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       bool param_no_pub = false;
       void write_params();
       std::queue<std::function<void()>> paramTaskQueue;
+      std::string devinfo = "N/A";
 
       // abstract (cover) logic
       void control(const cover::CoverCall &call) override;
