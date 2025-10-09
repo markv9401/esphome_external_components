@@ -110,8 +110,13 @@ void GatePro::process() {
 
    // Devinfo example: ACK READ DEVINFO:P500BU,PS21053C,V01\r\n
    if (msg.substr(0, 16) == "ACK READ DEVINFO") {
-      this->devinfo = msg.substr(17, msg.size() - (17 + 4));
-      this->txt_devinfo->publish_state(this->devinfo);
+      this->txt_devinfo->publish_state(msg.substr(17, msg.size() - (17 + 4)));
+      return;
+   }
+
+   // Devinfo example: ACK LEARN STATUS:SYSTEM LEARN COMPLETE,0\r\n
+   if (msg.substr(0, 16) == "ACK LEARN STATUS") {
+      this->txt_learn_status->publish_state(msg.substr(17, msg.size() - (17 + 4)));
       return;
    }
 }
@@ -354,6 +359,7 @@ void GatePro::setup() {
    this->target_position_ = 0.0f;
    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
    this->queue_gatepro_cmd(GATEPRO_CMD_DEVINFO);
+   this->queue_gatepro_cmd(GATEPRO_CMD_READ_LEARN_STATUS);
 
    // set up frontend controllers
    if (btn_learn) {

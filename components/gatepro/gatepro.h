@@ -48,6 +48,10 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       text_sensor::TextSensor *txt_devinfo{nullptr};
       void set_txt_devinfo(esphome::text_sensor::TextSensor *txt) { txt_devinfo = txt; }
 
+      // learn status
+      text_sensor::TextSensor *txt_learn_status{nullptr};
+      void set_txt_learn_status(esphome::text_sensor::TextSensor *txt) { txt_learn_status = txt; }
+
       // generic re-used param setter
       void set_param(int idx, int val);
 
