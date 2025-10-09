@@ -35,17 +35,12 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
    public:
       // buttons
-      void set_speed(int speed);
-      esphome::button::Button *btn_speed_1;
-      esphome::button::Button *btn_speed_2;
-      esphome::button::Button *btn_speed_3;
-      esphome::button::Button *btn_speed_4;
-      void set_btn_set_speed_1(esphome::button::Button *btn) { btn_speed_1 = btn; }
-      void set_btn_set_speed_2(esphome::button::Button *btn) { btn_speed_2 = btn; }
-      void set_btn_set_speed_3(esphome::button::Button *btn) { btn_speed_3 = btn; }
-      void set_btn_set_speed_4(esphome::button::Button *btn) { btn_speed_4 = btn; }
+      //esphome::button::Button *btn_speed_1;
+      //void set_btn_set_speed_1(esphome::button::Button *btn) { btn_speed_1 = btn; }
+
+      // speed control
+       void set_speed(int speed);
       number::Number *speed_slider{nullptr};
-      int cur_speed = 4;
       void set_speed_slider(number::Number *slider) { speed_slider = slider; }
 
       void setup() override;

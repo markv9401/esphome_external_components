@@ -26,9 +26,6 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
         #cv.Optional(CONF_SPEED_1): cv.use_id(button.Button),
-        #cv.Optional(CONF_SPEED_2): cv.use_id(button.Button),
-        #cv.Optional(CONF_SPEED_3): cv.use_id(button.Button),
-        #cv.Optional(CONF_SPEED_4): cv.use_id(button.Button),
         cv.Optional(CONF_SPEED_SLIDER): cv.use_id(number.Number),
     }).extend(cv.COMPONENT_SCHEMA).extend(cv.polling_component_schema("60s")).extend(uart.UART_DEVICE_SCHEMA)
 
@@ -44,15 +41,6 @@ async def to_code(config):
     #if CONF_SPEED_1 in config:
     #    btn = await cg.get_variable(config[CONF_SPEED_1])
     #    cg.add(var.set_btn_set_speed_1(btn))
-    #if CONF_SPEED_2 in config:
-    #    btn = await cg.get_variable(config[CONF_SPEED_2])
-    #    cg.add(var.set_btn_set_speed_2(btn))
-    #if CONF_SPEED_3 in config:
-    #    btn = await cg.get_variable(config[CONF_SPEED_3])
-    #    cg.add(var.set_btn_set_speed_3(btn))
-    #if CONF_SPEED_4 in config:
-    #    btn = await cg.get_variable(config[CONF_SPEED_4])
-    #    cg.add(var.set_btn_set_speed_4(btn))
     if CONF_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_SPEED_SLIDER])
       cg.add(var.set_speed_slider(slider))

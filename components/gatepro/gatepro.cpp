@@ -315,6 +315,9 @@ void GatePro::write_params() {
    std::strcpy(this->params_cmd, msg.c_str());
    ESP_LOGD(TAG, "BUILT PARAMS: %s", this->params_cmd);
    this->tx_queue.push(this->params_cmd);
+
+   // read params again just to update frontend and make sure :)
+   this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
 }
 
 ////////////////////////////////////////////
@@ -339,20 +342,11 @@ void GatePro::setup() {
    this->target_position_ = 0.0f;
    this->queue_gatepro_cmd(GATEPRO_CMD_READ_PARAMS);
 
-   // set up buttons
-   if (btn_speed_1) {
+   // set up frontend controllers
+   /*if (btn_speed_1) {
       this->btn_speed_1->add_on_press_callback([this](){this->set_speed(1);});
-   } 
-   if (btn_speed_2) {
-      this->btn_speed_2->add_on_press_callback([this](){this->set_speed(2);});
-   } 
-   if (btn_speed_3) {
-      this->btn_speed_3->add_on_press_callback([this](){this->set_speed(3);});
-   } 
-   if (btn_speed_4) {
-      this->btn_speed_4->add_on_press_callback([this](){this->set_speed(4);});
-   } 
-
+   }*/
+   
    if (speed_slider) {
       this->speed_slider->add_on_state_callback([this](int value){
          if (this->params[4] == value) {
