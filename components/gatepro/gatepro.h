@@ -84,6 +84,9 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       // max amp slider
       number::Number *max_amp_slider{nullptr};
       void set_max_amp_slider(number::Number *slider) { max_amp_slider = slider; }
+      // max amp slider
+      number::Number *auto_close_slider{nullptr};
+      void set_auto_close_slider(number::Number *slider) { auto_close_slider = slider; }
 
       void setup() override;
       void update() override;
