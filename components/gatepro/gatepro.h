@@ -17,6 +17,7 @@ enum GateProCmd : uint8_t {
   GATEPRO_CMD_CLOSE,
   GATEPRO_CMD_STOP,
   GATEPRO_CMD_READ_STATUS,
+  GATEPRO_CMD_READ_PARAMS
 };  
 
 const std::map<GateProCmd, const char*> GateProCmdMapping = {
