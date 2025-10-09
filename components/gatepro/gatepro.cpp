@@ -289,6 +289,19 @@ void GatePro::set_param(int idx, int val) {
       });
 }
 
+void GatePro::publish_params() {
+   if (!this->param_no_pub) {
+      if (this->speed_slider) this->speed_slider->publish_state(this->params[3]);
+      if (this->decel_dist_slider) this->decel_dist_slider->publish_state(this->params[4]);
+      if (this->decel_speed_slider) this->decel_speed_slider->publish_state(this->params[5]);
+      if (this->max_amp_slider) this->max_amp_slider->publish_state(this->params[6]);
+      if (this->auto_close_slider) this->auto_close_slider->publish_state(this->params[1]);
+      if (this->sw_permalock) this->sw_permalock->publish_state(this->params[15]);
+      if (this->sw_infra1) this->sw_infra1->publish_state(this->params[13]);
+      if (this->sw_infra2) this->sw_infra2->publish_state(this->params[14]);
+   }
+}
+
 void GatePro::parse_params(std::string msg) {
    this->params.clear();
    // example: ACK RP,1:1,0,0,1,2,2,0,0,0,3,0,0,3,0,0,0,0\r\n"
@@ -309,18 +322,7 @@ void GatePro::parse_params(std::string msg) {
       ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
    }
 
-   //////////// publish
-   if (!this->param_no_pub) {
-      this->speed_slider->publish_state(this->params[3]);
-      this->decel_dist_slider->publish_state(this->params[4]);
-      this->decel_speed_slider->publish_state(this->params[5]);
-      this->max_amp_slider->publish_state(this->params[6]);
-      this->auto_close_slider->publish_state(this->params[1]);
-      this->sw_permalock->publish_state(this->params[15]);
-      //this->sw_infra1->publish_state(this->params[13]);
-      //this->sw_infra2->publish_state(this->params[14]);
-   }
-   ////////////
+   this->publis_params();
 
    // write new params if any task is up
    while (!this->paramTaskQueue.empty()) {

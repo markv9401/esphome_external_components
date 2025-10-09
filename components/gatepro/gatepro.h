@@ -106,6 +106,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       char params_cmd[50];
       void parse_params(std::string msg);
       bool param_no_pub = false;
+      void publish_params();
       void write_params();
       std::queue<std::function<void()>> paramTaskQueue;
       std::string devinfo = "N/A";
