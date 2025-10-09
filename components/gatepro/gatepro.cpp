@@ -202,7 +202,7 @@ void GatePro::read_uart() {
       std::string sub = this->msg_buff.substr(0, pos + this->delimiter_length);
       this->rx_queue.push(sub);
       ESP_LOGD(TAG, "UART RX[%d]: %s", this->rx_queue.size(), sub.c_str());
-      this->msg_buff = this->msg_buff.substr(pos + this->delimiter_length + 1); //, this->msg_buff.length() - pos);
+      this->msg_buff = this->msg_buff.substr(pos + this->delimiter_length); //, this->msg_buff.length() - pos);
    }
 }
 
