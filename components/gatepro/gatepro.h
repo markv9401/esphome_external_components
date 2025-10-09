@@ -9,7 +9,6 @@
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/button/button.h"
 #include "esphome/components/number/number.h"
-#include "esphome/components/select/select.h"
 
 namespace esphome {
 namespace gatepro {
@@ -43,11 +42,11 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       number::Number *speed_slider{nullptr};
       void set_speed_slider(number::Number *slider) { speed_slider = slider; }
 
-      select::Select *decel_dist_select{nullptr};
-      void set_decel_dist_select(select::Select *select) { decel_dist_select = select; }
+      number::Number *decel_dist_slider{nullptr};
+      void set_decel_slider(number::Number *slider) { decel_dist_slider = slider; }
 
-      select::Select *decel_speed_select{nullptr};
-      void set_decel_speed_select(select::Select *select) { decel_speed_select = select; }
+      number::Number *decel_speed_select{nullptr};
+      void set_decel_speed_slider(number::Number *slider) { decel_speed_slider = slider; }
 
       void setup() override;
       void update() override;

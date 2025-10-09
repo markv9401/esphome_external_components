@@ -292,8 +292,8 @@ void GatePro::parse_params(std::string msg) {
 
    //////////// publish 
    this->speed_slider->publish_state(this->params[4]);
-   this->decel_dist_select->publish_index(this->params[5] - 1);
-   this->decel_speed_select->publish_index(this->params[6] - 1);
+   this->decel_dist_slider->publish_state(this->params[5]);
+   this->decel_speed_slider->publish_state(this->params[6]);
    ////////
 
    // write new params if any task is up
@@ -357,23 +357,21 @@ void GatePro::setup() {
       });
    }
 
-   if (decel_dist_select) {
-      this->decel_dist_select->add_on_state_callback([this](int value){
-         int val = this->decel_dist_select->get_index() + 1;
-         if (this->params[5] == val) {
+   if (decel_dist_slider) {
+      this->decel_dist_slider->add_on_state_callback([this](int value){
+         if (this->params[5] == value) {
             return;
          }
-         this->set_param(5, val);
+         this->set_param(5, value);
       });
    }
 
-   if (decel_speed_select) {
-      this->decel_speed_select->add_on_state_callback([this](std::string state){
-         int val = this->decel_speed_select->get_index() + 1;
-         if (this->params[6] == val) {
+   if (decel_speed_slider) {
+      this->decel_speed_slider->add_on_state_callback([this](int value){
+         if (this->params[6] == value) {
             return;
          }
-         this->set_param(6, val);
+         this->set_param(6, value);
       });
    }
 }
