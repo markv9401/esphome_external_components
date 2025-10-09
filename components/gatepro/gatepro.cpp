@@ -322,7 +322,7 @@ void GatePro::parse_params(std::string msg) {
       ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
    }
 
-   this->publis_params();
+   this->publish_params();
 
    // write new params if any task is up
    while (!this->paramTaskQueue.empty()) {
