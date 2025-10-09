@@ -37,6 +37,6 @@ async def to_code(config):
     await uart.register_uart_device(var, config)
 
     if CONF_SPEED_4 in config:
-        btn = cg.new_Pvariable(cv.generate_id(button.Button))
+        btn = cg.new_Pvariable(cv.GenerateID(button.Button))
         cg.add(var.set_btn_set_speed_4(btn))
         cg.add(btn.set_name(config[CONF_SPEED_4]["name"]))
