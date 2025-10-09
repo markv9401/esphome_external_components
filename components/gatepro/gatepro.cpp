@@ -366,7 +366,7 @@ void GatePro::setup() {
    }
 
    if (decel_speed_slider) {
-      this->set_decel_speed_slider->add_on_state_callback([this](int value){
+      this->decel_speed_slider->add_on_state_callback([this](int value){
          if (this->params[6] == value) {
             return;
          }
