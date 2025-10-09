@@ -59,7 +59,7 @@ void GatePro::process() {
   // Read param example: ACK RP,1:1,0,0,1,2,2,0,0,0,3,0,0,3,0,0,0,0\r\n"
   if (msg.substr(0, 6) == "ACK RP") {
     msg = msg.substr(11, 31);
-    vector<string> ps;
+    vector<int> ps;
     size_t start = 0;
     size_t end;
 
