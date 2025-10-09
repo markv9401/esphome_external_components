@@ -31,6 +31,8 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
    {GATEPRO_CMD_WRITE_PARAMS, "WP,1:"},
 };
 
+class GateProNumber : public number::Number {
+};
 
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
    public:
