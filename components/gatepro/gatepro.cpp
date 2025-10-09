@@ -60,6 +60,12 @@ void GatePro::process() {
       return;
    }
 
+   // ACK WP example: ACK WP,1\r\n
+   if (msg.substr(0, 6 == "ACK WP")) {
+      ESP_LOGD(TAG, "Write params acknowledged");
+      return;
+   }
+
    // Event message from the motor
    // example: $V1PKF0,17,Closed;src=0001\r\n
    if (msg.substr(0, 7) == "$V1PKF0") {
@@ -252,12 +258,6 @@ void GatePro::set_speed_4() {
       [this](){
          ESP_LOGD(TAG, "HALÓÓÓÓ ZSÓÓÓTI");
          this->params[4] = 4;
-
-         ESP_LOGD(TAG, "CURRRRR:", this->params.size());
-         for (size_t i = 0; i < this->params.size(); ++i) {
-            ESP_LOGD(TAG, "  [%zu] = %d", i, this->params[i]);
-         }
-
          this->write_params();
       });
 }
