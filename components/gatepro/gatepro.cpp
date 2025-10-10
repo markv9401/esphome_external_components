@@ -449,7 +449,7 @@ void GatePro::setup() {
             }
             this->set_param(swi.idx, value);
          }
-      )
+      );
    }
 
    if (sw_permalock) {
