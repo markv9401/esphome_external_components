@@ -443,7 +443,7 @@ void GatePro::setup() {
    }*/
    for (auto swi : this->sliders_with_indices) {
       swi.slider->add_on_state_callback(
-         [this](int value) {
+         [this, swi](int value) {
             if (this->params[swi.idx] == value) {
                return;
             }
