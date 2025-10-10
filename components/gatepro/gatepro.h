@@ -102,9 +102,9 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
 
          SliderWithIdx(u_int idx, number::Number *slider) : idx(idx), slider(slider) {};
       };
-      
+
       std::vector<SliderWithIdx> sliders_with_indices;
-      void set_slider(std::string param_idx, number::Number* slider) {
+      void set_slider(u_int param_idx, number::Number* slider) {
          this->sliders_with_indices.push_back(SliderWithIdx(param_idx, slider));
       }
 
