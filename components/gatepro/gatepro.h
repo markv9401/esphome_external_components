@@ -60,6 +60,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       // infra2
       switch_::Switch *sw_infra2{nullptr};
       void set_sw_infra2(switch_::Switch *sw) { sw_infra2 = sw; }
+
       // auto-learn btn
       esphome::button::Button *btn_learn;
       void set_btn_learn(esphome::button::Button *btn) { btn_learn = btn; }
@@ -69,6 +70,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       // remote learn btn
       esphome::button::Button *btn_remote_learn;
       void set_btn_remote_learn(esphome::button::Button *btn) { btn_remote_learn = btn; }
+
       // devinfo
       text_sensor::TextSensor *txt_devinfo{nullptr};
       void set_txt_devinfo(esphome::text_sensor::TextSensor *txt) { txt_devinfo = txt; }
@@ -93,6 +95,17 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       // max amp slider
       number::Number *auto_close_slider{nullptr};
       void set_auto_close_slider(number::Number *slider) { auto_close_slider = slider; }
+
+      struct SliderWithIdx{
+         u_int idx;
+         number::Number *slider;
+
+         SliderWithIdx(u_int idx, number::Number *slider) : idx(idx), slider(slider) {}
+      }
+      std::vector<SliderWithIdx> sliders_with_indices;
+      void set_slider(std::string param_idx, number::Number* slider) {
+         this->sliders_with_indices.push_back(SliderWithIdx(param_idx, slider));
+      }
 
       void setup() override;
       void update() override;

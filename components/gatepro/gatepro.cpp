@@ -295,10 +295,14 @@ void GatePro::publish_params() {
       if (this->decel_dist_slider) this->decel_dist_slider->publish_state(this->params[4]);
       if (this->decel_speed_slider) this->decel_speed_slider->publish_state(this->params[5]);
       if (this->max_amp_slider) this->max_amp_slider->publish_state(this->params[6]);
-      if (this->auto_close_slider) this->auto_close_slider->publish_state(this->params[1]);
+      //if (this->auto_close_slider) this->auto_close_slider->publish_state(this->params[1]);
       if (this->sw_permalock) this->sw_permalock->publish_state(this->params[15]);
       if (this->sw_infra1) this->sw_infra1->publish_state(this->params[13]);
       if (this->sw_infra2) this->sw_infra2->publish_state(this->params[14]);
+
+      for (auto swi : this->sliders_with_indices) {
+         swi.slider->publish_state(this->params[swi.idx]);
+      }
    }
 }
 
@@ -429,13 +433,23 @@ void GatePro::setup() {
       });
    }
 
-   if (auto_close_slider) {
+   /*if (auto_close_slider) {
       this->auto_close_slider->add_on_state_callback([this](int value){
          if (this->params[1] == value) {
             return;
          }
          this->set_param(1, value);
       });
+   }*/
+   for (auto swi : this->sliders_with_indices) {
+      swi.slider->add_on_state_callback(
+         [this](int value) {
+            if (this->params[swi.idx] == value) {
+               return;
+            }
+            this->set_param(swi.idx, value);
+         }
+      )
    }
 
    if (sw_permalock) {

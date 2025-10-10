@@ -66,6 +66,7 @@ async def to_code(config):
     if CONF_REMOTE_LEARN in config:
         btn = await cg.get_variable(config[CONF_REMOTE_LEARN])
         cg.add(var.set_btn_remote_learn(btn))
+
     if CONF_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_SPEED_SLIDER])
       cg.add(var.set_speed_slider(slider))
@@ -80,13 +81,15 @@ async def to_code(config):
       cg.add(var.set_max_amp_slider(slider))
     if CONF_AUTO_CLOSE in config: 
       slider = await cg.get_variable(config[CONF_AUTO_CLOSE])
-      cg.add(var.set_auto_close_slider(slider))
+      cg.add(var.set_slider(1, slider))
+
     if CONF_DEVINFO in config:
       txt = await cg.get_variable(config[CONF_DEVINFO])
       cg.add(var.set_txt_devinfo(txt))
     if CONF_LEARN_STATUS in config:
       txt = await cg.get_variable(config[CONF_LEARN_STATUS])
       cg.add(var.set_txt_learn_status(txt))
+
     if CONF_PERMALOCK in config:
       sw = await cg.get_variable(config[CONF_PERMALOCK])
       cg.add(var.set_sw_permalock(sw))
