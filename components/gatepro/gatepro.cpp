@@ -12,7 +12,7 @@ static const char* TAG = "gatepro";
 // Helper / misc functions
 ////////////////////////////////////////////
 void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
-   ESP_LOGD(TAG "Queuing cmd: %s", GateProCmdMapping.at(cmd));
+   ESP_LOGD(TAG, "Queuing cmd: %s", GateProCmdMapping.at(cmd));
    this->tx_queue.push(GateProCmdMapping.at(cmd));
 }
 
