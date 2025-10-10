@@ -96,7 +96,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
          GateProCmd cmd;
          button::Button *btn;
          BtnWithCmd(GateProCmd cmd, button::Button *btn) : cmd(cmd), btn(btn) {};
-      }
+      };
       std::vector<BtnWithCmd> btns_with_cmds;
       void set_btn(GateProCmd cmd, button::Button *btn) {
          this->btns_with_cmds.push_back(BtnWithCmd(find_cmd_by_string(cmd), btn));
