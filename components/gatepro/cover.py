@@ -32,17 +32,25 @@ CONF_PERMALOCK = "sw_permalock"
 CONF_INFRA1 = "sw_infra1"
 CONF_INFRA2 = "sw_infra2"
 
+
+SET_NUMBER_SCHEMA = cv.Schema({
+   cv.Required("number"): cv.use_id(number.Number),
+   cv.Required("param"): cv.int_,
+})
+
 CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
     {
         cv.GenerateID(): cv.declare_id(GatePro),
         cv.Optional(CONF_LEARN): cv.use_id(button.Button),
         cv.Optional(CONF_PARAMS_OD): cv.use_id(button.Button),
         cv.Optional(CONF_REMOTE_LEARN): cv.use_id(button.Button),
-        cv.Optional(CONF_SPEED_SLIDER): cv.use_id(number.Number),
-        cv.Optional(CONF_DECEL_DIST_SLIDER): cv.use_id(number.Number),
-        cv.Optional(CONF_DECEL_SPEED_SLIDER): cv.use_id(number.Number),
-        cv.Optional(CONF_MAX_AMP): cv.use_id(number.Number),
-        cv.Optional(CONF_AUTO_CLOSE): cv.use_id(number.Number),
+
+        cv.Optional(CONF_AUTO_CLOSE): SET_NUMBER_SCHEMA,
+        cv.Optional(CONF_SPEED_SLIDER): SET_NUMBER_SCHEMA,
+        cv.Optional(CONF_DECEL_DIST_SLIDER): SET_NUMBER_SCHEMA,
+        cv.Optional(CONF_DECEL_SPEED_SLIDER): SET_NUMBER_SCHEMA,
+        cv.Optional(CONF_MAX_AMP): SET_NUMBER_SCHEMA,
+        
         cv.Optional(CONF_DEVINFO): cv.use_id(text_sensor.TextSensor),
         cv.Optional(CONF_LEARN_STATUS): cv.use_id(text_sensor.TextSensor),
         cv.Optional(CONF_PERMALOCK): cv.use_id(switch.Switch),
@@ -68,20 +76,25 @@ async def to_code(config):
         cg.add(var.set_btn_remote_learn(btn))
 
     if CONF_SPEED_SLIDER in config: 
-      slider = await cg.get_variable(config[CONF_SPEED_SLIDER])
-      cg.add(var.set_slider(3, slider))
+      cfg = config[CONF_SPEED_SLIDER]
+      slider = await cg.get_variable(cfg["number"])
+      cg.add(var.set_slider(cfg["param"], slider))
     if CONF_DECEL_DIST_SLIDER in config: 
-      slider = await cg.get_variable(config[CONF_DECEL_DIST_SLIDER])
-      cg.add(var.set_slider(4, slider))
+      cfg = config[CONF_DECEL_DIST_SLIDER]
+      slider = await cg.get_variable(cfg["number"])
+      cg.add(var.set_slider(cfg["param"], slider))
     if CONF_DECEL_SPEED_SLIDER in config: 
-      slider = await cg.get_variable(config[CONF_DECEL_SPEED_SLIDER])
-      cg.add(var.set_slider(5, slider))
+      cfg = config[CONF_DECEL_SPEED_SLIDER]
+      slider = await cg.get_variable(cfg["number"])
+      cg.add(var.set_slider(cfg["param"], slider))
     if CONF_MAX_AMP in config: 
-      slider = await cg.get_variable(config[CONF_MAX_AMP])
-      cg.add(var.set_slider(6, slider))
+      cfg = config[CONF_MAX_AMP]
+      slider = await cg.get_variable(cfg["number"])
+      cg.add(var.set_slider(cfg["param"], slider))
     if CONF_AUTO_CLOSE in config: 
-      slider = await cg.get_variable(config[CONF_AUTO_CLOSE])
-      cg.add(var.set_slider(1, slider))
+      cfg = config[CONF_AUTO_CLOSE]
+      slider = await cg.get_variable(cfg["number"])
+      cg.add(var.set_slider(cfg["param"], slider))
 
     if CONF_DEVINFO in config:
       txt = await cg.get_variable(config[CONF_DEVINFO])
