@@ -415,6 +415,14 @@ void GatePro::setup() {
          }
       );
    }   
+   // Buttons
+   for (auto bwc : this->btns_with_cmds) {
+      bwc.btn->add_on_press_callback(
+         [this, bwc]() {
+            this->queue_gatepro_cmd(bwc.cmd);
+         }
+      );
+   }   
 }
 
 void GatePro::update() {

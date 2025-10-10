@@ -2,6 +2,7 @@
 
 #include <map>
 #include <vector>
+#include <optional>
 #include "esphome.h"
 #include "esphome/core/component.h"
 #include "esphome/components/uart/uart.h"
@@ -90,6 +91,16 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       void set_switch(u_int param_idx, switch_::Switch *switch_) {
          this->switches_with_indices.push_back(SwitchWithIdx(param_idx, switch_));
       }
+      // Buttons
+      struct BtnWithCmd{
+         GateProCmd cmd;
+         button::Button *btn;
+         BtnWithCmd(GateProCmd cmd, button::Button *btn) : cmd(cmd), btn(btn) {};
+      }
+      std::vector<BtnWithCmd> btns_with_cmds;
+      void set_btn(GateProCmd cmd, button::Button *btn) {
+         this->btns_with_cmds.push_back(BtnWithCmd(find_cmd_by_string(cmd), btn));
+      }
 
       void setup() override;
       void update() override;
@@ -107,6 +118,15 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       void write_params();
       std::queue<std::function<void()>> paramTaskQueue;
       std::string devinfo = "N/A";
+      std::optional<GateProCmd> GatePro::find_cmd_by_string(const std::string &input) {
+         for (const auto &[cmd, str] : GateProCmdMapping) {
+            if (input == str) {
+                  return cmd;  // found a match
+            }
+         }
+         return std::nullopt; // no match
+      }
+
 
       // abstract (cover) logic
       void control(const cover::CoverCall &call) override;
