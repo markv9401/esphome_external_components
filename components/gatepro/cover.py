@@ -119,7 +119,7 @@ async def to_code(config):
       cfg = config[CONF_AUTO_CLOSE]
       slider = await cg.get_variable(cfg["number"])
       cg.add(var.set_slider(cfg["param"], slider))
-   if CONF_PED_DURA in config: 
+    if CONF_PED_DURA in config: 
       cfg = config[CONF_PED_DURA]
       slider = await cg.get_variable(cfg["number"])
       cg.add(var.set_slider(cfg["param"], slider))
