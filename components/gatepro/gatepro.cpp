@@ -408,10 +408,10 @@ void GatePro::setup() {
    for (auto swi : this->switches_with_indices) {
       swi.switch_->add_on_state_callback(
          [this, swi](bool state) {
-            if (this->params[swi.idx] == value) {
+            if (this->params[swi.idx] == state) {
                return;
             }
-            this->set_param(swi.idx, value ? 1 : 0);
+            this->set_param(swi.idx, state ? 1 : 0);
          }
       );
    }   
