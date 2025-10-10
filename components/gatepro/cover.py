@@ -39,7 +39,7 @@ SET_NUMBER_SCHEMA = cv.Schema({
 })
 
 SET_SWITCH_SCHEMA = cv.Schema({
-   cv.Required("number"): cv.use_id(switch.Switch),
+   cv.Required("switch"): cv.use_id(switch.Switch),
    cv.Required("param"): cv.int_,
 })
 
