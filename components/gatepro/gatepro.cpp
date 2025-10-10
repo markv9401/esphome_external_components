@@ -291,12 +291,13 @@ void GatePro::set_param(int idx, int val) {
 
 void GatePro::publish_params() {
    if (!this->param_no_pub) {
-      if (this->sw_permalock) this->sw_permalock->publish_state(this->params[15]);
-      if (this->sw_infra1) this->sw_infra1->publish_state(this->params[13]);
-      if (this->sw_infra2) this->sw_infra2->publish_state(this->params[14]);
-
+      // Numbers
       for (auto swi : this->sliders_with_indices) {
          swi.slider->publish_state(this->params[swi.idx]);
+      }
+      // Switches
+      for (auto swi : this->switches_with_indices) {
+         swi.switch_->publish_state(this->params[swi.idx]);
       }
    }
 }
@@ -403,34 +404,17 @@ void GatePro::setup() {
          }
       );
    }
-   //
-
-   if (sw_permalock) {
-      this->sw_permalock->add_on_state_callback([this](bool state){
-         if (this->params[15] == state) {
-            return;
+   // Switches
+   for (auto swi : this->switches_with_indices) {
+      swi.switch_->add_on_state_callback(
+         [this, swi](bool state) {
+            if (this->params[swi.idx] == value) {
+               return;
+            }
+            this->set_param(swi.idx, value ? 1 : 0);
          }
-         this->set_param(15, state ? 1 : 0);
-      });
-   }
-
-   if (sw_infra1) {
-      this->sw_infra1->add_on_state_callback([this](bool state){
-         if (this->params[13] == state) {
-            return;
-         }
-         this->set_param(13, state ? 1 : 0);
-      });
-   }
-
-   if (sw_infra2) {
-      this->sw_infra2->add_on_state_callback([this](bool state){
-         if (this->params[14] == state) {
-            return;
-         }
-         this->set_param(14, state ? 1 : 0);
-      });
-   }
+      );
+   }   
 }
 
 void GatePro::update() {

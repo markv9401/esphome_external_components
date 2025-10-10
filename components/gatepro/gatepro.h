@@ -51,16 +51,6 @@ const std::map<GateProCmd, const char*> GateProCmdMapping = {
 
 class GatePro : public cover::Cover, public PollingComponent, public uart::UARTDevice {
    public:
-      // perma lock
-      switch_::Switch *sw_permalock{nullptr};
-      void set_sw_permalock(switch_::Switch *sw) { sw_permalock = sw; }
-      // infra1
-      switch_::Switch *sw_infra1{nullptr};
-      void set_sw_infra1(switch_::Switch *sw) { sw_infra1 = sw; }
-      // infra2
-      switch_::Switch *sw_infra2{nullptr};
-      void set_sw_infra2(switch_::Switch *sw) { sw_infra2 = sw; }
-
       // auto-learn btn
       esphome::button::Button *btn_learn;
       void set_btn_learn(esphome::button::Button *btn) { btn_learn = btn; }
@@ -78,19 +68,28 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       text_sensor::TextSensor *txt_learn_status{nullptr};
       void set_txt_learn_status(esphome::text_sensor::TextSensor *txt) { txt_learn_status = txt; }
 
-      // Sliders
+      // Param setter
       void set_param(int idx, int val);
+      // Sliders
       struct SliderWithIdx{
          u_int idx;
          number::Number *slider;
-
          SliderWithIdx(u_int idx, number::Number *slider) : idx(idx), slider(slider) {};
       };
       std::vector<SliderWithIdx> sliders_with_indices;
-      void set_slider(u_int param_idx, number::Number* slider) {
+      void set_slider(u_int param_idx, number::Number *slider) {
          this->sliders_with_indices.push_back(SliderWithIdx(param_idx, slider));
       }
-      //
+      // Switches
+      struct SwitchWithIdx{
+         u_int idx;
+         switch_::Switch *switch_;
+         SwitchWithIdx(u_int idx, switch_::Switch *switch_) : idx(idx), switch_(switch_) {};
+      };
+      std::vector<SwitchWithIdx> switches_with_indices;
+      void set_switch(u_int param_idx, switch_::Switch *switch_) {
+         this->switches_with_indices.push_back(SwitchWithIdx(param_idx, slider));
+      }
 
       void setup() override;
       void update() override;
