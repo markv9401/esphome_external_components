@@ -2,7 +2,6 @@
 
 #include <map>
 #include <vector>
-#include <optional>
 #include "esphome.h"
 #include "esphome/core/component.h"
 #include "esphome/components/uart/uart.h"
@@ -17,6 +16,7 @@ namespace esphome {
 namespace gatepro {
 
 enum GateProCmd : uint8_t {
+   GATEPRO_CMD_NONE,
    GATEPRO_CMD_OPEN,
    GATEPRO_CMD_CLOSE,
    GATEPRO_CMD_STOP,
@@ -118,13 +118,13 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       void write_params();
       std::queue<std::function<void()>> paramTaskQueue;
       std::string devinfo = "N/A";
-      std::optional<GateProCmd> find_cmd_by_string(const std::string &input) {
+      GateProCmd find_cmd_by_string(const std::string &input) {
          for (const auto &[cmd, str] : GateProCmdMapping) {
             if (input == str) {
-                  return cmd;  // found a match
+               return cmd;
             }
          }
-         return std::nullopt; // no match
+         return GATEPRO_CMD_NONE;
       }
 
 
