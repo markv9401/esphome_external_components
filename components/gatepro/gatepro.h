@@ -118,7 +118,7 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       void write_params();
       std::queue<std::function<void()>> paramTaskQueue;
       std::string devinfo = "N/A";
-      std::optional<GateProCmd> GatePro::find_cmd_by_string(const std::string &input) {
+      std::optional<GateProCmd> find_cmd_by_string(const std::string &input) {
          for (const auto &[cmd, str] : GateProCmdMapping) {
             if (input == str) {
                   return cmd;  // found a match
