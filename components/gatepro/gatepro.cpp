@@ -12,6 +12,7 @@ static const char* TAG = "gatepro";
 // Helper / misc functions
 ////////////////////////////////////////////
 void GatePro::queue_gatepro_cmd(GateProCmd cmd) {
+   ESP_LOGD(TAG "Queuing cmd: %s", GateProCmdMapping.at(cmd));
    this->tx_queue.push(GateProCmdMapping.at(cmd));
 }
 
@@ -417,8 +418,10 @@ void GatePro::setup() {
    }   
    // Buttons
    for (auto bwc : this->btns_with_cmds) {
+      ESP_LOGD(TAG, "setting up btn");
       bwc.btn->add_on_press_callback(
          [this, bwc]() {
+            ESP_LOGD(TAG, "press callback");
             this->queue_gatepro_cmd(bwc.cmd);
          }
       );
