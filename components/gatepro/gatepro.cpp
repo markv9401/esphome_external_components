@@ -115,13 +115,13 @@ void GatePro::process() {
    }
 
    // Devinfo example: ACK READ DEVINFO:P500BU,PS21053C,V01\r\n
-   if (msg.substr(0, 16) == "ACK READ DEVINFO") {
+   if (msg.substr(0, 16) == "ACK READ DEVINFO" && this->txt_devinfo) {
       this->txt_devinfo->publish_state(msg.substr(17, msg.size() - (17 + 4)));
       return;
    }
 
    // Devinfo example: ACK LEARN STATUS:SYSTEM LEARN COMPLETE,0\r\n /
-   if (msg.substr(0, 16) == "ACK LEARN STATUS") {
+   if (msg.substr(0, 16) == "ACK LEARN STATUS" && this->txt_learn_status) {
       this->txt_learn_status->publish_state(msg.substr(17, msg.size() - (17 + 4)));
       return;
    }

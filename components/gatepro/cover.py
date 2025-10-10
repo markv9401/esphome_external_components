@@ -17,17 +17,21 @@ cover.COVER_OPERATIONS.update({
 })
 validate_cover_operation = cv.enum(cover.COVER_OPERATIONS, upper=True)
 
-
+# buttons
 CONF_LEARN = "set_learn"
 CONF_PARAMS_OD = "get_params"
 CONF_REMOTE_LEARN = "remote_learn"
+# numbers
 CONF_SPEED_SLIDER = "set_speed"
 CONF_DECEL_DIST_SLIDER = "set_decel_dist"
 CONF_DECEL_SPEED_SLIDER = "set_decel_speed"
 CONF_MAX_AMP = "set_max_amp"
 CONF_AUTO_CLOSE = "set_auto_close"
+CONF_PED_DURA = "set_ped_dura"
+# text sensors
 CONF_DEVINFO = "txt_devinfo"
 CONF_LEARN_STATUS = "txt_learn_status"
+# switchs
 CONF_PERMALOCK = "sw_permalock"
 CONF_INFRA1 = "sw_infra1"
 CONF_INFRA2 = "sw_infra2"
@@ -56,6 +60,7 @@ CONFIG_SCHEMA = cover.cover_schema(GatePro).extend(
         cv.Optional(CONF_DECEL_DIST_SLIDER): SET_NUMBER_SCHEMA,
         cv.Optional(CONF_DECEL_SPEED_SLIDER): SET_NUMBER_SCHEMA,
         cv.Optional(CONF_MAX_AMP): SET_NUMBER_SCHEMA,
+        cv.Optional(CONF_PED_DURA): SET_NUMBER_SCHEMA,
         # text sensors
         cv.Optional(CONF_DEVINFO): cv.use_id(text_sensor.TextSensor),
         cv.Optional(CONF_LEARN_STATUS): cv.use_id(text_sensor.TextSensor),
@@ -101,6 +106,10 @@ async def to_code(config):
       cg.add(var.set_slider(cfg["param"], slider))
     if CONF_AUTO_CLOSE in config: 
       cfg = config[CONF_AUTO_CLOSE]
+      slider = await cg.get_variable(cfg["number"])
+      cg.add(var.set_slider(cfg["param"], slider))
+   if CONF_PED_DURA in config: 
+      cfg = config[CONF_PED_DURA]
       slider = await cg.get_variable(cfg["number"])
       cg.add(var.set_slider(cfg["param"], slider))
     # text sensors
