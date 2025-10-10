@@ -78,35 +78,19 @@ class GatePro : public cover::Cover, public PollingComponent, public uart::UARTD
       text_sensor::TextSensor *txt_learn_status{nullptr};
       void set_txt_learn_status(esphome::text_sensor::TextSensor *txt) { txt_learn_status = txt; }
 
-      // generic re-used param setter
+      // Sliders
       void set_param(int idx, int val);
-      // speed control
-      number::Number *speed_slider{nullptr};
-      void set_speed_slider(number::Number *slider) { speed_slider = slider; }
-      // deceleration distance slider
-      number::Number *decel_dist_slider{nullptr};
-      void set_decel_dist_slider(number::Number *slider) { decel_dist_slider = slider; }
-      // deceleration speed slider
-      number::Number *decel_speed_slider{nullptr};
-      void set_decel_speed_slider(number::Number *slider) { decel_speed_slider = slider; }
-      // max amp slider
-      number::Number *max_amp_slider{nullptr};
-      void set_max_amp_slider(number::Number *slider) { max_amp_slider = slider; }
-      // max amp slider
-      number::Number *auto_close_slider{nullptr};
-      void set_auto_close_slider(number::Number *slider) { auto_close_slider = slider; }
-
       struct SliderWithIdx{
          u_int idx;
          number::Number *slider;
 
          SliderWithIdx(u_int idx, number::Number *slider) : idx(idx), slider(slider) {};
       };
-
       std::vector<SliderWithIdx> sliders_with_indices;
       void set_slider(u_int param_idx, number::Number* slider) {
          this->sliders_with_indices.push_back(SliderWithIdx(param_idx, slider));
       }
+      //
 
       void setup() override;
       void update() override;

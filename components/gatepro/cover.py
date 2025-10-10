@@ -69,16 +69,16 @@ async def to_code(config):
 
     if CONF_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_SPEED_SLIDER])
-      cg.add(var.set_speed_slider(slider))
+      cg.add(var.set_slider(3, slider))
     if CONF_DECEL_DIST_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_DECEL_DIST_SLIDER])
-      cg.add(var.set_decel_dist_slider(slider))
+      cg.add(var.set_slider(4, slider))
     if CONF_DECEL_SPEED_SLIDER in config: 
       slider = await cg.get_variable(config[CONF_DECEL_SPEED_SLIDER])
-      cg.add(var.set_decel_speed_slider(slider))
+      cg.add(var.set_slider(5, slider))
     if CONF_MAX_AMP in config: 
       slider = await cg.get_variable(config[CONF_MAX_AMP])
-      cg.add(var.set_max_amp_slider(slider))
+      cg.add(var.set_slider(6, slider))
     if CONF_AUTO_CLOSE in config: 
       slider = await cg.get_variable(config[CONF_AUTO_CLOSE])
       cg.add(var.set_slider(1, slider))

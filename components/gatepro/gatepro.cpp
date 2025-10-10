@@ -291,11 +291,6 @@ void GatePro::set_param(int idx, int val) {
 
 void GatePro::publish_params() {
    if (!this->param_no_pub) {
-      if (this->speed_slider) this->speed_slider->publish_state(this->params[3]);
-      if (this->decel_dist_slider) this->decel_dist_slider->publish_state(this->params[4]);
-      if (this->decel_speed_slider) this->decel_speed_slider->publish_state(this->params[5]);
-      if (this->max_amp_slider) this->max_amp_slider->publish_state(this->params[6]);
-      //if (this->auto_close_slider) this->auto_close_slider->publish_state(this->params[1]);
       if (this->sw_permalock) this->sw_permalock->publish_state(this->params[15]);
       if (this->sw_infra1) this->sw_infra1->publish_state(this->params[13]);
       if (this->sw_infra2) this->sw_infra2->publish_state(this->params[14]);
@@ -397,50 +392,7 @@ void GatePro::setup() {
       });
    }
    
-   if (speed_slider) {
-      this->speed_slider->add_on_state_callback([this](int value){
-         if (this->params[3] == value) {
-            return;
-         }
-         this->set_param(3, value);
-      });
-   }
-
-   if (decel_dist_slider) {
-      this->decel_dist_slider->add_on_state_callback([this](int value){
-         if (this->params[4] == value) {
-            return;
-         }
-         this->set_param(4, value);
-      });
-   }
-
-   if (decel_speed_slider) {
-      this->decel_speed_slider->add_on_state_callback([this](int value){
-         if (this->params[5] == value) {
-            return;
-         }
-         this->set_param(5, value);
-      });
-   }
-
-   if (max_amp_slider) {
-      this->max_amp_slider->add_on_state_callback([this](int value){
-         if (this->params[6] == value) {
-            return;
-         }
-         this->set_param(6, value);
-      });
-   }
-
-   /*if (auto_close_slider) {
-      this->auto_close_slider->add_on_state_callback([this](int value){
-         if (this->params[1] == value) {
-            return;
-         }
-         this->set_param(1, value);
-      });
-   }*/
+   // Sliders
    for (auto swi : this->sliders_with_indices) {
       swi.slider->add_on_state_callback(
          [this, swi](int value) {
@@ -451,6 +403,7 @@ void GatePro::setup() {
          }
       );
    }
+   //
 
    if (sw_permalock) {
       this->sw_permalock->add_on_state_callback([this](bool state){
