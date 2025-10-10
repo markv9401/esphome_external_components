@@ -34,7 +34,7 @@ enum GateProCmd : uint8_t {
 };  
 
 const std::map<GateProCmd, const char*> GateProCmdMapping = {
-   {GATEPRO_CMD_NON, "NAK"},
+   {GATEPRO_CMD_NONE, "NAK"},
    {GATEPRO_CMD_OPEN, "FULL OPEN;src=P00287D7"},
    {GATEPRO_CMD_CLOSE, "FULL CLOSE;src=P00287D7"},
    {GATEPRO_CMD_STOP, "STOP;src=P00287D7"},
